@@ -68,8 +68,7 @@ class farmacia {
         echo '<td><input type="submit" name="btnguardar" value="Guardar"></td>';
         echo '<input type="hidden" name="codigo" value="'.$indice.'"></form>';
       }
-      else{
-        
+      else{        
         echo "<td>".$elemento['nombre']."</td>";
         echo "<td>".$elemento['cantidad']."</td>";
         echo "<td>".$elemento['importe']."</td>";
@@ -86,12 +85,10 @@ class farmacia {
     }
   }
   function guardarregistro(){
-    $this->ficheroamatriz();
     //modificamos el registro correspondiente de la matriz
-    //y añadimos el salto de linea para que quede bien el fichero con "\n"
-    $this->diccionario[$_REQUEST['codigo']]['nombre'] = ($_REQUEST['nombre']."\n");
-    $this->diccionario[$_REQUEST['codigo']]['cantidad'] = ($_REQUEST['nombre']."\n");
-    $this->diccionario[$_REQUEST['codigo']]['importe'] = ($_REQUEST['nombre']."\n");
+    $this->farmacia[$_REQUEST['codigo']]['nombre'] = ($_REQUEST['nombre']);
+    $this->farmacia[$_REQUEST['codigo']]['cantidad'] = ($_REQUEST['cantidad']);
+    $this->farmacia[$_REQUEST['codigo']]['importe'] = ($_REQUEST['importe']."\n");
     $this->matrizafichero();
   }
   function matrizafichero(){
@@ -102,9 +99,9 @@ class farmacia {
       fputs($idfich,$texto,(strlen($texto)));
       $this->contador++;
     }
-    if(isset($_REQUEST['btnagregar']) or isset($_REQUEST['btnguardar'])){
+    /*if(isset($_REQUEST['btnagregar']) or isset($_REQUEST['btnguardar'])){
       fputs($idfich,"\n",(strlen("\n")));//añadimos un salto de linea
-    }
+    }*/
     fclose($idfich);
   }
 }
