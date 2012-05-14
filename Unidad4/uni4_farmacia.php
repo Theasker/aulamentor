@@ -15,7 +15,7 @@ $mi_farmacia = new farmacia();
 $mi_farmacia->directorio = '.'; //Directorio de trabajo el actual
 $mi_farmacia->fichero = "uni4_farmacia.txt";
 
-var_dump($_REQUEST);
+//var_dump($_REQUEST);
 titulo();
 encabezados();
 if (!isset($_REQUEST['accion'])){
@@ -47,19 +47,27 @@ elseif($_REQUEST['accion']=="editarregistro"){
   $mi_farmacia->ficheroamatriz();
   $mi_farmacia->mostrarmatrizeditar();
 }
-if (isset($_REQUEST['btnguardar'])){
-  $mi_farmacia->guardarregistro();
-} 
-elseif($_REQUEST['accion']=="borrarregistro"){
+elseif ($_REQUEST['accion']=="guardar"){
   $mi_farmacia->ficheroamatriz();
+  $mi_farmacia->guardarregistro();
+  $mi_farmacia->mostrarmatriz();
+} 
+elseif($_REQUEST['accion']=="agregar"){
+  $mi_farmacia->agregarregistro();
+  $mi_farmacia->mostrarmatriz();
 }
-//if(isset($_REQUEST['']))
+elseif($_REQUEST['accion']=="borrarregistro"){
+  $mi_farmacia->borrarregistro();
+  $mi_farmacia->mostrarmatriz();
+}
+elseif($_REQUEST['accion']=="buscar"){
+  $mi_farmacia->buscarregistro();
+}
 
-echo "</table>";
+
 formularioagregar();
+echo "</table>";
 formulariobuscar();
-
-
 
 
 echo 'El nº de medicamentos es ';
