@@ -21,22 +21,41 @@ class uni5_entradas_class {
   }
   function mostrarmatriz(){
     echo "<table>";
-    for ($filas = 0 ; $filas < 16; $filas++){
-      for ($columnas = 0 ; $columnas < 21; $columnas++){
-        if ($columnas == 0 && $filas < 15) echo "<td>".($filas+1)."</td>";
-        else {
-          if ($filas < 15) echo "<td><a href=uni5_entradas.php?accion=pulsar&estado=ocupado>__</a></td>";
-            else{
-              if ($columnas == 0) echo "<td></td>";
-              else echo "<td>$columnas</td>";
-            }
-        }
+    for ($fila = 0 ; $fila < 15; $fila++){
+      for ($columna = 0 ; $columna < 20; $columna++){
+        //numeracion lateral
+        if ($columna == 0 && $fila < 16) echo "<td class=\"limpio\">".($fila+1)."</td>";
+        switch ($this->cine[$fila][$columna]){
+        case 0:
+          echo "<td class=\"verde\"><a href=uni5_entradas.php?estado=cambiar&fila=$fila&columna=$columna>__</a></td>";
+          break;
+        case 1:
+          echo "<td class=\"rojo\"><a href=uni5_entradas.php?estado=cambiar&fila=$fila&columna=$columna>__</a></td>";
+          break;
+        default:
+          echo $this->cine[$fila][$columna];
+          } 
       }
       echo "</tr>";
+    }
+    // numeracion en la última fila
+    for ($columna = 0 ; $columna < 21; $columna++){
+      if ($columna == 0) echo "<td class=\"limpio\"></td>";
+      else echo "<td class=\"limpio\">$columna</td>";
     }
     echo "</table>";
     var_dump($_REQUEST);
   }
+  function matrizafichero(){
+    $idfich = @fopen($this->fichero, "w") or die("No existe el fichero $this->fichero");
+    $texto = implode("|",$this->cine["peli"]);
+    fputs($idfich,$texto,(strlen($texto)));
+    for ($fila = 0; $fila < 15;$fila++){
+      $texto = implode("",$this->cine[$fila]);
+      fputs($idfich,$texto,(strlen($texto)));
+    }
+    fclose($idfich);
+  }
+  function cambiarestado(){
 }
-
 ?>

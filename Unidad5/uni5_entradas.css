@@ -1,12 +1,10 @@
 table{
   /*border-collapse:collapse;*/
-  /*width:200px;*/
   font-family: 'Courier New',Courier,monospace;
   font-size: 12px;
 }
 td{
   width: 5px;
-  background-color: greenyellow;
   border-right-style: solid;
   border-left-style: solid;
   border-bottom-style: solid;
@@ -16,7 +14,20 @@ td{
   border-bottom-width: 1px;
   border-top-width: 1px;
 }
-.a{
-  
-  background-color: white;
+.verde{
+  background-color: greenyellow;
+}
+.naranja{
+  background-color: orange;
+}
+.rojo{
+  background-color: red;
+}
+.limpio{
+  width: 5px;
+  border-right-style: none;
+  border-left-style: none;
+  border-bottom-style: none;
+  border-top-style: none;
+  text-align: center;
 }
