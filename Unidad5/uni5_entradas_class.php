@@ -30,7 +30,7 @@ class uni5_entradas_class {
           echo "<td class=\"verde\"><a href=uni5_entradas.php?estado=".$this->cine[$fila][$columna]."&fila=$fila&columna=$columna>__</a></td>";
           break;
         case 1:
-          if ($_SESSION[$fila][$columna]){
+          if (isset($_SESSION[$fila][$columna])){
             echo "<td class=\"naranja\"><a href=uni5_entradas.php?estado=".$this->cine[$fila][$columna]."&fila=$fila&columna=$columna>__</a></td>";
           }
           else{

@@ -15,21 +15,26 @@
   if(isset($_REQUEST['estado'])){
     $fila = $_REQUEST['fila'];
     $columna = $_REQUEST['columna'];
+    //si es una nueva sesión o ha caducado en la que estábamos
     if(!isset($_SESSION["contador"])){
-      $_SESSION["contador"] = 1;
-      $_SESSION[$fila][$columna] = $_REQUEST['estado'];
       //esto pasa cuando intentamos anular un asiento de otra sesión
       if($_REQUEST['estado'] == 1){
         $mensaje = "Esa entrada es de otra sesión y no se puede devolver";
       }
       elseif($_REQUEST['estado'] == 0){
+        $_SESSION["contador"] = 1;
+        $_SESSION[$fila][$columna] = $_REQUEST['estado'];
         $mensaje = "Gracias por comprar en este cine";
         $mi_cine->cambiarestado();
-      }   
-      
-      
+      }
     }
+    //estamos dentro de la sesión y si existe el asiento guardado 
+    //en esta sesión significa que se había comprado
     elseif(isset($_SESSION[$fila][$columna])){
+      $mensaje = "Gracias por devolver la entrada de cine";
+      $mi_cine->cambiarestado();
+    }
+    else{
       
     }
     
