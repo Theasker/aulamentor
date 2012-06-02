@@ -10,11 +10,35 @@
   require 'uni5_entradas_class.php';
   $mi_cine = new uni5_entradas_class();
   session_start();
-  if(isset($_REQUEST[estado]) && $_REQUEST[estado] == "cambiar"){
-    sess
+  //entramos si se ha pinchado en una localidad
+  $mensaje = "";
+  if(isset($_REQUEST['estado'])){
+    $fila = $_REQUEST['fila'];
+    $columna = $_REQUEST['columna'];
+    if(!isset($_SESSION["contador"])){
+      $_SESSION["contador"] = 1;
+      $_SESSION[$fila][$columna] = $_REQUEST['estado'];
+      //esto pasa cuando intentamos anular un asiento de otra sesión
+      if($_REQUEST['estado'] == 1){
+        $mensaje = "Esa entrada es de otra sesión y no se puede devolver";
+      }
+      elseif($_REQUEST['estado'] == 0){
+        $mensaje = "Gracias por comprar en este cine";
+        $mi_cine->cambiarestado();
+      }   
+      
+      
+    }
+    elseif(isset($_SESSION[$fila][$columna])){
+      
+    }
+    
   }
+  echo $mensaje;
   $mi_cine->mostrarmatriz();
-  //var_dump($mi_cine->cine);
+  
+  var_dump($_REQUEST);
+  var_dump($_SESSION);
 ?>
   </body>
 </html>

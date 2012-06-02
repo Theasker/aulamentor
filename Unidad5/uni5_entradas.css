@@ -1,13 +1,15 @@
+body{ 
+  background-color: #cccccc;
+}
 table{
   /*border-collapse:collapse;*/
   font-family: 'Courier New',Courier,monospace;
   font-size: 12px;
 }
 td{
-  width: 5px;
   border-right-style: solid;
   border-left-style: solid;
-  border-bottom-style: solid;
+  /*border-bottom-style: solid;*/
   border-top-style: solid;
   border-right-width: 1px;
   border-left-width: 1px;
@@ -24,7 +26,6 @@ td{
   background-color: red;
 }
 .limpio{
-  width: 5px;
   border-right-style: none;
   border-left-style: none;
   border-bottom-style: none;

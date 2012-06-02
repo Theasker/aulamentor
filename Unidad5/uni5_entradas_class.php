@@ -27,10 +27,15 @@ class uni5_entradas_class {
         if ($columna == 0 && $fila < 16) echo "<td class=\"limpio\">".($fila+1)."</td>";
         switch ($this->cine[$fila][$columna]){
         case 0:
-          echo "<td class=\"verde\"><a href=uni5_entradas.php?estado=cambiar&fila=$fila&columna=$columna>__</a></td>";
+          echo "<td class=\"verde\"><a href=uni5_entradas.php?estado=".$this->cine[$fila][$columna]."&fila=$fila&columna=$columna>__</a></td>";
           break;
         case 1:
-          echo "<td class=\"rojo\"><a href=uni5_entradas.php?estado=cambiar&fila=$fila&columna=$columna>__</a></td>";
+          if ($_SESSION[$fila][$columna]){
+            echo "<td class=\"naranja\"><a href=uni5_entradas.php?estado=".$this->cine[$fila][$columna]."&fila=$fila&columna=$columna>__</a></td>";
+          }
+          else{
+            echo "<td class=\"rojo\"><a href=uni5_entradas.php?estado=".$this->cine[$fila][$columna]."&fila=$fila&columna=$columna>__</a></td>";
+          }          
           break;
         default:
           echo $this->cine[$fila][$columna];
@@ -44,7 +49,6 @@ class uni5_entradas_class {
       else echo "<td class=\"limpio\">$columna</td>";
     }
     echo "</table>";
-    var_dump($_REQUEST);
   }
   function matrizafichero(){
     $idfich = @fopen($this->fichero, "w") or die("No existe el fichero $this->fichero");
@@ -57,5 +61,17 @@ class uni5_entradas_class {
     fclose($idfich);
   }
   function cambiarestado(){
+    $fila = $_REQUEST['fila'];
+    $columna = $_REQUEST['columna'];
+    switch ($this->cine[$fila][$columna]){
+      case 0:
+        $this->cine[$fila][$columna] = 1;
+        break;
+      case 1:
+        $this->cine[$fila][$columna] = 0;
+        break;
+    }
+    $this->matrizafichero();
+  }
 }
 ?>
