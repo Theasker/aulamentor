@@ -30,7 +30,7 @@ class uni5_entradas_class {
           echo "<td class=\"verde\"><a href=uni5_entradas.php?estado=".$this->cine[$fila][$columna]."&fila=$fila&columna=$columna>__</a></td>";
           break;
         case 1:
-          if (isset($_SESSION[$fila][$columna])){
+          if (isset($_SESSION["asientos"][$fila][$columna])){
             echo "<td class=\"naranja\"><a href=uni5_entradas.php?estado=".$this->cine[$fila][$columna]."&fila=$fila&columna=$columna>__</a></td>";
           }
           else{
@@ -39,7 +39,7 @@ class uni5_entradas_class {
           break;
         default:
           echo $this->cine[$fila][$columna];
-          } 
+        } 
       }
       echo "</tr>";
     }
@@ -61,8 +61,8 @@ class uni5_entradas_class {
     fclose($idfich);
   }
   function cambiarestado(){
-    $fila = $_REQUEST['fila'];
-    $columna = $_REQUEST['columna'];
+    $fila = (int) $_REQUEST['fila'];
+    $columna = (int) $_REQUEST['columna'];
     switch ($this->cine[$fila][$columna]){
       case 0:
         $this->cine[$fila][$columna] = 1;
