@@ -4,9 +4,7 @@ class uni5_entradas_class {
   public $directorio;
   
   function __construct() {
-    $this->directorio = '.'; //Directorio de trabajo el actual
-    $this->fichero = "uni5_entradas.txt";
-    $this->ficheroamatriz();
+    
   }
   function ficheroamatriz(){ 
     chdir($this->directorio);//cambiamos el directorio activo
