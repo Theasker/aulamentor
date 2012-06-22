@@ -10,7 +10,8 @@ SELECT * FROM clientes;
 # Eliminamos los registros que no tengan deudas tanto en la tabla 
 # compras como en clientes. 
 delete FROM compras  
-   WHERE codigo_cliente IN (select codigo FROM clientes WHERE deudas_euros=0); 
+   WHERE codigo_cliente IN (select codigo FROM clientes WHERE deudas_euros=0);
+   
 delete FROM clientes WHERE deudas_euros=0; 
 
 # Mostramos ahora los registros que quedan. 

@@ -9,8 +9,7 @@ DROP TABLE IF EXISTS peliculas;
 DROP TABLE IF EXISTS clientes; 
 
 # Creamos las tablas "peliculas" y "clientes"
-CREATE TABLE IF NOT EXISTS
-peliculas(
+CREATE TABLE IF NOT EXISTS peliculas(
 registro INT PRIMARY KEY AUTO_INCREMENT,
 titulo VARCHAR(35),
 soporte SET('CIN','DVD'),
@@ -23,8 +22,7 @@ anotaciones BLOB,
 INDEX  titulo_i (titulo),
 INDEX pais_i (pais));
 
-CREATE TABLE IF NOT EXISTS
-clientes(
+CREATE TABLE IF NOT EXISTS clientes(
 registro INT PRIMARY KEY AUTO_INCREMENT,
 nombre VARCHAR(35),
 fecha_nacim  DATE,
