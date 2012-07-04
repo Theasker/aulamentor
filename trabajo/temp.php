@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title></title>
-    <link rel="stylesheet" type="text/css" href="temp.css" />
-  </head>
-  <body>
- <?php
-   var_dump(ini_get_all());
-   ini_get()
- 
- ?>
-  </body>
-</html>
+<?php
+  $id = @mysql_connect("localhost", "root", "") or die("No se ha establecido la conexión");
+  echo $id;
+  @mysql_close($id) or die("No se ha podido cerrar la conexión");
+?>

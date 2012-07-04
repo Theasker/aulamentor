@@ -1,0 +1,37 @@
+.titulo{  
+  background-color: blue;
+  font-family: Arial,Helvetica,sans-serif;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  font-size: 32px;
+}
+.encabezados{  
+  background-color: blue;
+  font-family: Arial,Helvetica,sans-serif;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  font-size: 15px;
+}
+body{ 
+  background-color: silver;
+}
+.dcha{
+  text-align: right;
+}
+.centrar{
+  text-align: center;
+}
+.boton{
+  background-color: white;
+  border-right-width: 2px;
+  border-left-width: 2px;
+  border-bottom-width: 2px;
+  border-top-width: 2px;
+  border-right-style: ridge;
+  border-left-style: ridge;
+  border-bottom-style: ridge;
+  border-top-style: ridge;
+  font-size: 14px;
+}
