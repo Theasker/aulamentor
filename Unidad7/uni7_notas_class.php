@@ -30,9 +30,14 @@ class notas {
       echo '<td class="centrar">'.$reg['asignatura'].'</td>';
       echo '<td class="centrar">'.$reg['horario'].'</td>';
       echo '<td class="derecha">'.$reg['nota'].'</td>';
-      
+      $this->formulario_agregar("agregar","","","","");
       echo '</tr>';
     }
+  }
+  function formulario_agregar($accion,$nom,$trim,$horario,$nota){
+    echo '
+      <form method="post" action="uni7_notas.php">
+        <input type';
   }
 }
 

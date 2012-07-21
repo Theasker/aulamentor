@@ -1,29 +1,14 @@
 <?php
-class MyClass
-{
-    public $var1 = 'value 1';
-    public $var2 = 'value 2';
-    public $var3 = 'value 3';
+$path = 'E:\Documents and Settings\u3440003.ALBIA.000\Escritorio\temp';
 
-    protected $protected = 'protected var';
-    private   $private   = 'private var';
+chdir($path);
 
-    function iterateVisible(){
-      echo "MyClass::iterateVisible:\n";
-      foreach($this as $key => $value){
-        print "$key => $value\n";
-      }
-    }
-}
-
-$class = new MyClass();
-
-foreach($class as $key => $value) {
-    print "$key => $value\n";
-}
-echo "\n";
+$exif = exif_read_data('IMG_20120716_192455.jpg');
+$fecha = $exif['DateTime'];
 
 
-$class->iterateVisible();
-
-?> 
+$fecha = getdate($exif['FileDateTime']);
+var_dump($fecha);
+echo $fecha['year'].'-'.$fecha['mon'].'-'.$fecha['mday'].' '
+        .$fecha['hours'].':'.$fecha['minutes'].':'.$fecha['seconds'];
+?>
