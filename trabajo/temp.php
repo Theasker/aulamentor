@@ -1,3 +1,6 @@
 <?
-mail("theasker@gmail.com", "subject", "mensaje")
+$nombre = "Mauri";
+$n = "nombre";
+
+echo ${$n};
 ?>

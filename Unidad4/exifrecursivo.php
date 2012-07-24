@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title></title>
+    <title>Renombrado recursivo de fotos</title>
     <style type="text/css">
         body{font-family: Arial,Helvetica,sans-serif; font-size: 10px;}
     </style>
@@ -22,7 +22,7 @@ function listar_directorios_ruta($ruta){
         //mostraría tanto archivos como directorios 
         //echo "<br>Nombre de archivo: $file : Es un: " . filetype($ruta . $file); 
         if (is_dir($ruta."\\".$file) && $file!="." && $file!=".."){ 
-          //solo si el archivo es un directorio, distinto que "." y ".." 
+          //solo si el archivo es un directorio, distinto que "." y ".."
           echo "<br>$ruta$file <b>(".filetype($ruta.$file).")</b>";
           listar_directorios_ruta($ruta . $file ."/"); 
         }elseif($file!="." && $file!=".."){
