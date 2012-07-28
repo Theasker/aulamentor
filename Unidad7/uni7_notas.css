@@ -14,4 +14,16 @@ body{
 .derecha{
   text-align: right;
 }
-
+.boton{
+  background-color: white;
+  border-right-width: 2px;
+  border-left-width: 2px;
+  border-bottom-width: 2px;
+  border-top-width: 2px;
+  border-right-style: ridge;
+  border-left-style: ridge;
+  border-bottom-style: ridge;
+  border-top-style: ridge;
+  font-size: 14px;
+  text-align: center;
+}

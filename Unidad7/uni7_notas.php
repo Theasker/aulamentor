@@ -15,5 +15,19 @@ require 'uni7_notas_class.php';
 
 $misnotas = new notas();
 var_dump($_REQUEST);
-$misnotas->mostrar();
+if(isset($_REQUEST['opcion'])){
+  switch($_REQUEST['opcion']){
+    case 'agregar':
+      $misnotas->agregar();
+      $misnotas->mostrar();
+      break;
+    case 'borrar':
+      $misnotas->borrar();
+      $misnotas->mostrar();
+      break;
+    case 'editar':
+      $misnotas->mostrar();
+      break;
+  }
+}else $misnotas->mostrar();
 ?>
