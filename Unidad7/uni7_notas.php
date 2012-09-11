@@ -28,6 +28,26 @@ if(isset($_REQUEST['opcion'])){
     case 'editar':
       $misnotas->mostrar();
       break;
+    case 'guardar':
+    	$misnotas->guardar();
+    	$misnotas->mostrar();
+    	break;
+    case 'informes':
+    	$misnotas->resultadoinf = "";
+    	$misnotas->informes();
+    	break;
+    case 'inf_asig_trim':
+    	$misnotas->inf_asig_trim();
+    	break;
+    case 'inf_alumno':
+    	$misnotas->inf_alumno();
+    	break;
+    case 'inf_media_asig':
+    	$misnotas->inf_media_asig();
+    	break;
+    case 'inf_media_alum':
+    	$misnotas->inf_media_alum();
+    	break;
   }
 }else $misnotas->mostrar();
 ?>
