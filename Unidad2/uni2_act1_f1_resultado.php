@@ -35,7 +35,7 @@
           ?>
         </table>
         <? echo "<br>Número total de puntos conseguidos en el campeonato: <b>$acum</b>" ?>
-         <br><br><INPUT type='button' value='<- Volver atrás'onClick='history.back()'
+         <br><br><INPUT type='button' value='<- Volver atrás' onClick='history.back()'>
     </center>
   </body>
 </html>

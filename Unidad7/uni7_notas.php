@@ -51,3 +51,6 @@ if(isset($_REQUEST['opcion'])){
   }
 }else $misnotas->mostrar();
 ?>
+</center>
+</body>
+</html>

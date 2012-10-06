@@ -10,7 +10,7 @@
     <table class="verdeoscuro" width="100%">
       <tr><td><h1>Comprar entradas de cine</h1></td></tr>
     </table>
-      <h1>¡Bienvenid@ a la página de reserva de localidades!</h1><hr>
+      <h1>¡Bienvenid@ a la p�gina de reserva de localidades!</h1><hr>
 <?php
   require 'uni5_entradas_class.php';
   $mi_cine = new uni5_entradas_class();
