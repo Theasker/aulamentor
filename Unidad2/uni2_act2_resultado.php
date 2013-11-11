@@ -11,7 +11,7 @@
       El equipo <b>'<?echo $_POST["equipos"];?>'</b> ha ganado la/s temporada/s:<br><br>
       <table border=1 WIDTH=40>
         <th ALIGN="center">Año</th>
-        <?
+        <?php
           require("uni2_act2_arrayequipos.php");
           foreach($matriz_equipos[$_POST["equipos"]] as $elemento=>$indice){
             echo "<tr>";

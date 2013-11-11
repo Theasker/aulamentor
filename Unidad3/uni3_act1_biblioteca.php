@@ -32,7 +32,7 @@
   <div style="clear: both;">
     <hr>
   </div>
-  <?
+  <?php
   //claee con inicialización de la matriz
   require "uni3_act1_biblioteca_class.php";
   $obj_biblio = new biblioteca();

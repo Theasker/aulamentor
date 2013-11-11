@@ -26,7 +26,7 @@
     </TH>
 </TR></TABLE><P>
 
-<?
+<?php
   require ("uni7_agenda_class.php");    
     
   $mi_agenda=new agenda();

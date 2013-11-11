@@ -10,12 +10,12 @@
       <br><hr>
       <img alt="logoF1.gif" src="logoF1.gif">
       <h1>FÓRMULA 1</h1><hr><br>
-        La clasificación de <b>'<? echo $_POST["piloto"]; ?>'</b> es:<br>
+        La clasificación de <b>'<?php echo $_POST["piloto"]; ?>'</b> es:<br>
         <table border=1 WIDTH=200>
         <th ALIGN="center">Gran Premio</th>
         <th ALIGN="center">Posición</th>
         <th ALIGN="center">Puntos</th>
-          <?
+          <?php
           require "uni2_act1_f1_matrices.php";
           $acum = 0;
           foreach ($matriz_pilotos[$_POST["piloto"]] as $elemento=>$indice){
@@ -34,7 +34,7 @@
             echo "</tr>";
           ?>
         </table>
-        <? echo "<br>Número total de puntos conseguidos en el campeonato: <b>$acum</b>" ?>
+        <?php echo "<br>Número total de puntos conseguidos en el campeonato: <b>$acum</b>" ?>
          <br><br><INPUT type='button' value='<- Volver atrás' onClick='history.back()'>
     </center>
   </body>

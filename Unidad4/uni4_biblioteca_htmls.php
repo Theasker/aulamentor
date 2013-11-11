@@ -1,4 +1,4 @@
-<?
+<?php
 function encabezado1(){
   ?>
   <table width="100%">
@@ -8,7 +8,7 @@ function encabezado1(){
       </td>
     </tr>
   </table>
-<?
+<?php
 }
 function resumen1($primer_resumen){
   ?>
@@ -21,7 +21,7 @@ function resumen1($primer_resumen){
       </td>
     </tr>
   </table>
-<?
+<?php
 }
 function encabezadosmatriz(){
   ?>
@@ -49,7 +49,7 @@ function encabezadosmatriz(){
       </td>
     </tr>
   
-  <?
+  <?php
 }
 function formularioagregar(){
   ?>
@@ -79,7 +79,7 @@ function formularioagregar(){
     </form>
   </center>
   <br><hr>
-  <?
+  <?php
 }
 function pie(){
   ?>
@@ -88,5 +88,7 @@ function pie(){
       <td><A href=uni4_biblioteca.php?accion=mostrar>Ver listado completo</A></td>
     </tr>
   </table>
-  <?}
+  <?php
+ 
+}
 ?>

@@ -6,7 +6,7 @@
     </title>
   </head>
   <body BGCOLOR="#339967">
-    <?
+    <?php
     $matriz_monedas = array(0=>array(0=>"Alemania",1=>"Marco alemán",2=>1.9558),
                             1=>array(0=>"España",1=>"Peseta",2=>166.386),
                             2=>array(0=>"Francia",1=>"Franco francés",2=>6.5596),

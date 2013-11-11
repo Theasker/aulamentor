@@ -1,4 +1,4 @@
-<?
+<?php
 $matriz_elementos = array("Alcalinos (I)"=>array("Li"=>3,
                                                  "Na"=>11,
                                                  "K"=>19,

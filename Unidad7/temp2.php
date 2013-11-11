@@ -3,7 +3,7 @@
 <BODY>
 <CENTER>
  
-<?
+<?php
    require("conexion.php");
    /* Recuperamos las variables globales de la conexión.*/
  

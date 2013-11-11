@@ -13,7 +13,7 @@
       <form action="uni2_act2_tabla_resultado.php" method="POST">
         <p>Seleccione grupo que desea consultar:
         <SELECT NAME="grupos">
-          <?
+          <?php
           //cargamos el combo con los datos del array
           //que ya tenemos para no tener que rellenarlo a mano.
           require "uni2_act2_tabla_matrices.php";

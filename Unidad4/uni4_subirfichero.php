@@ -3,7 +3,7 @@
    <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
 </head>
 <body>
-<?
+<?php
 $directorio = 'H:\programacion\xampp\htdocs\varios\curso\Ejercicios\Unidad4';
 chdir($directorio);
 echo "<FORM ENCTYPE=multipart/form-data METHOD=post ACTION=uni4_subirfichero.php>

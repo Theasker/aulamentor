@@ -67,13 +67,13 @@ class biblioteca{
         <form method="post" action="uni4_biblioteca.php">
           <tr>
             <td>
-              <input type="text" name="Autor" value="<? echo $elemento['Autor'] ?>">
+              <input type="text" name="Autor" value="<?php echo $elemento['Autor'] ?>">
             </td>
             <td>
-              <input type="text" name="Titulo" value="<? echo $elemento['Titulo'] ?>">
+              <input type="text" name="Titulo" value="<?php echo $elemento['Titulo'] ?>">
             </td>
             <td>
-              <input type="text" name="Editorial" value="<? echo $elemento['Editorial'] ?>">
+              <input type="text" name="Editorial" value="<?php echo $elemento['Editorial'] ?>">
             </td>
             <td align="center">
               <input type="submit" name="btnguardar" value="Guardar">
@@ -81,7 +81,7 @@ class biblioteca{
             </td>
           </tr>
         </form>
-        <?
+        <?php
 
         echo '<td><table border=1 bgcolor="white"><tr>';
         echo "</tr></table></td>";

@@ -1,4 +1,4 @@
-<?
+<?php
 var_dump($_REQUEST);
 session_start();
 if ( (isset($_POST["item"])) && ($_POST["item"]!="") ){
@@ -35,7 +35,7 @@ if ( (isset($_POST["item"])) && ($_POST["item"]!="") ){
 
 <TABLE border='0' align='center' cellspacing='0' cellpadding='1' width='600'>
 <TR><TD colspan='2' width='100%' bgcolor='yellow'>
-  <FORM action="<?=$_SERVER["PHP_SELF"]."?".SID?>" method="post">
+  <FORM action="<?php=$_SERVER["PHP_SELF"]."?".SID?>" method="post">
   <TABLE border='0' align='center' cellspacing='3' cellpadding='3' width='600'>
   <TR><TD width='100%' bgcolor='white'>		
         Dime el producto <input type="text" name="item" size="20"></td>
@@ -53,7 +53,7 @@ if ( (isset($_POST["item"])) && ($_POST["item"]!="") ){
     </select></TD>
   </TR></TABLE></FORM>
 </TD></TR></TABLE>
-<?
+<?php
 if (isset($_SESSION["itemsEnCesta"])){
   echo'<P>El contenido de la cesta de la compra es:<br>';
   echo "<TABLE BORDER=\"0\" cellspacing=\"1\" cellpadding=\"1\" align=\"center\" width=\"600\">

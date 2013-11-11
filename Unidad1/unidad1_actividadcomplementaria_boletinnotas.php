@@ -6,7 +6,7 @@
     </title>
   </head>
   <body BGCOLOR="#66CBFF">
-    <?
+    <?php
     $matriz_notas = array(0=>array(0=>"Matemáticas",1=>3,2=>10,3=>7),
                            1=>array(0=>"Lengua",1=>8,2=>5,3=>3),
                            2=>array(0=>"Física",1=>7,2=>2,3=>1),

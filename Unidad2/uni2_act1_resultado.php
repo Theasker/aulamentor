@@ -12,7 +12,7 @@
       <table border=1 WIDTH=200>
         <th ALIGN="center">Ciudad</th>
         <th ALIGN="center">Código</th>
-        <?
+        <?php
           require("uni2_act1_arrayprovincias.php");
 
           /*

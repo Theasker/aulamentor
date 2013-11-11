@@ -1,4 +1,4 @@
-<?
+<?php
 class monedero{
   protected $datos;
   protected $id_conexion;

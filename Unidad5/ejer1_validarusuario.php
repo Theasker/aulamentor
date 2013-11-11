@@ -1,4 +1,4 @@
-<?
+<?php
 $resultadoStr="";
 
 if (isset($_POST["validar"])) {

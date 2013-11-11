@@ -9,7 +9,7 @@ class cine{
 		$DBUser="root";
 		$DBPass="";
 		$this->id_conexion = @mysql_connect($DBHost, $DBUser, $DBPass) or
-					die ("No se ha podidor realizar la conexión a la BD");
+					die ("No se ha podidor realizar la conexiï¿½n a la BD");
 		if (!mysql_select_db("ejercicios")) echo (mysql_errno().'.-'.mysql_error());
 	}
 	function __destruct(){
@@ -22,7 +22,7 @@ class cine{
       <tr><td class="centrar"><form method="POST" action="uni7_cines.php">
        Buscar pelicula 
       	<input type="text" name="txt_buscar" size="20">
-       	<input type="submit" name="buscar" value="¡Buscar!">
+       	<input type="submit" name="buscar" value="ï¿½Buscar!">
        	<p><input type="submit" name="nuevo" value="Nuevo cine">
        	<input type="submit" name="listado" value="Listado completo">
        	<input type="hidden" name="opcion" value="frm_inicial"></p>
@@ -36,8 +36,8 @@ class cine{
 		<table width="100%">
 		<tr>
 		<th class="titulo" width="15%">Nombre cine</th>
-		<th class="titulo" width="20%">Película</th>
-		<th class="titulo" width="35%">Descripción</th>
+		<th class="titulo" width="20%">Pelï¿½cula</th>
+		<th class="titulo" width="35%">Descripciï¿½n</th>
 		<th class="titulo" width="30%">Operaciones</th></tr>
 		<?php 
 		$datos = @mysql_query($sql,$this->id_conexion) or
@@ -60,7 +60,7 @@ class cine{
 		?>
 		</table>
 		<?php
-		echo '<div class="resul"><p>El nº de películas es: '.$this->cont.'</p></div>';
+		echo '<div class="resul"><p>El nï¿½ de pelï¿½culas es: '.$this->cont.'</p></div>';
 		unset($datos);
 	}
 	function consultar(){
@@ -72,19 +72,19 @@ class cine{
 		while($registro = mysql_fetch_array($datos)){
 				echo '<tr><td class="titulo">Nombre del cine</td>';
 				echo '<td>'.$registro['nombre_cine'].'</td></tr>';
-				echo '<tr><td class="titulo">Nombre de la película</td>';
+				echo '<tr><td class="titulo">Nombre de la pelï¿½cula</td>';
 				echo '<td>'.$registro['nombre_peli'].'</td></tr>';
-				echo '<tr><td class="titulo">Descripción</td>';
+				echo '<tr><td class="titulo">Descripciï¿½n</td>';
 				echo '<td>'.$registro['descripcion'].'</td></tr>';
-				echo '<tr><td class="titulo">Sesión 1 (hora)</td>';
+				echo '<tr><td class="titulo">Sesiï¿½n 1 (hora)</td>';
 				echo '<td>'.$registro['sesion1'].'</td></tr>';
-				echo '<tr><td class="titulo">Sesión 2 (hora)</td>';
+				echo '<tr><td class="titulo">Sesiï¿½n 2 (hora)</td>';
 				echo '<td>'.$registro['sesion2'].'</td></tr>';
-				echo '<tr><td class="titulo">Sesión 3 (hora)</td>';
+				echo '<tr><td class="titulo">Sesiï¿½n 3 (hora)</td>';
 				echo '<td>'.$registro['sesion3'].'</td></tr>';
-				echo '<tr><td class="titulo">Nº de filas del cine</td>';
+				echo '<tr><td class="titulo">Nï¿½ de filas del cine</td>';
 				echo '<td>'.$registro['nume_filas'].'</td></tr>';
-				echo '<tr><td class="titulo">Nº de asientos del cine</td>';
+				echo '<tr><td class="titulo">Nï¿½ de asientos del cine</td>';
 				echo '<td>'.$registro['nume_asientos'].'</td></tr>';
 		}
 	}
@@ -96,19 +96,19 @@ class cine{
 			<table>
 				<tr><td class="titulo">Nombre del cine</td>
 				<td><input type="text" name="nomcine" value="'.$nomcine.'" size="30"></td></tr>
-				<tr><td class="titulo">Nombre de la película</td>
+				<tr><td class="titulo">Nombre de la pelï¿½cula</td>
 				<td><input type="text" name="nompeli" value="'.$nompeli.'" size="60"></td></tr>
-				<tr><td class="titulo">Descripción</td>
+				<tr><td class="titulo">Descripciï¿½n</td>
 				<td><input type="text" name="descripcion" value="'.$descripcion.'" size="200"></td></tr>
-				<tr><td class="titulo">Sesión 1 (hora)</td>
+				<tr><td class="titulo">Sesiï¿½n 1 (hora)</td>
 				<td><input type="text" name="sesion1" value="'.$sesion1.'" size="10"></td></tr>
-				<tr><td class="titulo">Sesión 2 (h ora)</td>
+				<tr><td class="titulo">Sesiï¿½n 2 (h ora)</td>
 				<td><input type="text" name="sesion2" value="'.$sesion2.'" size="10"></td></tr>
-				<tr><td class="titulo">Sesión 3 (hora)</td>
+				<tr><td class="titulo">Sesiï¿½n 3 (hora)</td>
 				<td><input type="text" name="sesion3" value="'.$sesion3.'" size="10"></td></tr>
-				<tr><td class="titulo">Nº de filas del cine</td>
+				<tr><td class="titulo">Nï¿½ de filas del cine</td>
 				<td><input type="text" name="numfilas" value="'.$numfilas.'" size="5"></td></tr>
-				<tr><td class="titulo">Nº de asientos del cine</td>
+				<tr><td class="titulo">Nï¿½ de asientos del cine</td>
 				<td><input type="text" name="numasientos" value="'.$numasientos.'" size="5"></td></tr>';
 				if ($opcion == "modificacion"){
 					echo '<tr><td></td><td><input type="submit" name="modificar" value="Modificar cine"></td></tr>';
@@ -126,7 +126,7 @@ class cine{
 						"'.$descripcion.'","'.$sesion1.'","'.$sesion2.'","'.$sesion3.'",
 						"'.$numfilas.'","'.$numasientos.'")';
 		$datos = @mysql_query($sql,$this->id_conexion) or	die("$sql</br>".mysql_error());
-		// Después de añadir el registro mostramos todos los registros de nuevo
+		// Despuï¿½s de aï¿½adir el registro mostramos todos los registros de nuevo
 		$sql = "SELECT * FROM ejercicios.cine ORDER BY cine.nombre_cine";
 		$this->mostrar($sql);
 	}
@@ -144,20 +144,20 @@ class cine{
 						WHERE Id='.$registro;
 		
 		$datos = @mysql_query($sql,$this->id_conexion) or	die("$sql</br>".mysql_error());
-		// Después de añadir el registro mostramos todos los registros de nuevo
+		// Despuï¿½s de aï¿½adir el registro mostramos todos los registros de nuevo
 		$sql = "SELECT * FROM ejercicios.cine ORDER BY cine.nombre_cine";
 		$this->mostrar($sql);
 	}
 	function borrar(){
 		$sql = 'DELETE FROM cine WHERE Id='.$_REQUEST['registro'];
 		$datos = @mysql_query($sql,$this->id_conexion) or	die("$sql</br>".mysql_error());
-		// Después de añadir el registro mostramos todos los registros de nuevo
+		// Despuï¿½s de aï¿½adir el registro mostramos todos los registros de nuevo
 		$sql = "SELECT * FROM ejercicios.cine ORDER BY cine.nombre_cine";
 		$this->mostrar($sql);
 	}
 	function comprobarcampos(){
 		if($_REQUEST['nomcine']=='' or $_REQUEST['nompeli']==''){
-			echo 'No se puede realizar la operación: el campo 
+			echo 'No se puede realizar la operaciï¿½n: el campo 
 						"Nombre del cine" y el campo "Nombre de pelicula" es obligatorio.';
 			return (false);
 		}else return (true);
@@ -165,18 +165,18 @@ class cine{
 	function formulariocomprar($registro,$sesion,$fecha){
 		$sql = 'SELECT cine.*	FROM ejercicios.cine WHERE cine.Id='.$_REQUEST['registro'];
 		$datos = @mysql_query($sql,$this->id_conexion) or	die("$sql".mysql_error());
-		$registro = mysql_fetch_array($datos); //leemos el registro del cine en cuestión
+		$registro = mysql_fetch_array($datos); //leemos el registro del cine en cuestiï¿½n
 		echo '<hr><div class="centrar">';
 		echo '<table><tr><td class="titulo">Nombre cine</td><th>'.$registro['nombre_cine'].'</th>';
 		echo '<td class="titulo">Nombre pelicula</td><th>'.$registro['nombre_peli'].'</th></table>';
-		// Seleccionamos el registro último de un cine, de una sesión de un día específico.
+		// Seleccionamos el registro ï¿½ltimo de un cine, de una sesiï¿½n de un dï¿½a especï¿½fico.
 		$sql = 'SELECT * FROM ejercicios.cine_entradas
 						WHERE Id_cine='.$_REQUEST['registro'].' AND sesion='.$sesion.' 
 						ORDER BY sesion, dia DESC';
 		$datos = @mysql_query($sql,$this->id_conexion) or	die("$sql".mysql_error());
 		$regsesion = mysql_fetch_array($datos);
 		echo '<form method="post" action="uni7_cines.php">
-					<table><tr><td class="titulo">Sesión</td><td>Hora</td>
+					<table><tr><td class="titulo">Sesiï¿½n</td><td>Hora</td>
 					<td><select name="sesion">';
 		switch ($sesion){
 			case '1': 
@@ -197,13 +197,13 @@ class cine{
 		}
 		echo '</select></td>
 					<td><input type="text" name="fecha" value="'.date_format(date_create($regsesion['dia']),'d/m/Y').'" size="8"></td>
-					<td><input type="submit" name="cambiarsesion" value="Cambiar sesión"></td>
+					<td><input type="submit" name="cambiarsesion" value="Cambiar sesiï¿½n"></td>
 							<input type="hidden" name="opcion" value="comprar">
 							<input type="hidden" name="registro" value="'.$_REQUEST['registro'].'">
 					</form></table></div>';
 		// Rellenamos toda la matriz de asientos con 0
 		$this->rellenarmatriz($registro['nume_filas'],$registro['nume_asientos']);
-		// Seleccionamos los asientos del día y sesion específica.
+		// Seleccionamos los asientos del dï¿½a y sesion especï¿½fica.
 		$dia = date_format(date_create($regsesion['dia']),'Y-m-d');
 		$sql = 'SELECT * FROM ejercicios.cine_entradas
 						WHERE Id_cine='.$_REQUEST['registro'].'
@@ -258,8 +258,7 @@ class cine{
 	}
 	function cambiarestado(){
 		if($_REQUEST['estado']==0){
-			$sql = 'INSERT INTO cine_entradas VALUES(0,
-							'.$_REQUEST['idcine'].',
+			$sql = 'INSERT INTO cine_entradas VALUES(0,'.$_REQUEST['idcine'];
 			
 		}
 	}

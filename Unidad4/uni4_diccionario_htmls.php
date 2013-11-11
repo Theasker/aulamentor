@@ -3,7 +3,7 @@ function titulo(){
 ?> 
 <center><div class="cabecera">Diccionario</div></center>
 <br>
-<?
+<?php
 }
 function encabezados(){
 ?>
@@ -15,7 +15,7 @@ function encabezados(){
     <th class="b">Operaciones</th>      
   </tr>
 </center>
-<?
+<?php
 }
 function formularioagregar(){
 ?>
@@ -27,7 +27,7 @@ function formularioagregar(){
   </tr>  
 </form>
 </table>
-<?
+<?php
 }
 function formulariobuscar(){
   ?>
@@ -42,6 +42,6 @@ function formulariobuscar(){
   </form>
 </center>
 </div>
-<?
+<?php
 }
 ?>

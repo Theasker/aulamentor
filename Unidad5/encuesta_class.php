@@ -52,7 +52,7 @@ class encuesta_class {
       <input type="submit" name="Votar" value="Votar"></center></td>      
       </tr>
       <tr><td>
-      <?
+      <?php
       foreach($this->encuesta as $indice=>$elemento){
         if ($indice != "titulo"){
           echo '<input type="radio" name="encuesta" value="'.$indice.'"> '.$indice.'</br>';
@@ -63,7 +63,7 @@ class encuesta_class {
       </form>
     </table>
     </center>
-  <?
+  <?php
   }
   function votacion(){
     $this->encuesta[$_REQUEST['encuesta']] = $this->encuesta[$_REQUEST['encuesta']] + 1;

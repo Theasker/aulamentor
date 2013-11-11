@@ -1,4 +1,4 @@
-<?
+<?php
 setlocale(LC_ALL,"spanish");
 $fecha_nueva=strftime("%A, %d de %B de %Y %H:%M:%S");
 
@@ -20,7 +20,7 @@ else  //si el cookie no existe lo creamos
 ?>
 <HTML><HEAD><TITLE>Curso PHP 5 - Unidad 5 - Ejercicio 2</TITLE></HEAD>
 <BODY bgcolor="#C0C0C0" link="blue" vlink="blue" alink="blue">
-<?
+<?php
 echo "<P><TABLE border='0' align='center' cellspacing='3' 
             cellpadding='3' width='600'>
     <TR>

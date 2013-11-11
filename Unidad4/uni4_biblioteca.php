@@ -3,7 +3,7 @@
    <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
 </head>
 <body bgcolor="#CDCDCD">
-<?
+<?php
 require 'uni4_biblioteca_htmls.php';
 require 'uni4_biblioteca_class.php';
 $mi_biblioteca = new biblioteca();

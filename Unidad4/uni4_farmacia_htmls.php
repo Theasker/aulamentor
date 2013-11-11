@@ -3,7 +3,7 @@ function titulo(){
 ?> 
 <center><div class="cabecera">Farmacia</div></center>
 <br>
-<?
+<?php
 }
 function encabezados(){
 ?>
@@ -16,7 +16,7 @@ function encabezados(){
     <th class="c">Operaciones</th>      
   </tr>
 </center>
-<?
+<?php
 }
 function formularioagregar(){
 ?>
@@ -30,7 +30,7 @@ function formularioagregar(){
   </tr>  
 </form>
 </table>
-<?
+<?php
 }
 function formulariobuscar(){
   ?>
@@ -48,6 +48,6 @@ function formulariobuscar(){
   </p>
 </center>
 
-<?
+<?php
 }
 ?>

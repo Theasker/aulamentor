@@ -51,7 +51,7 @@ class encuesta_class {
       <tr>
       <td><p><h2><?echo $this->encuesta["titulo"]?></h2>
       (Puedes votar hasta 3 películas diferentes, una cada vez)</br></p>
-      <?
+      <?php
       $this->totalvotos = 0;
       foreach($this->encuesta as $indice=>$elemento){
         if ($indice != "titulo"){
@@ -70,7 +70,7 @@ class encuesta_class {
       </form>
     </table>
     </center>
-  <?
+  <?php
   }
   function votacion(){
     // comprobamos las veces que se ha votado esa película

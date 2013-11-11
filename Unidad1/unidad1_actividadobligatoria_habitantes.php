@@ -6,7 +6,7 @@
     </title>
   </head>
   <body BGCOLOR="#66CBFF">
-    <?
+    <?php
     $matriz_hab = array(0=>array(0=>1910,1=>19995191),
                           1=>array(0=>1920,1=>21389589),
                           2=>array(0=>1930,1=>23677497),

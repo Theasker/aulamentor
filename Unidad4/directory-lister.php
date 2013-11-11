@@ -1,4 +1,4 @@
-<? 
+<?php 
 // directorio de origen
 $path = 'E:\utilidades\programacion\EasyPHP-5.3.8.0\www';
 

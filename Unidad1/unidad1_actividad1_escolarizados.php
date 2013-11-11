@@ -6,7 +6,7 @@
     </title>
   </head>
   <body BGCOLOR="#66CBFF">
-    <?
+    <?php
     $matriz_alumnos = array(0=>array(0=>"Andalucía",1=>593.6),
                           1=>array(0=>"Aragón",1=>600.3),
                           2=>array(0=>"Asturias",1=>582.9),

@@ -13,7 +13,7 @@
       <form action="uni2_act1_f1_resultado.php" method="POST">
         Seleccione el piloto que desea consultar:
         <SELECT NAME="piloto">
-          <?
+          <?php
           //cargamos el combo con los datos del array
           //que ya tenemos para no tener que rellenarlo a mano.
           require "uni2_act1_f1_matrices.php";

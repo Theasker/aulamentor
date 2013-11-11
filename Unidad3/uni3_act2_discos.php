@@ -27,7 +27,7 @@
       </tr>
     </table>
     <hr>
-    <?
+    <?php
     require 'uni3_act2_discos_class.php';
     $discos = new catalogo();
     //comprobación del botón que se ha pulsado

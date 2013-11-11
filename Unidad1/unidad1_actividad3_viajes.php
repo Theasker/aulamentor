@@ -6,7 +6,7 @@
     </title>
   </head>
   <body BGCOLOR="#339967">
-    <?
+    <?php
     $matriz_viajes = array(0=>array(0=>"Madrid",1=>"Segovia",2=>90201),
                             1=>array(0=>"Madrid",1=>"A Coruña",2=>596887),
                             2=>array(0=>"Barcelona",1=>"Cádiz",2=>1152669),

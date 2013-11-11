@@ -4,7 +4,7 @@
 <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
 </HEAD>
 <BODY>
-<?
+<?php
 /****** Enlace Adaptar las cadenas al contexto *******/
 if ($_GET["tipo"]==1)
 {

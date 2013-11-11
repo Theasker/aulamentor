@@ -1,4 +1,4 @@
-<?
+<?php
 $nombre = "Mauri";
 $n = "nombre";
 

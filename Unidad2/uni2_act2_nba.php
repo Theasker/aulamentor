@@ -11,7 +11,7 @@
       <form action="uni2_act2_resultado.php" method="POST">
         Seleccione el equipo que desea consultar:
         <SELECT NAME="equipos">
-          <?
+          <?php
           //cargamos el combo con los datos del array
           //que ya tenemos para no tener que rellenarlo a mano.
           require "uni2_act2_arrayequipos.php";
@@ -25,7 +25,7 @@
     </center>
     <DIV align="right">
       <br><br><br><br>
-      NBA es una marca registrada de NBA Media Ventures, LLC
+      NBA es una marca registrada de NBA Media Ventures, LLC 
     </DIV>
   </body>
 </html>

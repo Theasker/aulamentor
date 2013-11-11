@@ -5,7 +5,7 @@
 </HEAD>
 <BODY>
 
-<?
+<?php
 
 /****** Comprobar la validadez de una fecha *******/
 
