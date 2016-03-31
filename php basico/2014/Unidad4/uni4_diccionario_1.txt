@@ -1,0 +1,4 @@
+0~house~casa
+1~car~coche
+2~dog~perro
+3~flower~flor
