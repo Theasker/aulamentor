@@ -1,0 +1,34 @@
+<HEAD><TITLE>Curso de PHP 5</TITLE></HEAD>
+<BODY>
+<H3><CENTER> TABLA DE LOS 20 PRIMEROS NÚMEROS EN DIFERENTES BASES
+<TABLE BORDER=2>
+	<TH> &nbsp;&nbsp;Decimal&nbsp;&nbsp;</TH>
+	<TH> &nbsp;&nbsp;Binario&nbsp;&nbsp;&nbsp;</TH>
+	<TH> &nbsp;&nbsp;Octal&nbsp;&nbsp;&nbsp;</TH>
+	<TH> &nbsp;&nbsp;Hexadecimal&nbsp;&nbsp;</TH>
+<BR><TR><TD>&nbsp;00</TD><TD>&nbsp;000000</TD>
+      		<TD>&nbsp;00</TD><TD>&nbsp;00</TD></TR><TR><TD>&nbsp;01</TD><TD>&nbsp;000001</TD>
+      		<TD>&nbsp;01</TD><TD>&nbsp;01</TD></TR><TR><TD>&nbsp;02</TD><TD>&nbsp;000010</TD>
+      		<TD>&nbsp;02</TD><TD>&nbsp;02</TD></TR><TR><TD>&nbsp;03</TD><TD>&nbsp;000011</TD>
+      		<TD>&nbsp;03</TD><TD>&nbsp;03</TD></TR><TR><TD>&nbsp;04</TD><TD>&nbsp;000100</TD>
+      		<TD>&nbsp;04</TD><TD>&nbsp;04</TD></TR><TR><TD>&nbsp;05</TD><TD>&nbsp;000101</TD>
+      		<TD>&nbsp;05</TD><TD>&nbsp;05</TD></TR><TR><TD>&nbsp;06</TD><TD>&nbsp;000110</TD>
+      		<TD>&nbsp;06</TD><TD>&nbsp;06</TD></TR><TR><TD>&nbsp;07</TD><TD>&nbsp;000111</TD>
+      		<TD>&nbsp;07</TD><TD>&nbsp;07</TD></TR><TR><TD>&nbsp;08</TD><TD>&nbsp;001000</TD>
+      		<TD>&nbsp;10</TD><TD>&nbsp;08</TD></TR><TR><TD>&nbsp;09</TD><TD>&nbsp;001001</TD>
+      		<TD>&nbsp;11</TD><TD>&nbsp;09</TD></TR><TR><TD>&nbsp;10</TD><TD>&nbsp;001010</TD>
+      		<TD>&nbsp;12</TD><TD>&nbsp;0A</TD></TR><TR><TD>&nbsp;11</TD><TD>&nbsp;001011</TD>
+      		<TD>&nbsp;13</TD><TD>&nbsp;0B</TD></TR><TR><TD>&nbsp;12</TD><TD>&nbsp;001100</TD>
+      		<TD>&nbsp;14</TD><TD>&nbsp;0C</TD></TR><TR><TD>&nbsp;13</TD><TD>&nbsp;001101</TD>
+      		<TD>&nbsp;15</TD><TD>&nbsp;0D</TD></TR><TR><TD>&nbsp;14</TD><TD>&nbsp;001110</TD>
+      		<TD>&nbsp;16</TD><TD>&nbsp;0E</TD></TR><TR><TD>&nbsp;15</TD><TD>&nbsp;001111</TD>
+      		<TD>&nbsp;17</TD><TD>&nbsp;0F</TD></TR><TR><TD>&nbsp;16</TD><TD>&nbsp;010000</TD>
+      		<TD>&nbsp;20</TD><TD>&nbsp;10</TD></TR><TR><TD>&nbsp;17</TD><TD>&nbsp;010001</TD>
+      		<TD>&nbsp;21</TD><TD>&nbsp;11</TD></TR><TR><TD>&nbsp;18</TD><TD>&nbsp;010010</TD>
+      		<TD>&nbsp;22</TD><TD>&nbsp;12</TD></TR><TR><TD>&nbsp;19</TD><TD>&nbsp;010011</TD>
+      		<TD>&nbsp;23</TD><TD>&nbsp;13</TD></TR><TR><TD>&nbsp;20</TD><TD>&nbsp;010100</TD>
+      		<TD>&nbsp;24</TD><TD>&nbsp;14</TD></TR>
+</TABLE>
+</BODY>
+</HTML>
+

@@ -1,0 +1,6 @@
+AuthType Basic
+AuthName "Curso PHP 5"
+AuthBasicProvider file
+AuthUserFile C:\xampp\apache\conf\usuarios
+Require valid-user
+ 
