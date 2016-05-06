@@ -12,8 +12,8 @@
 		// Conectamos con la base de datos
 		// $mbd = new PDO('mysql:host=localhost;dbname=prueba', $usuario, $contraseña);
 		$db = new PDO('mysql:host=localhost;dbname=dbtest;charset=utf8','root','Theasker');
-		//$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		//$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 		$stmt = $db->prepare("SELECT * FROM articulos WHERE pais=:mycountry");
 		$stmt->execute( array(':mycountry' => 'Brazil') );
 		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
