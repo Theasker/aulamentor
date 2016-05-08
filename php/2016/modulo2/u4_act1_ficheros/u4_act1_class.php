@@ -5,6 +5,7 @@ class monedero{
 	private $file;
 	private $fileid;
 	private $fileArray = array();
+	private $rows;
 	
 	public function __construct(){
 		try{
@@ -21,29 +22,30 @@ class monedero{
 	public function getPath(){
 		return $this->path;
 	}
+	
+	public function getRows(){
+		return $this->rows;
+	}
 
-	public function readFile(){
+	public function show(){
 		try{
 			$this->fileArray = file($this->file);
+			$this->rows = count($this->fileArray);
 			foreach($this->fileArray as $row){
 				$splits = explode("~", $row);
 				echo "<tr>";
 				echo "<td>",$splits[1],"</td>";
-				echo "<td class=\"text-center\">",date('m/d/Y', $splits[2]),"</td>";
-				echo "<td class=\"text-right\">",$splits[3]," €","</td>";
-				$bar = <<<EOT
+				echo '<td class="text-center">',date('m/d/Y', $splits[2]),"</td>";
+				echo '<td class="text-right">',$splits[3]," €","</td>";
+				echo <<<EOT
 				<td class="text-center">
-				<div class="btn-group" role="group" aria-label="...">
-				  <button type="button" class="btn btn-default btn-success">
-				  
-				  </button>
-				  <button type="button" class="btn btn-default btn-success">
-				  
-				  </button>
-				</div>
+					<div class="btn-group text-center" role="group">
+					  <a class="btn btn-xs btn-success" href="http://www.w3schools.com">Editar</a>
+					  <a class="btn btn-xs btn-success" href="http://www.w3schools.com">Modificar</a>
+					</div>
 				</td>
 EOT;
-				echo $bar;
+				
 				echo "</tr>";
 			}
 			fclose($this->fileid);
