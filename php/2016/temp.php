@@ -1,6 +1,7 @@
 <?php
-for ($x = 0; $x < 10 ;$x++){
-	echo $x,"<br>";
-	if ($x == 5) break;
-}
+	$path_with_query="http://www.ex.com/getdat.php?dep=n/a&title=boss";
+	$path=explode("?",$path_with_query);
+	$filename=basename($path[0]);
+	echo $filename;
+	$query=$path[1];
 ?>

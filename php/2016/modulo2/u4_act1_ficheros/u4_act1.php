@@ -9,21 +9,19 @@
 		body{background-color:#C0C0C0;}
 		.centrado{width:700px; margin: 0 auto;}
 		.btn{margin-right:5px;}
+		.verde{background:#669900;};
+		.textoNegro{color:black;}
 	</style>
 </head>
 <body>
 	<div class="centrado">
-		<div class="panel-body alert-success">
-			<div class="col-md-2">
-		    <img src="cerdito.gif" alt="cerdito">
-		  </div>
-		  <div class="col-md-8">
-		    <h1 class="text-center">Monedero</h1>
-		  </div>
-		  <div class="col-md-2">
-		    <img src="cerdito.gif" alt="cerdito">
-		  </div>
-		</div>
+		<p>
+			<div class="panel-body verde">
+				<div class="col-md-2"><img src="cerdito.gif" alt="cerdito"></div>
+			  <div class="col-md-8"><h1 class="text-center">Monedero</h1></div>
+			  <div class="col-md-2"><img src="cerdito.gif" alt="cerdito"></div>
+			</div>
+		</p>
 
 		<div class="clearfix">
 			<?php
@@ -34,37 +32,59 @@
 			
 			$monedero = new monedero();
 			
-			//echo "<table class=\"table table-condensed table-bordered table-fixed no-margin\">
+			$script = $monedero->getScriptName();
+			
+			var_dump($_GET);
+			
+			if (isset($_GET["orden"])){
+				switch ($_GET["orden"]){
+					case "concepto":
+						
+						break:
+					case "concepto":
+						break:
+					case "concepto":
+						break:
+					case "concepto":
+						break:
+				}
+			}else
+				
+			}
+			
 			echo <<<EOT
 			<table class="table table-condensed table-bordered table-fixed no-margin">
-				<thead class="alert-success">
+				<thead class="verde">
 					<tr>
-						<th class="text-center col-md-5">Concepto</th>
-						<th class="text-center col-md-2">Fecha</th>
-						<th class="text-center col-md-2">Importe (€)</th>
-						<th class="text-center col-md-3">Operaciones</th>
+						<th class="text-center col-md-7"><a href="$script?orden=concepto">Concepto</a></th>
+						<th class="text-center col-md-1"><a href="$script?orden=fecha">Fecha</a></th>
+						<th class="text-center col-md-2"><a href="$script?orden=importe">Importe (€)</a></th>
+						<th class="text-center col-md-2">Operaciones</th>
 					</tr>
-				</thead>"
+				</thead>
 EOT;
 			echo "<tbody>";
 			$monedero->show();
 			
 			echo <<<EOT
-				<div class="clearfix">
-					<form name="form2" method="post" action="index.php" >
+
+					<form name="add" method="post" action="$script" >
 						<tr>
-							<td><input name="add_concepto" type="text" value="" class="form-control"></td>
-							<td><input name="add_fecha" type="text" value="" class="form-control"></td>
-							<td><input name="add_importe" type="text" value="" class="form-control"></td>
-							<td class="text-center"><a class="btn btn-danger" href="http://www.w3schools.com">Añadir</a></td>
+							<div class="input-group input-group-sm">
+								<input type="hidden" name="add" value="add">
+								<td><input name="add_concepto" type="text" value="" class="form-control input-sm"></td>
+								<td><input name="add_fecha" type="text" value="" class="form-control input-sm"></td>
+								<td><input name="add_importe" type="text" value="" class="form-control input-sm"></td>
+								<td class="text-center"><input class="btn btn-sm"  type="submit" value="Añadir registro"></td>
+							</div>
 						</tr>
 					</form>
-				</div>
+
 EOT;
 			
 			echo "</tbody></table>";
 			
-			echo "Hay ",$monedero->getRows()," registros."
+			echo "El nº de registros del monedero es ",$monedero->getRows();
 			?>	
 		</div>
 	</div>
