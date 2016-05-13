@@ -8,6 +8,7 @@ class monedero{
 	private $fileid;
 	private $fileArray = array();
 	private $rows;
+	private $splits = array();
 	
 	public function __construct(){
 		try{
@@ -24,7 +25,9 @@ class monedero{
 		}
 	}
 	
-	
+	public function __destruct(){
+		fclose($this->fileid);
+	}
 	
 	public function getPath(){
 		return $this->path;
@@ -37,17 +40,27 @@ class monedero{
 	public function getScriptName(){
 		return $this->scriptName;
 	}
-
+	
+	private function loadArray(){
+		$this->fileArray = file($this->file);
+		$this->rows = count($this->fileArray);
+		foreach($this->fileArray as $row){
+			$this->splits[] = explode("~", $row);
+		}
+		echo("<pre>");
+		//var_dump($this->splits);
+		echo("</pre>");
+		
+	}
+	
 	public function show(){
 		try{
-			$this->fileArray = file($this->file);
-			$this->rows = count($this->fileArray);
-			foreach($this->fileArray as $row){
-				$splits = explode("~", $row);
+			$this->loadArray();
+			foreach($this->splits as $row){
 				echo "<tr>";
-				echo "<td>",$splits[1],"</td>";
-				echo '<td class="text-center">',date('m/d/Y', $splits[2]),"</td>";
-				echo '<td class="text-right">',$splits[3] , " €", "</td>";
+				echo "<td>",$row[1],"</td>";
+				echo '<td class="text-center">',date('m/d/Y', $row[2]),"</td>";
+				echo '<td class="text-right">',$row[3] , " €", "</td>";
 				echo <<<EOT
 				<td class="text-center">
 					<div class="btn-group text-center" role="group">
@@ -59,21 +72,30 @@ EOT;
 				
 				echo "</tr>";
 			}
-			fclose($this->fileid);
+			
 		}catch (Exception $e){
 			echo ("Ha habido un problema con el fichero.");
 		}
-		
 	}
 	
 	public function sortConcepto(){
-		// Función que compara el título de cada película para ordenarlo
+
+		
+
+
+
+
+		// Función que compara para orden
 		function cmp($a,$b){
-			if ($a[0] == $b[0]) return 0;
-			return ($a[0] < $b[0]) ? -1 : 1;
+			if ($a[1] == $b[1]) return 0;
+			return ($a[1] < $b[1]) ? -1 : 1;
 		}
 		// Ordenamos con la función 'cmp'
-		usort($this->medicine,'cmp');
+		usort($this->fileArray,'cmp');
+		echo "<h3>ordenado por concepto:</h3>";
+		echo "<pre>";
+		var_dump($this->fileArray);
+		echo "</pre>";
 		$this->show();
 	}
 }
