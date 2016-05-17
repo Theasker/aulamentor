@@ -12,6 +12,7 @@
 		.verde{background:#669900;}
 		th, .textWhite{color: white;}
 		.resaltado{background:teal;}
+		.red{color:red;}
 	</style>
 </head>
 <body>
@@ -28,7 +29,7 @@
 			<?php
 			require('u4_act1_class.php');
 			
-			//error_reporting(E_ALL); 
+			//error_reporting(E_ALL);
 			//ini_set("display_errors", 1);
 			
 			$monedero = new monedero();
@@ -45,10 +46,10 @@
 							<table class="table table-condensed table-bordered table-fixed no-margin">
 								<thead class="verde">
 									<tr>
-										<th class="text-center col-md-7 resaltado"><a class="textWhite" href="$script?orden=concepto">Concepto</a></th>
-										<th class="text-center col-md-1"><a class="textWhite" href="$script?orden=fecha">Fecha</a></th>
-										<th class="text-center col-md-2"><a class="textWhite" href="$script?orden=importe">Importe (€)</a></th>
-										<th class="text-center col-md-2">Operaciones</th>
+										<th class="text-center col-xs-7 resaltado"><a class="textWhite" href="$script?orden=concepto">Concepto</a></th>
+										<th class="text-center col-xs-1"><a class="textWhite" href="$script?orden=fecha">Fecha</a></th>
+										<th class="text-center col-xs-2"><a class="textWhite" href="$script?orden=importe">Importe (€)</a></th>
+										<th class="text-center col-xs-2">Operaciones</th>
 									</tr>
 								</thead>
 EOT;
@@ -60,26 +61,28 @@ EOT;
 							<table class="table table-condensed table-bordered table-fixed no-margin">
 								<thead class="verde">
 									<tr>
-										<th class="text-center col-md-7"><a class="textWhite" href="$script?orden=concepto">Concepto</a></th>
-										<th class="text-center col-md-1 resaltado"><a class="textWhite" href="$script?orden=fecha">Fecha</a></th>
-										<th class="text-center col-md-2"><a class="textWhite" href="$script?orden=importe">Importe (€)</a></th>
-										<th class="text-center col-md-2">Operaciones</th>
+										<th class="text-center col-xs-7"><a class="textWhite" href="$script?orden=concepto">Concepto</a></th>
+										<th class="text-center col-xs-1 resaltado"><a class="textWhite" href="$script?orden=fecha">Fecha</a></th>
+										<th class="text-center col-xs-2"><a class="textWhite" href="$script?orden=importe">Importe (€)</a></th>
+										<th class="text-center col-xs-2">Operaciones</th>
 									</tr>
 								</thead>
 EOT;
+						$monedero->sortDate();
 						break;
 					case "importe":
 						echo <<<EOT
 							<table class="table table-condensed table-bordered table-fixed no-margin">
 								<thead class="verde">
 									<tr>
-										<th class="text-center col-md-7"><a class="textWhite" href="$script?orden=concepto">Concepto</a></th>
-										<th class="text-center col-md-1"><a class="textWhite" href="$script?orden=fecha">Fecha</a></th>
-										<th class="text-center col-md-2 resaltado"><a class="textWhite" href="$script?orden=importe">Importe (€)</a></th>
-										<th class="text-center col-md-2">Operaciones</th>
+										<th class="text-center col-xs-7"><a class="textWhite" href="$script?orden=concepto">Concepto</a></th>
+										<th class="text-center col-xs-1"><a class="textWhite" href="$script?orden=fecha">Fecha</a></th>
+										<th class="text-center col-xs-2 resaltado"><a class="textWhite" href="$script?orden=importe">Importe (€)</a></th>
+										<th class="text-center col-xs-2">Operaciones</th>
 									</tr>
 								</thead>
 EOT;
+						$monedero->sortAmount();
 						break;
 				}
 			}else{ // Si no se ha pulsado ninguna cabecera para ordenaer
@@ -87,19 +90,19 @@ EOT;
 							<table class="table table-condensed table-bordered table-fixed no-margin">
 								<thead class="verde">
 									<tr>
-										<th class="text-center col-md-7"><a class="textWhite" href="$script?orden=concepto">Concepto</a></th>
-										<th class="text-center col-md-1"><a class="textWhite" href="$script?orden=fecha">Fecha</a></th>
-										<th class="text-center col-md-2"><a class="textWhite" href="$script?orden=importe">Importe (€)</a></th>
-										<th class="text-center col-md-2">Operaciones</th>
+										<th class="text-center col-xs-7"><a class="textWhite" href="$script?orden=concepto">Concepto</a></th>
+										<th class="text-center col-xs-1"><a class="textWhite" href="$script?orden=fecha">Fecha</a></th>
+										<th class="text-center col-xs-2"><a class="textWhite" href="$script?orden=importe">Importe (€)</a></th>
+										<th class="text-center col-xs-2">Operaciones</th>
 									</tr>
 								</thead>
 EOT;
-				$monedero->show();
+				$monedero->unsorted();
 			};
 			
 			
 
-			
+			// Formulario para añdir un nuevo registro
 			echo <<<EOT
 					<form name="add" method="post" action="$script" >
 						<tr>
@@ -112,12 +115,19 @@ EOT;
 							</div>
 						</tr>
 					</form>
-
 EOT;
 			
 			echo "</table>";
 			
-			echo "El nº de registros del monedero es ",$monedero->getRows();
+			echo '<div class="container"';
+			echo '<hr>';
+			
+			echo '<hr>';
+			echo 'El nº de registros del monedero es ',$monedero->getRows();
+			echo '<p class="red">El balance del monedero es de <strong>',$monedero->getTotal(),' euros </strong></p>';
+			echo '<p class="text-center">NOTA: es obligatorio rellenar el campo Concepto.</p>';
+			echo '</div>';
+			
 			?>	
 		</div>
 	</div>
