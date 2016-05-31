@@ -9,7 +9,7 @@ class monedero{
 	private $fileArray = array();
 	private $rows;
 	private $splits = array();
-	private $total;
+	private $total;	
 	
 	public function __construct(){
 		try{
@@ -30,21 +30,13 @@ class monedero{
 		fclose($this->fileid);
 	}
 	
-	public function getPath(){
-		return $this->path;
-	}
+	public function getPath(){ return $this->path;	}
 	
-	public function getRows(){
-		return $this->rows;
-	}
+	public function getRows(){ return $this->rows; }
 	
-	public function getScriptName(){
-		return $this->scriptName;
-	}
+	public function getScriptName(){ return $this->scriptName; }
 	
-	public function getTotal(){
-		return $this->total;	
-	}
+	public function getTotal(){	return $this->total; }
 	
 	private function loadArray(){
 		$this->fileArray = file($this->file);
@@ -54,71 +46,99 @@ class monedero{
 		}
 	}
 	
-	public function show(){
+	public function show($orden){
 		$this->total = 0;
 		foreach($this->splits as $row){
 			$this->total = $this->total + (int)$row[3];
 			$id=(int)$this->splits[0];
+			
+			
 			echo "<tr>";
 			echo "<td>",$row[1],"</td>";
 			echo '<td class="text-center">',date('m/d/Y', $row[2]),"</td>";
-			echo '<td class="text-right">',$row[3] , " €", "</td>";
+			echo '<td class="text-right">',$row[3] ," €","</td>";
 			echo <<<EOT
 			<td class="text-center">
 				<div class="btn-group text-center" role="group">
-				  <a class="btn btn-xs btn-success" href="$this->scriptName?ope="editar";id=$id">Editar</a>
-				  <a class="btn btn-xs btn-success" href="$this->scriptName?ope="editar";id=$id">Borrar</a>
+				  <a class="btn btn-xs btn-success" href="$this->scriptName?action=edit&id=$id&orden=$orden">Editar</a>
+				  <a class="btn btn-xs btn-success" href="$this->scriptName?action=del&id=$id&orden=$orden">Borrar</a>
 				</div>
 			</td>
 EOT;
 			echo "</tr>";
+			
 		}
 	}
 	
-	public function unsorted(){
+	public function unsorted($orden){
 		$this->loadArray();
-		$this->show();
+		$this->show($orden);
 	}
 	
-	public function sortConcepto(){
+	public function ordenar($orden){
 		
 		$this->loadArray();
-
-		// Función que compara para ordenar por el segundo elemento de array (1)
-		function cmp($a,$b){
-			if ($a[1] == $b[1]) return 0;
-			return ($a[1] < $b[1]) ? -1 : 1;
+		switch ($orden){
+			case "concepto":
+				// Función que compara para ordenar por el segundo elemento de array (1)
+				function cmpconcepto($a,$b){
+					if ($a[1] == $b[1]) return 0;
+					return ($a[1] < $b[1]) ? -1 : 1;
+				}
+				// Ordenamos con la función 'cmp'
+				usort($this->splits,'cmpconcepto');
+				break;
+			case "fecha":
+				// Función que compara para ordenar por el tercer elemento de array (2)
+				function cmpdate($a,$b){
+					if ($a[2] == $b[2]) return 0;
+					return ($a[2] < $b[2]) ? -1 : 1;
+				}
+				// Ordenamos con la función 'cmp'
+				usort($this->splits,'cmpdate');
+				break;
+			case "importe":
+				// Función que compara para ordenar por el tercer elemento de array (3)
+				function cmpamount($a,$b){
+					if ($a[3] == $b[3]) return 0;
+					return ($a[3] < $b[3]) ? -1 : 1;
+				}
+				// Ordenamos con la función 'cmp'
+				usort($this->splits,'cmpamount');
+				break;
 		}
-		// Ordenamos con la función 'cmp'
-		usort($this->splits,'cmp');
-		$this->show();
+		$this->show($orden);
 	}
 	
-	public function sortDate(){
+	public function find ($str){
+		$cont = 0;
 		$this->loadArray();
-
-		// Función que compara para ordenar por el tercer elemento de array (2)
-		function cmp($a,$b){
-			if ($a[2] == $b[2]) return 0;
-			return ($a[2] < $b[2]) ? -1 : 1;
+		$arrayTemp = array();
+		
+		foreach ($this->splits as $key => $value){
+			$finded = 0; //Para controlar si hay coincidencia en el "registro"
+			foreach ($value as $val){
+				$val = $this->stripAccents($val); //quitamos los posibles acentos
+				// comprobamos que la cadena a buscar está en alguna de los campos
+        // pasando a mayúsculas la frase y la cadena a comparar
+        // Si encuentra alguna coincidencia en algún elemento del "registro" lo visualiza y sale
+        if  (substr_count(strtoupper($val),strtoupper($str))) {
+        	$finded = 1;
+        	$cont++;
+        	break;
+        }
+			}
+			if ($finded){ $arrayTemp[] = $value; }
 		}
-		// Ordenamos con la función 'cmp'
-		usort($this->splits,'cmp');
-		$this->show();
+		$this->splits = $arrayTemp;
+		$this->show('desordenado');
+		return($cont);
 	}
 	
-	
-	public function sortAmount(){
-		$this->loadArray();
-
-		// Función que compara para ordenar por el tercer elemento de array (3)
-		function cmp($a,$b){
-			if ($a[3] == $b[3]) return 0;
-			return ($a[3] < $b[3]) ? -1 : 1;
-		}
-		// Ordenamos con la función 'cmp'
-		usort($this->splits,'cmp');
-		$this->show();
+	// Función que quita los acentos de cualquier string
+	function stripAccents($string){
+		return strtr($string,'àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ',
+	'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
 	}
 }
 ?>

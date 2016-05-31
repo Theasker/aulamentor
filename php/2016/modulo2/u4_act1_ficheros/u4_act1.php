@@ -27,107 +27,51 @@
 
 		<div>
 			<?php
+			include('vardump.php');
 			require('u4_act1_class.php');
+			require('u4_act1_class_html.php');
 			
 			//error_reporting(E_ALL);
 			//ini_set("display_errors", 1);
 			
 			$monedero = new monedero();
-			
+
 			$script = $monedero->getScriptName();
+			$html = new html($script);
 			
-			//var_dump("get:",$_GET);
-			//var_dump("post:",$_POST);
+			$orden = $_GET['orden'];
+
+			echo '<pre>';
+			print_r($_REQUEST);
+			echo '</pre>'; 
 			
+			echo '<table class="table table-condensed table-bordered table-fixed no-margin">';
 			if (isset($_GET["orden"])){
-				switch ($_GET["orden"]){
-					case "concepto":
-						echo <<<EOT
-							<table class="table table-condensed table-bordered table-fixed no-margin">
-								<thead class="verde">
-									<tr>
-										<th class="text-center col-xs-7 resaltado"><a class="textWhite" href="$script?orden=concepto">Concepto</a></th>
-										<th class="text-center col-xs-1"><a class="textWhite" href="$script?orden=fecha">Fecha</a></th>
-										<th class="text-center col-xs-2"><a class="textWhite" href="$script?orden=importe">Importe (€)</a></th>
-										<th class="text-center col-xs-2">Operaciones</th>
-									</tr>
-								</thead>
-EOT;
-						
-						$monedero->sortConcepto();
-						break;
-					case "fecha":
-						echo <<<EOT
-							<table class="table table-condensed table-bordered table-fixed no-margin">
-								<thead class="verde">
-									<tr>
-										<th class="text-center col-xs-7"><a class="textWhite" href="$script?orden=concepto">Concepto</a></th>
-										<th class="text-center col-xs-1 resaltado"><a class="textWhite" href="$script?orden=fecha">Fecha</a></th>
-										<th class="text-center col-xs-2"><a class="textWhite" href="$script?orden=importe">Importe (€)</a></th>
-										<th class="text-center col-xs-2">Operaciones</th>
-									</tr>
-								</thead>
-EOT;
-						$monedero->sortDate();
-						break;
-					case "importe":
-						echo <<<EOT
-							<table class="table table-condensed table-bordered table-fixed no-margin">
-								<thead class="verde">
-									<tr>
-										<th class="text-center col-xs-7"><a class="textWhite" href="$script?orden=concepto">Concepto</a></th>
-										<th class="text-center col-xs-1"><a class="textWhite" href="$script?orden=fecha">Fecha</a></th>
-										<th class="text-center col-xs-2 resaltado"><a class="textWhite" href="$script?orden=importe">Importe (€)</a></th>
-										<th class="text-center col-xs-2">Operaciones</th>
-									</tr>
-								</thead>
-EOT;
-						$monedero->sortAmount();
-						break;
+				if (isset($_GET["buscar"])){
+					$html->cabeceraOrden("desordenado");
+					$monedero->find($_GET['buscar']);
+				}else{
+					$html->cabeceraOrden($_GET["orden"]);
+					$monedero->ordenar($_GET["orden"]);
 				}
 			}else{ // Si no se ha pulsado ninguna cabecera para ordenaer
-				echo <<<EOT
-							<table class="table table-condensed table-bordered table-fixed no-margin">
-								<thead class="verde">
-									<tr>
-										<th class="text-center col-xs-7"><a class="textWhite" href="$script?orden=concepto">Concepto</a></th>
-										<th class="text-center col-xs-1"><a class="textWhite" href="$script?orden=fecha">Fecha</a></th>
-										<th class="text-center col-xs-2"><a class="textWhite" href="$script?orden=importe">Importe (€)</a></th>
-										<th class="text-center col-xs-2">Operaciones</th>
-									</tr>
-								</thead>
-EOT;
-				$monedero->unsorted();
+				$html->cabeceraOrden("desordenado");
+				$monedero->ordenar("desordenado");
 			};
 			
 			
-
-			// Formulario para añdir un nuevo registro
-			echo <<<EOT
-					<form name="add" method="post" action="$script" >
-						<tr>
-							<div class="input-group input-group-sm">
-								<input type="hidden" name="add" value="add">
-								<td><input name="add_concepto" type="text" value="" class="form-control input-sm"></td>
-								<td><input name="add_fecha" type="text" value="" class="form-control input-sm"></td>
-								<td><input name="add_importe" type="text" value="" class="form-control input-sm"></td>
-								<td class="text-center"><input class="btn btn-sm"  type="submit" value="Añadir registro"></td>
-							</div>
-						</tr>
-					</form>
-EOT;
 			
+			$html->formAdd(); // formulario para añadir registros
 			echo "</table>";
 			
-			echo '<div class="container"';
+			$html->formFind();
+
 			echo '<hr>';
-			
-			echo '<hr>';
-			echo 'El nº de registros del monedero es ',$monedero->getRows();
+			echo '<p><div class="col-xs-8 text-left">El nº de registros del monedero es ',$monedero->getRows(),'</div>';
+			echo '<div class="col-xs-4">','<a class="btn btn-xs btn-success text-right" href="',$script,'">Ver listado inicial</a>','</div></p>';
 			echo '<p class="red">El balance del monedero es de <strong>',$monedero->getTotal(),' euros </strong></p>';
 			echo '<p class="text-center">NOTA: es obligatorio rellenar el campo Concepto.</p>';
-			echo '</div>';
-			
+
 			?>	
 		</div>
 	</div>

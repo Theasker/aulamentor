@@ -27,7 +27,7 @@ class coleccion{
 	}
 	
 	public function sortName(){
-		// Función que compara el título de cada película para ordenarlo
+		// Función que compara el título de cada registro para ordenarlo
 		function cmp($a,$b){
 			if ($a[0] == $b[0]) return 0;
 			return ($a[0] < $b[0]) ? -1 : 1;

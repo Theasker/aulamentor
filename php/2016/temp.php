@@ -1,7 +1,11 @@
 <?php
-	$path_with_query="http://www.ex.com/getdat.php?dep=n/a&title=boss";
-	$path=explode("?",$path_with_query);
-	$filename=basename($path[0]);
-	echo $filename;
-	$query=$path[1];
+class MyClass {
+    const CONST_VALUE = 'Un valor constante';
+}
+
+$classname = 'MyClass';
+echo $classname::CONST_VALUE; // A partir de PHP 5.3.0
+
+echo MyClass::CONST_VALUE;
+
 ?>
