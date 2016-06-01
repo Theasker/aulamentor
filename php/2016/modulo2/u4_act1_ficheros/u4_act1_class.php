@@ -47,12 +47,12 @@ class monedero{
 	}
 	
 	public function show($orden){
+		if ($orden=="") $orden="desordenado";
 		$this->total = 0;
-		foreach($this->splits as $row){
+		// (expresión_array as $clave => $valor)
+		foreach($this->splits as $id => $row ){
 			$this->total = $this->total + (int)$row[3];
-			$id=(int)$this->splits[0];
-			
-			
+
 			echo "<tr>";
 			echo "<td>",$row[1],"</td>";
 			echo '<td class="text-center">',date('m/d/Y', $row[2]),"</td>";
@@ -61,12 +61,11 @@ class monedero{
 			<td class="text-center">
 				<div class="btn-group text-center" role="group">
 				  <a class="btn btn-xs btn-success" href="$this->scriptName?action=edit&id=$id&orden=$orden">Editar</a>
-				  <a class="btn btn-xs btn-success" href="$this->scriptName?action=del&id=$id&orden=$orden">Borrar</a>
+				  <a class="btn btn-xs btn-danger" href="$this->scriptName?action=del&id=$id&orden=$orden">Borrar</a>
 				</div>
 			</td>
 EOT;
 			echo "</tr>";
-			
 		}
 	}
 	
@@ -126,10 +125,10 @@ EOT;
         	$finded = 1;
         	$cont++;
         	break;
-        }
-			}
-			if ($finded){ $arrayTemp[] = $value; }
-		}
+        };
+			};
+			if ($finded){ $arrayTemp[] = $value; };
+		};
 		$this->splits = $arrayTemp;
 		$this->show('desordenado');
 		return($cont);
@@ -139,6 +138,40 @@ EOT;
 	function stripAccents($string){
 		return strtr($string,'àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ',
 	'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
+	}
+	
+	public function add($orden){
+		if($_POST['add_concepto'] && $_POST['add_fecha'] && $_POST['add_importe']){
+			$this->loadArray();
+			// Buscamos el id del último registro de nuestro fichero
+			$ultimo = ($this->splits[count($this->splits)-1]);
+			$ultimo = $ultimo[0];
+			// Convierto el string de la fecha a timestamp
+			$dtime = DateTime::createFromFormat("Y-m-d", $_POST['add_fecha']);
+			$timestamp = $dtime->getTimestamp();
+			// confeccionamos el array que añadiremos al final del fichero
+			$registro = array($ultimo+1,$_POST['add_concepto'],$timestamp,$_POST['add_importe']);
+			$implode = implode("~", $registro);
+			$this->fileArray[] = $implode;
+			// Agregamos la línea
+			file_put_contents($this->file, $implode, FILE_APPEND | LOCK_EX);
+			// Añado un salto de línea al fichero para el siguiente registro
+			file_put_contents($this->file,"\n",FILE_APPEND); 
+			
+			echo "implode";
+			vardump::ver($implode);
+		}
+		$this->loadArray();
+		$this->show($orden);
+	}
+	
+	public function del($orden){
+		$this->loadArray();
+		vardump::ver($_GET);
+		vardump::ver($this->fileArray);
+		for($x=0;$x<count($this->fileArray);$x++){
+			
+		}
 	}
 }
 ?>

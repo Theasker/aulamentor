@@ -59,16 +59,17 @@ EOT;
 				}
 	}
 	
-	public function formAdd(){
+	public function formAdd($orden){
 		// Formulario para añdir un nuevo registro
 			echo <<<EOT
 					<form name="add" method="post" action="$script" >
 						<tr>
 							<div class="input-group input-group-sm">
 								<input type="hidden" name="action" value="add">
-								<td><input name="add_concepto" type="text" value="" class="form-control input-sm"></td>
-								<td><input name="add_fecha" type="text" value="" class="form-control input-sm"></td>
-								<td><input name="add_importe" type="text" value="" class="form-control input-sm"></td>
+								<input type="hidden" name="orden" value="$orden">
+								<td><input name="add_concepto" type="text" value="" class="form-control input-sm" placeholder="Introduce un concepto" require></td>
+								<td><input name="add_fecha" type="date" value="" class="form-control input-sm" placeholder="aaaa-mm-dd" require></td>
+								<td><input name="add_importe" type="number" step="any" value="" class="form-control input-sm" placeholder="0.00" require></td>
 								<td class="text-center"><input class="btn btn-sm"  type="submit" value="Añadir registro"></td>
 							</div>
 						</tr>

@@ -38,30 +38,35 @@
 
 			$script = $monedero->getScriptName();
 			$html = new html($script);
-			
-			$orden = $_GET['orden'];
+			if(isset($_GET['orden'])){
+				$orden = $_GET['orden'];
+			}else if(isset($_POST['orden'])){
+				$orden = $_POST['orden'];
+			}
 
-			echo '<pre>';
-			print_r($_REQUEST);
-			echo '</pre>'; 
+			vardump::ver($_REQUEST);
 			
-			echo '<table class="table table-condensed table-bordered table-fixed no-margin">';
+			echo '<table class="table table-condensed table-hover table-bordered table-fixed no-margin">';
 			if (isset($_GET["orden"])){
 				if (isset($_GET["buscar"])){
 					$html->cabeceraOrden("desordenado");
 					$monedero->find($_GET['buscar']);
-				}else{
+				}else if($_GET['action']=='del'){
+					$monedero->del($_GET['orden']);
+				}
+				else{
 					$html->cabeceraOrden($_GET["orden"]);
 					$monedero->ordenar($_GET["orden"]);
 				}
+			}else if($_POST['action']=='add'){
+				$monedero->add($_POST['orden']);
 			}else{ // Si no se ha pulsado ninguna cabecera para ordenaer
 				$html->cabeceraOrden("desordenado");
 				$monedero->ordenar("desordenado");
 			};
 			
 			
-			
-			$html->formAdd(); // formulario para añadir registros
+			$html->formAdd($_GET['orden']); // formulario para añadir registros
 			echo "</table>";
 			
 			$html->formFind();
