@@ -1,9 +1,2 @@
-0~Cena de sábado~1418338801~-40.00
-1~Compras supermercado~1401746401~-100.20
-2~Nómina trabajo~1370210401~1000.99
-3~Regalo cumpleaños Alicia~1362697201~-199.66
-4~Concierto~1362697201~-20.38
-8~seis~1465996337~6
-9~seis~1465996347~6
-10~seis~1465996363~6
-11~otro registro~1465996492~4.5
+1~prueba~1465370637~3
+2~prueba~1465370666~3

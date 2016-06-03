@@ -57,12 +57,15 @@
 				else{
 					$html->cabeceraOrden($_GET["orden"]);
 					$monedero->ordenar($_GET["orden"]);
+					$monedero->show($_GET["orden"]);
 				}
 			}else if($_POST['action']=='add'){
+				$html->cabeceraOrden($orden);
 				$monedero->add($_POST['orden']);
 			}else{ // Si no se ha pulsado ninguna cabecera para ordenaer
 				$html->cabeceraOrden("desordenado");
 				$monedero->ordenar("desordenado");
+				$monedero->show($_GET["orden"]);
 			};
 			
 			

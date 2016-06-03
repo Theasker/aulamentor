@@ -9,7 +9,8 @@ class monedero{
 	private $fileArray = array();
 	private $rows;
 	private $splits = array();
-	private $total;	
+	private $total;
+	private $html;
 	
 	public function __construct(){
 		try{
@@ -21,6 +22,7 @@ class monedero{
 			chdir($this->path);
 			opendir($this->path);
 			$this->fileid = fopen($this->file,"r");
+			$this->html = new html($this->scriptName);
 		}catch(Exception $e){
 			echo ("Ha habido un problema con el fichero.");
 		}
@@ -49,64 +51,68 @@ class monedero{
 	public function show($orden){
 		if ($orden=="") $orden="desordenado";
 		$this->total = 0;
-		// (expresión_array as $clave => $valor)
-		foreach($this->splits as $id => $row ){
-			$this->total = $this->total + (int)$row[3];
-
-			echo "<tr>";
-			echo "<td>",$row[1],"</td>";
-			echo '<td class="text-center">',date('m/d/Y', $row[2]),"</td>";
-			echo '<td class="text-right">',$row[3] ," €","</td>";
-			echo <<<EOT
-			<td class="text-center">
-				<div class="btn-group text-center" role="group">
-				  <a class="btn btn-xs btn-success" href="$this->scriptName?action=edit&id=$id&orden=$orden">Editar</a>
-				  <a class="btn btn-xs btn-danger" href="$this->scriptName?action=del&id=$id&orden=$orden">Borrar</a>
-				</div>
-			</td>
-EOT;
-			echo "</tr>";
-		}
-	}
+		vardump::ver(count($this->splits));
+		if(count($this->splits)!=0){
+			foreach($this->splits as $id => $row ){
+				$this->total = $this->total + (int)$row[3];
 	
+				echo "<tr>";
+				echo "<td>",$row[1],"</td>";
+				echo '<td class="text-center">',date('m/d/Y', $row[2]),"</td>";
+				echo '<td class="text-right">',$row[3] ," €","</td>";
+				echo <<<EOT
+				<td class="text-center">
+					<div class="btn-group text-center" role="group">
+					  <a class="btn btn-xs btn-success" href="$this->scriptName?action=edit&id=$id&orden=$orden">Editar</a>
+					  <a class="btn btn-xs btn-danger" href="$this->scriptName?action=del&id=$id&orden=$orden">Borrar</a>
+					</div>
+				</td>
+EOT;
+				echo "</tr>";
+			}
+		}
+			
+	}
+	/*
 	public function unsorted($orden){
 		$this->loadArray();
 		$this->show($orden);
-	}
+	}*/
 	
 	public function ordenar($orden){
 		
 		$this->loadArray();
-		switch ($orden){
-			case "concepto":
-				// Función que compara para ordenar por el segundo elemento de array (1)
-				function cmpconcepto($a,$b){
-					if ($a[1] == $b[1]) return 0;
-					return ($a[1] < $b[1]) ? -1 : 1;
-				}
-				// Ordenamos con la función 'cmp'
-				usort($this->splits,'cmpconcepto');
-				break;
-			case "fecha":
-				// Función que compara para ordenar por el tercer elemento de array (2)
-				function cmpdate($a,$b){
-					if ($a[2] == $b[2]) return 0;
-					return ($a[2] < $b[2]) ? -1 : 1;
-				}
-				// Ordenamos con la función 'cmp'
-				usort($this->splits,'cmpdate');
-				break;
-			case "importe":
-				// Función que compara para ordenar por el tercer elemento de array (3)
-				function cmpamount($a,$b){
-					if ($a[3] == $b[3]) return 0;
-					return ($a[3] < $b[3]) ? -1 : 1;
-				}
-				// Ordenamos con la función 'cmp'
-				usort($this->splits,'cmpamount');
-				break;
+		if(count($this->splits)!=0){
+			switch ($orden){
+				case "concepto":
+					// Función que compara para ordenar por el segundo elemento de array (1)
+					function cmpconcepto($a,$b){
+						if ($a[1] == $b[1]) return 0;
+						return ($a[1] < $b[1]) ? -1 : 1;
+					}
+					// Ordenamos con la función 'cmp'
+					usort($this->splits,'cmpconcepto');
+					break;
+				case "fecha":
+					// Función que compara para ordenar por el tercer elemento de array (2)
+					function cmpdate($a,$b){
+						if ($a[2] == $b[2]) return 0;
+						return ($a[2] < $b[2]) ? -1 : 1;
+					}
+					// Ordenamos con la función 'cmp'
+					usort($this->splits,'cmpdate');
+					break;
+				case "importe":
+					// Función que compara para ordenar por el tercer elemento de array (3)
+					function cmpamount($a,$b){
+						if ($a[3] == $b[3]) return 0;
+						return ($a[3] < $b[3]) ? -1 : 1;
+					}
+					// Ordenamos con la función 'cmp'
+					usort($this->splits,'cmpamount');
+					break;
+			}
 		}
-		$this->show($orden);
 	}
 	
 	public function find ($str){
@@ -157,21 +163,32 @@ EOT;
 			file_put_contents($this->file, $implode, FILE_APPEND | LOCK_EX);
 			// Añado un salto de línea al fichero para el siguiente registro
 			file_put_contents($this->file,"\n",FILE_APPEND); 
-			
-			echo "implode";
-			vardump::ver($implode);
 		}
-		$this->loadArray();
+		$this->splits = "";
+		$this->ordenar($orden);
 		$this->show($orden);
 	}
 	
 	public function del($orden){
 		$this->loadArray();
-		vardump::ver($_GET);
-		vardump::ver($this->fileArray);
+		// Borramos el registro pulsado de fileArray
+		unset($this->fileArray[$_GET['id']]);
+		$registros = "";
 		for($x=0;$x<count($this->fileArray);$x++){
-			
+			$registros = $registros.$this->fileArray[$x];
 		}
+		// grabamos el texto de los registros al fichero
+		file_put_contents($this->file, $registros);
+		// Añado un salto de línea al fichero para el siguiente registro
+		//file_put_contents($this->file,"\n",FILE_APPEND | LOCK_EX); 
+		$this->splits = "";
+		$this->html->cabeceraOrden($orden);
+		$this->ordenar($orden);
+		$this->show($orden);
+	}
+	
+	public function edit($orden){
+		
 	}
 }
 ?>
