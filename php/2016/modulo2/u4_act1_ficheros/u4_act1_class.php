@@ -50,22 +50,22 @@ class monedero{
 	
 	public function show($orden){
 		if ($orden=="") $orden="desordenado";
+		$script = $this->scriptName;
 		$this->total = 0;
-		vardump::ver(count($this->splits));
 		if(count($this->splits)!=0){
 			foreach($this->splits as $id => $row ){
 				$this->total = $this->total + (int)$row[3];
 	
 				echo "<tr>";
 				echo "<td>",$row[1],"</td>";
-				echo '<td class="text-center">',date('m/d/Y', $row[2]),"</td>";
+				echo '<td class="text-center">',date('m-d-Y', $row[2]),"</td>";
 				echo '<td class="text-right">',$row[3] ," €","</td>";
 				echo <<<EOT
 				<td class="text-center">
 					<div class="btn-group text-center" role="group">
-					  <a class="btn btn-xs btn-success" href="$this->scriptName?action=edit&id=$id&orden=$orden">Editar</a>
+					  <a class="btn btn-xs btn-success" href="$this->scriptName?action=editVer&id=$id&orden=$orden">Editar</a>
 					  <a class="btn btn-xs btn-danger" href="$this->scriptName?action=del&id=$id&orden=$orden">Borrar</a>
-					</div>
+					</form>
 				</td>
 EOT;
 				echo "</tr>";
@@ -73,12 +73,7 @@ EOT;
 		}
 			
 	}
-	/*
-	public function unsorted($orden){
-		$this->loadArray();
-		$this->show($orden);
-	}*/
-	
+
 	public function ordenar($orden){
 		
 		$this->loadArray();
@@ -174,8 +169,8 @@ EOT;
 		// Borramos el registro pulsado de fileArray
 		unset($this->fileArray[$_GET['id']]);
 		$registros = "";
-		for($x=0;$x<count($this->fileArray);$x++){
-			$registros = $registros.$this->fileArray[$x];
+		foreach($this->fileArray as $row){
+			$registros = $registros.$row;
 		}
 		// grabamos el texto de los registros al fichero
 		file_put_contents($this->file, $registros);
@@ -187,8 +182,35 @@ EOT;
 		$this->show($orden);
 	}
 	
-	public function edit($orden){
-		
+	public function editVer($orden){
+		if ($orden=="") $orden="desordenado";
+		$this->total = 0;
+		foreach($this->splits as $id => $row ){
+			$this->total = $this->total + (int)$row[3];
+			if ($id == $_GET['id']){ // coincide con el registro a editar
+				// El número está guardado con un salto de línea y con este comando lo descarto
+				$num = explode("\n", $row[3]);
+				$this->html->formEdit($row[1],date('Y-m-d',$row[2]),(float)$num[0],$orden);
+			}else{ // no coincide con el registro a editar
+				echo "<tr>";
+				echo "<td>",$row[1],"</td>";
+				echo '<td class="text-center">',date('m-d-Y', $row[2]),"</td>";
+				echo '<td class="text-right">',$row[3] ," €","</td>";
+				echo <<<EOT
+				<td class="text-center">
+					<div class="btn-group text-center" role="group">
+					  <a class="btn btn-xs btn-success" href="$this->scriptName?action=editVer&id=$id&orden=$orden">Editar</a>
+					  <a class="btn btn-xs btn-danger" href="$this->scriptName?action=del&id=$id&orden=$orden">Borrar</a>
+					</div>
+				</td>
+EOT;
+			}
+				echo "</tr>";
+		}
+	}
+	
+	public function edit(){
+		var_dump('function editar:',$_POST);
 	}
 }
 ?>

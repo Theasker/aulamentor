@@ -9,54 +9,54 @@ class html{
 	
 	public function cabeceraOrden($orden){
 		switch ($orden){
-					case "concepto":
-						echo <<<EOT
-								<thead class="verde">
-									<tr>
-										<th class="text-center col-xs-7 resaltado"><a class="textWhite" href="$script?orden=concepto">Concepto</a></th>
-										<th class="text-center col-xs-1"><a class="textWhite" href="$script?orden=fecha">Fecha</a></th>
-										<th class="text-center col-xs-2"><a class="textWhite" href="$script?orden=importe">Importe (€)</a></th>
-										<th class="text-center col-xs-2">Operaciones</th>
-									</tr>
-								</thead>
+			case "concepto":
+				echo <<<EOT
+					<thead class="verde">
+						<tr>
+							<th class="text-center col-xs-7 resaltado"><a class="textWhite" href="$script?orden=concepto">Concepto</a></th>
+							<th class="text-center col-xs-1"><a class="textWhite" href="$script?orden=fecha">Fecha</a></th>
+							<th class="text-center col-xs-2"><a class="textWhite" href="$script?orden=importe">Importe (€)</a></th>
+							<th class="text-center col-xs-2">Operaciones</th>
+						</tr>
+					</thead>
 EOT;
-						break;
-					case "fecha":
-						echo <<<EOT
-								<thead class="verde">
-									<tr>
-										<th class="text-center col-xs-7"><a class="textWhite" href="$script?orden=concepto">Concepto</a></th>
-										<th class="text-center col-xs-1 resaltado"><a class="textWhite" href="$script?orden=fecha">Fecha</a></th>
-										<th class="text-center col-xs-2"><a class="textWhite" href="$script?orden=importe">Importe (€)</a></th>
-										<th class="text-center col-xs-2">Operaciones</th>
-									</tr>
-								</thead>
+				break;
+			case "fecha":
+				echo <<<EOT
+					<thead class="verde">
+						<tr>
+							<th class="text-center col-xs-7"><a class="textWhite" href="$script?orden=concepto">Concepto</a></th>
+							<th class="text-center col-xs-1 resaltado"><a class="textWhite" href="$script?orden=fecha">Fecha</a></th>
+							<th class="text-center col-xs-2"><a class="textWhite" href="$script?orden=importe">Importe (€)</a></th>
+							<th class="text-center col-xs-2">Operaciones</th>
+						</tr>
+					</thead>
 EOT;
-						break;
-					case "importe":
-						echo <<<EOT
-								<thead class="verde">
-									<tr>
-										<th class="text-center col-xs-7"><a class="textWhite" href="$script?orden=concepto">Concepto</a></th>
-										<th class="text-center col-xs-1"><a class="textWhite" href="$script?orden=fecha">Fecha</a></th>
-										<th class="text-center col-xs-2 resaltado"><a class="textWhite" href="$script?orden=importe">Importe (€)</a></th>
-										<th class="text-center col-xs-2">Operaciones</th>
-									</tr>
-								</thead>
+				break;
+			case "importe":
+				echo <<<EOT
+					<thead class="verde">
+						<tr>
+							<th class="text-center col-xs-7"><a class="textWhite" href="$script?orden=concepto">Concepto</a></th>
+							<th class="text-center col-xs-1"><a class="textWhite" href="$script?orden=fecha">Fecha</a></th>
+							<th class="text-center col-xs-2 resaltado"><a class="textWhite" href="$script?orden=importe">Importe (€)</a></th>
+							<th class="text-center col-xs-2">Operaciones</th>
+						</tr>
+					</thead>
 EOT;
-						break;
-					case "desordenado":
-						echo <<<EOT
-								<thead class="verde">
-									<tr>
-										<th class="text-center col-xs-7"><a class="textWhite" href="$script?orden=concepto">Concepto</a></th>
-										<th class="text-center col-xs-1"><a class="textWhite" href="$script?orden=fecha">Fecha</a></th>
-										<th class="text-center col-xs-2"><a class="textWhite" href="$script?orden=importe">Importe (€)</a></th>
-										<th class="text-center col-xs-2">Operaciones</th>
-									</tr>
-								</thead>
+				break;
+			case "desordenado":
+				echo <<<EOT
+					<thead class="verde">
+						<tr>
+							<th class="text-center col-xs-7"><a class="textWhite" href="$script?orden=concepto">Concepto</a></th>
+							<th class="text-center col-xs-1"><a class="textWhite" href="$script?orden=fecha">Fecha</a></th>
+							<th class="text-center col-xs-2"><a class="textWhite" href="$script?orden=importe">Importe (€)</a></th>
+							<th class="text-center col-xs-2">Operaciones</th>
+						</tr>
+					</thead>
 EOT;
-						break;
+				break;
 				}
 	}
 	
@@ -73,6 +73,31 @@ EOT;
 							<td><input name="add_fecha" type="date" value="" class="form-control input-sm" placeholder="aaaa-mm-dd" min="1970-01-01" require></td>
 							<td><input name="add_importe" type="number" step="any" value="" class="form-control input-sm" placeholder="0.00" require></td>
 							<td class="text-center"><input class="btn btn-sm"  type="submit" value="Añadir registro"></td>
+						</div>
+					</tr>
+				</form>
+EOT;
+			// END Formulario para añadir un nuevo registro
+	}
+	
+	public function formEdit($concepto,$fecha,$importe,$orden){
+		// Formulario para editar un registro
+		$script = $this->scriptName;
+		echo <<<EOT
+				<form name="edit" method="post" action="$script" >
+					<tr>
+						<div class="input-group input-group-sm">
+							<input type="hidden" name="action" value="edit">
+							<input type="hidden" name="orden" value="$orden">
+							<td><input name="edit_concepto" type="text" value="$concepto" class="form-control input-sm" placeholder="Introduce un concepto" require></td>
+							<td><input name="edit_fecha" type="date" value="$fecha" class="form-control input-sm" placeholder="aaaa-mm-dd" min="1970-01-01" require></td>
+							<td><input name="edit_importe" type="number" step="any" value="$importe" class="form-control input-sm" placeholder="0.00" require></td>
+							<td class="text-center">
+								<div class="btn-group text-center" role="group">
+								  <input class="btn btn-sm btn-warning" type="submit" value="Si">
+									<input class="btn btn-sm btn-success" type="button" value="No" name="no" onClick="location.href='$script'">
+								</div>
+							</td>
 						</div>
 					</tr>
 				</form>
