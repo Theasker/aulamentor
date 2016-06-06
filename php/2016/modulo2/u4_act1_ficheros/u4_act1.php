@@ -27,7 +27,6 @@
 
 		<div>
 			<?php
-			include('vardump.php');
 			require('u4_act1_class.php');
 			require('u4_act1_class_html.php');
 			
@@ -40,7 +39,7 @@
 			}else if(isset($_POST['orden'])){
 				$orden = $_POST['orden'];
 			}
-			
+			/*
 			if (isset($_GET)){
 				echo '$_GET';
 				var_dump($_GET);	
@@ -48,7 +47,7 @@
 			if (isset($_POST)){
 				echo '$_POST';
 				var_dump($_POST);
-			}
+			}*/
 			
 			echo '<table class="table table-condensed table-hover table-bordered table-fixed no-margin">';
 			if (isset($_GET["orden"])){ // $_GET
@@ -61,7 +60,6 @@
 					$html->cabeceraOrden($_GET["orden"]);
 					$monedero->ordenar($_GET["orden"]);
 					$monedero->editVer($_GET['orden']);
-					echo "elseif de editar";
 				}else{
 					$html->cabeceraOrden($_GET["orden"]);
 					$monedero->ordenar($_GET["orden"]);
@@ -71,10 +69,7 @@
 				$html->cabeceraOrden($orden);
 				$monedero->add($_POST['orden']);
 			}else if($_POST['action']=='edit'){
-				$html->cabeceraOrden($orden);
 				$monedero->edit();
-				$monedero->ordenar($_POST["orden"]);
-				$monedero->show($_GET["orden"]);
 			}else{ // Si no se ha pulsado ninguna cabecera para ordenaer
 				$html->cabeceraOrden("desordenado");
 				$monedero->ordenar("desordenado");

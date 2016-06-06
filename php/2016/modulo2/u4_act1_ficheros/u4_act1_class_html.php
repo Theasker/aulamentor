@@ -80,7 +80,7 @@ EOT;
 			// END Formulario para añadir un nuevo registro
 	}
 	
-	public function formEdit($concepto,$fecha,$importe,$orden){
+	public function formEdit($id,$concepto,$fecha,$importe,$orden){
 		// Formulario para editar un registro
 		$script = $this->scriptName;
 		echo <<<EOT
@@ -89,6 +89,7 @@ EOT;
 						<div class="input-group input-group-sm">
 							<input type="hidden" name="action" value="edit">
 							<input type="hidden" name="orden" value="$orden">
+							<input type="hidden" name="id" value="$id">
 							<td><input name="edit_concepto" type="text" value="$concepto" class="form-control input-sm" placeholder="Introduce un concepto" require></td>
 							<td><input name="edit_fecha" type="date" value="$fecha" class="form-control input-sm" placeholder="aaaa-mm-dd" min="1970-01-01" require></td>
 							<td><input name="edit_importe" type="number" step="any" value="$importe" class="form-control input-sm" placeholder="0.00" require></td>

@@ -58,7 +58,7 @@ class monedero{
 	
 				echo "<tr>";
 				echo "<td>",$row[1],"</td>";
-				echo '<td class="text-center">',date('m-d-Y', $row[2]),"</td>";
+				echo '<td class="text-center">',date('d-m-Y', $row[2]),"</td>";
 				echo '<td class="text-right">',$row[3] ," €","</td>";
 				echo <<<EOT
 				<td class="text-center">
@@ -190,7 +190,7 @@ EOT;
 			if ($id == $_GET['id']){ // coincide con el registro a editar
 				// El número está guardado con un salto de línea y con este comando lo descarto
 				$num = explode("\n", $row[3]);
-				$this->html->formEdit($row[1],date('Y-m-d',$row[2]),(float)$num[0],$orden);
+				$this->html->formEdit($row[0],$row[1],date('Y-m-d',$row[2]),(float)$num[0],$orden);
 			}else{ // no coincide con el registro a editar
 				echo "<tr>";
 				echo "<td>",$row[1],"</td>";
@@ -208,9 +208,39 @@ EOT;
 				echo "</tr>";
 		}
 	}
-	
+	/*
+	'action' => string 'edit' (length=4)
+  'orden' => string 'desordenado' (length=11)
+  'id' => string '3' (length=1)
+  'edit_concepto' => string 'Regalo cumpleaños Alicia' (length=25)
+  'edit_fecha' => string '2013-03-07' (length=10)
+  'edit_importe' => string '-199.66' (length=7)
+	*/
 	public function edit(){
 		var_dump('function editar:',$_POST);
+		
+		// Convierto el string de la fecha a timestamp
+		$dtime = DateTime::createFromFormat("Y-m-d", $_POST['edit_fecha']);
+		$timestamp = $dtime->getTimestamp();
+		$reg = [$_POST['id'],$_POST['edit_concepto'],$timestamp,$_POST['edit_importe']];
+		
+		$registro = implode("~", $reg);
+		$registro = $registro."\n";
+		$this->loadArray();
+		// Sustituyo la posición editada del array de registros
+		$this->fileArray[(int)$_POST['id']] = $registro;
+		$registros = "";
+		foreach($this->fileArray as $row){
+			$registros = $registros.$row;
+		}
+		// grabamos el texto de los registros al fichero
+		file_put_contents($this->file, $registros);
+		// Añado un salto de línea al fichero para el siguiente registro
+		//file_put_contents($this->file,"\n",FILE_APPEND | LOCK_EX); 
+		$this->splits = "";
+		$this->html->cabeceraOrden($_POST['orden']);
+		$this->ordenar($orden);
+		$this->show($orden);
 	}
 }
 ?>
