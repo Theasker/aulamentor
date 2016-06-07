@@ -54,7 +54,7 @@ class monedero{
 		$this->total = 0;
 		if(count($this->splits)!=0){
 			foreach($this->splits as $id => $row ){
-				$this->total = $this->total + (int)$row[3];
+				$this->total = $this->total + (float)$row[3];
 	
 				echo "<tr>";
 				echo "<td>",$row[1],"</td>";
@@ -98,7 +98,7 @@ EOT;
 					usort($this->splits,'cmpdate');
 					break;
 				case "importe":
-					// Función que compara para ordenar por el tercer elemento de array (3)
+					// Función que compara para ordenar por el cuarto elemento de array (3)
 					function cmpamount($a,$b){
 						if ($a[3] == $b[3]) return 0;
 						return ($a[3] < $b[3]) ? -1 : 1;
@@ -208,14 +208,7 @@ EOT;
 				echo "</tr>";
 		}
 	}
-	/*
-	'action' => string 'edit' (length=4)
-  'orden' => string 'desordenado' (length=11)
-  'id' => string '3' (length=1)
-  'edit_concepto' => string 'Regalo cumpleaños Alicia' (length=25)
-  'edit_fecha' => string '2013-03-07' (length=10)
-  'edit_importe' => string '-199.66' (length=7)
-	*/
+
 	public function edit(){
 		var_dump('function editar:',$_POST);
 		

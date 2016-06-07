@@ -1,7 +1,6 @@
 <?php
 class html{
 	private $scriptName;
-	public $temp = "prueba";
 	
 	public function __construct($script){
 		$this->scriptName = $script;

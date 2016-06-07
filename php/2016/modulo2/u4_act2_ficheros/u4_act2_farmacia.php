@@ -20,6 +20,8 @@
 		.centrado{width:700px; margin: 0 auto;}
 		.amarillo{background: #FFA500;}
 		.titulo{padding: 5px; color: white;}
+		.textWhite{color: white;}
+		.resaltado{background:red;}
 	</style>
 </head>
 <body>
@@ -39,8 +41,33 @@
 	
 	$scriptName = basename($_SERVER["SCRIPT_NAME"]);
 	
-	$farmacia = new farmacia();
+	$farmacia = new farmacia($scriptName);
+	$html = new html($scriptName);
 	
+	if(isset($_GET['orden'])){
+		$orden = $_GET['orden'];
+	}else if(isset($_POST['orden'])){
+		$orden = $_POST['orden'];
+	}else {
+		$orden = 'desordenado';
+	}
+	echo '$_GET';
+	var_dump($_GET);
+	echo '$_POST';
+	var_dump($_POST);
+?>
+<table class="table table-condensed table-hover table-bordered table-fixed no-margin">
+<?php
+	if (isset($_GET['']));
+	$html->cabeceraOrden($orden); // Muestra las cabeceras de la tabla
+	$farmacia->show($orden); // Muestra los datos de la tabla
+	$html->formAdd($orden);
+?>
+</table>
+<?php
+	$html->formFind($orden);
+	$html->footer($farmacia->getRows(),$farmacia->getMax());
+
 ?>
 		</div>
 	</div>

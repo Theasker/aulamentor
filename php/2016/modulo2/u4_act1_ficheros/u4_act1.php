@@ -39,15 +39,6 @@
 			}else if(isset($_POST['orden'])){
 				$orden = $_POST['orden'];
 			}
-			/*
-			if (isset($_GET)){
-				echo '$_GET';
-				var_dump($_GET);	
-			}
-			if (isset($_POST)){
-				echo '$_POST';
-				var_dump($_POST);
-			}*/
 			
 			echo '<table class="table table-condensed table-hover table-bordered table-fixed no-margin">';
 			if (isset($_GET["orden"])){ // $_GET
