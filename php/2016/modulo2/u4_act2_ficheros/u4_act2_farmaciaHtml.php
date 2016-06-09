@@ -99,9 +99,9 @@ EOT;
 		echo '<div class="row">';
 		echo '<p>';
 		echo '<div class="col-xs-8 text-left">El nº de registros del monedero es <b>',$rows,'</b></div>';
-		echo '<div class="col-xs-4 text-right"><a class="btn btn-xs btn-success text-right" href="'.$script.'">Ver listado inicial</a></div>';
+		echo '<div class="col-xs-4 text-right"><a class="btn btn-xs btn-success text-right" href="'.$this->scriptName.'">Ver listado inicial</a></div>';
 		echo '</p>';
-		echo '<p class="red col-xs-12">El medicamento más caro es "'.$total['nombre'].'" con <strong>'.number_format($total['cantidad'],2,",",".").' euros </strong></p>';
+		echo '<p class="red col-xs-12 text-danger">El medicamento más caro es "'.$total['nombre'].'" con <strong>'.number_format($total['cantidad'],2,",",".").' euros </strong></p>';
 		echo '<p class="text-center col-xs-12">NOTA: no se puede repetir el nombre de un medicamento en esta farmacia.</p>';
 		echo '</div>';
 	}

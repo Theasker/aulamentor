@@ -44,10 +44,9 @@
 	$farmacia = new farmacia($scriptName);
 	$html = new html($scriptName);
 	
-	if(isset($_GET['orden'])){
-		$orden = $_GET['orden'];
-	}else if(isset($_POST['orden'])){
-		$orden = $_POST['orden'];
+	// Comporbamos que se ha ordenado alguna columna
+	if(isset($_REQUEST['orden'])){
+		$orden = $_REQUEST['orden'];
 	}else {
 		$orden = 'desordenado';
 	}
@@ -58,10 +57,16 @@
 ?>
 <table class="table table-condensed table-hover table-bordered table-fixed no-margin">
 <?php
-	if (isset($_GET['']));
+	// Mostramos las cabeceras de tabla pase lo que pase
 	$html->cabeceraOrden($orden); // Muestra las cabeceras de la tabla
-	$farmacia->show($orden); // Muestra los datos de la tabla
-	$html->formAdd($orden);
+	if (isset($_GET['buscar'])){
+		$farmacia->find($_GET['buscar'],$orden);
+	}else if ($_POST['action'] == 'add'){
+		$farmacia->add($orden);
+	}else{
+		$farmacia->show($orden); // Muestra los datos de la tabla
+	};
+	$html->formAdd($orden); // Mostramos el formuario de añadir siempre
 ?>
 </table>
 <?php
