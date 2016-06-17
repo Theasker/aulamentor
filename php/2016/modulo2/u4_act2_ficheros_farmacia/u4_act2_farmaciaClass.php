@@ -44,10 +44,6 @@ class farmacia{
 		}
 	}
 	
-	private function arrayToFile(){
-		
-	}
-	
 	public function show($orden){
 		$script = $this->scriptName;
 		$this->ordenar($orden);
@@ -144,8 +140,6 @@ EOT;
 		if($_POST['add_concepto'] && $_POST['add_cantidad'] && $_POST['add_importe']){
 			if (!$this->comprobarMedicamento($_POST['add_concepto'])){ // Comprobamos que el medicamento no existe
 				// Buscamos el id del último registro de nuestro fichero
-				echo "registros: ", ($this->splits[count($this->splits)-1]);
-				echo "<br>registros: ", ($this->splits[count($this->splits)-1]);
 				$ultimo = ($this->splits[count($this->splits)-1]);
 				$ultimo = $ultimo[0];
 				// confeccionamos el array que añadiremos al final del fichero
@@ -173,22 +167,65 @@ EOT;
 	}
 	
 	public function del($orden){
-		$this->loadArray();
 		// Borramos el registro pulsado de fileArray
 		unset($this->fileArray[$_GET['id']]);
-		$registros = "";
+		unset($this->splits[$_GET['id']]);
+		$registros = array();
 		foreach($this->fileArray as $row){
-			$registros = $registros.$row;
+			$registros[] = $row;
 		}
 		// grabamos el texto de los registros al fichero
 		file_put_contents($this->file, $registros);
 		// Añado un salto de línea al fichero para el siguiente registro
 		//file_put_contents($this->file,"\n",FILE_APPEND | LOCK_EX); 
-		$this->splits = "";
-		$this->html->cabeceraOrden($orden);
+		//$this->splits = "";
 		$this->ordenar($orden);
 		$this->show($orden);
 	}
 	
+	public function editVer($orden){
+		$this->total = 0;
+		foreach($this->splits as $id => $row ){
+			$this->total = $this->total + (int)$row[3];
+			if ($id == $_GET['id']){ // coincide con el registro a editar
+				// El número está guardado con un salto de línea y con este comando lo descarto
+				$num = explode("\n", $row[3]);
+				$this->html->formEdit($row[0],$row[1],(float)$row[2],(float)$num[0],$orden);
+			}else{ // no coincide con el registro a editar
+				echo "<tr>";
+				echo "<td>",$row[1],"</td>";
+				echo '<td class="text-center">',(float)$row[2],"</td>";
+				echo '<td class="text-right">',$row[3] ," €","</td>";
+				echo <<<EOT
+				<td class="text-center">
+					<div class="btn-group text-center" role="group">
+					  <a class="btn btn-xs btn-success" href="$this->scriptName?action=editVer&id=$id&orden=$orden">Editar</a>
+					  <a class="btn btn-xs btn-danger" href="$this->scriptName?action=del&id=$id&orden=$orden">Borrar</a>
+					</div>
+				</td>
+EOT;
+			}
+				echo "</tr>";
+		}
+	}
+
+	public function edit(){
+		$reg = [$_POST['id'],$_POST['edit_concepto'],$_POST['edit_cantidad'],$_POST['edit_importe']];
+		$registro = implode("~", $reg);
+		$registro = $registro."\n";
+		// Sustituyo la posición editada del array de registros
+		$this->fileArray[(int)$_POST['id']] = $registro;
+		$this->splits[(int)$_POST['id']] = $reg;
+		$registros = array();
+		foreach($this->fileArray as $row){
+			$registros[] = $row;
+		}
+		// grabamos el texto de los registros al fichero
+		file_put_contents($this->file, $registros);
+		// Añado un salto de línea al fichero para el siguiente registro
+		//file_put_contents($this->file,"\n",FILE_APPEND | LOCK_EX); 
+		$this->ordenar($orden);
+		$this->show($orden);
+	}
 }
 ?>

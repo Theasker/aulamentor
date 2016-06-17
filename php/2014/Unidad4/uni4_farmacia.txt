@@ -1,3 +1,1 @@
-0~Aspirina~100~1.99
-1~Mercromina~150~1.35
-2~3~3~3
+0~Mercromina~150~1.35

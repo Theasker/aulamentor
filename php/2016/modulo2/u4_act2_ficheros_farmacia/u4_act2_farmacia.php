@@ -50,10 +50,12 @@
 	}else {
 		$orden = 'desordenado';
 	}
+	/*
 	echo '$_GET';
 	var_dump($_GET);
 	echo '$_POST';
 	var_dump($_POST);
+	*/
 ?>
 <table class="table table-condensed table-hover table-bordered table-fixed no-margin">
 <?php
@@ -63,6 +65,12 @@
 		$farmacia->find($_GET['buscar'],$orden);
 	}else if ($_POST['action'] == 'add'){
 		$farmacia->add($orden);
+	}else if ($_GET['action'] == 'del'){
+		$farmacia->del($orden);
+	}else if ($_GET['action'] == 'editVer'){
+		$farmacia->editVer($orden);
+	}else if ($_POST['action'] == 'edit'){
+		$farmacia->edit($orden);
 	}else{
 		$farmacia->show($orden); // Muestra los datos de la tabla
 	};
