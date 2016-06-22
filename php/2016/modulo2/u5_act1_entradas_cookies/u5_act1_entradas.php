@@ -1,3 +1,13 @@
+<?php
+// Controlo las entradas solicitadas
+if (isset($_COOKIE['reservados'])){
+	$cont = (int)$_COOKIE['reservados'] + 1;
+}
+
+setcookie("reservados", $cont, time()+360);  /* expire in 10 m hour */
+
+
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -21,12 +31,17 @@
 		.titulo{margin-top: 15px; padding: 5px; color: white;}
 		.textWhite{color: white;}
 		.resaltado{background:red;}
-		table{font-size: 12px;}
+		/*table{font-size: 12px;}*/
+		td{width: 20px;}
+		tr{margin-top: 10px;}
+		div{margin-top: 2px;}
+		.centrado {text-align: center !important;	}
 		.verde{
 			background-color: greenyellow;
 		  border-right-style: solid;
 		  border-left-style: solid;
 		  border-top-style: solid;
+		  border-bottom-style: solid;
 		  border-right-width: 1px;
 		  border-left-width: 1px;
 		  border-bottom-width: 1px;
@@ -72,31 +87,44 @@
 	</style>
 </head>
 <body>
-	<div class="container centrado">
-		<div class="row verdeoscuro titulo">
-			 <div class="col-md-12 text-center"><h1>Comprar entradas de teatro</h1></div>
-		</div>
-		<div class="row">
-			<div class="col-md-12 text-center">
-				<h2>¡Bienvenid@ a la página de reserva de localidades</h2>
-			</div>
-			<hr>
-		</div>
 <?php
-	require('u4_act2_entradasCineClass.php');
-	require('u4_act2_entradasCineHtml.php');
+	require('u5_act1_entradasClass.php');
+	require('u5_act1_entradasHtml.php');
 	
 	$scriptName = basename($_SERVER["SCRIPT_NAME"]);
 	
-	$entradas = new entrdas($scriptName);
+	$entradas = new entradas($scriptName);
 	$html = new html($scriptName);
 	
-	/*
+	
+	echo '<div class="container centrado">';
+	$html->titulo('prueba');
+	
+	switch ($_GET['estado']){
+		case 0:
+			//$html->
+			//$entradas->cambioEstado();
+			break;
+		case 1:
+			
+			break;
+	}
+	
+	if (isset($_COOKIE['reservados'])){
+		
+	}
+
+	$entradas->obra();
+	$entradas->butacas();
+	
+	var_dump($_COOKIE);
 	echo '$_GET';
 	var_dump($_GET);
 	echo '$_POST';
 	var_dump($_POST);
-	*/
+	
+	
+	
 ?>
 	</div>
 </body>

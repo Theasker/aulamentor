@@ -26,19 +26,19 @@ class uni5_entradas_class {
         //numeracion lateral
         if ($columna == 0 && $fila < 16) echo "<td class=\"limpio\">".($fila+1)."</td>";
         switch ($this->cine[$fila][$columna]){
-        case 0:
-          echo "<td class=\"verde\"><a href=uni5_entradas.php?estado=".$this->cine[$fila][$columna]."&fila=$fila&columna=$columna>__</a></td>";
-          break;
-        case 1:
-          if (isset($_SESSION["asientos"][$fila][$columna])){
-            echo "<td class=\"naranja\"><a href=uni5_entradas.php?estado=".$this->cine[$fila][$columna]."&fila=$fila&columna=$columna>__</a></td>";
-          }
-          else{
-            echo "<td class=\"rojo\"><a href=uni5_entradas.php?estado=".$this->cine[$fila][$columna]."&fila=$fila&columna=$columna>__</a></td>";
-          }          
-          break;
-        default:
-          echo $this->cine[$fila][$columna];
+	        case 0:
+	          echo "<td class=\"verde\"><a href=uni5_entradas.php?estado=".$this->cine[$fila][$columna]."&fila=$fila&columna=$columna>__</a></td>";
+	          break;
+	        case 1:
+	          if (isset($_SESSION["asientos"][$fila][$columna])){
+	            echo "<td class=\"naranja\"><a href=uni5_entradas.php?estado=".$this->cine[$fila][$columna]."&fila=$fila&columna=$columna>__</a></td>";
+	          }
+	          else{
+	            echo "<td class=\"rojo\"><a href=uni5_entradas.php?estado=".$this->cine[$fila][$columna]."&fila=$fila&columna=$columna>__</a></td>";
+	          }          
+	          break;
+	        default:
+	          echo $this->cine[$fila][$columna];
         } 
       }
       echo "</tr>";

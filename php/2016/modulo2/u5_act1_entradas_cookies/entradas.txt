@@ -1,4 +1,4 @@
-10|El nombre de la rosa|22:10|Martes
+Teatro Principal|El nombre de la rosa|22:10|Martes
 00000000000000000000
 00000000000000000000
 00000000000000000000
