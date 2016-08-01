@@ -2,7 +2,7 @@
 class entradas{
 	private $scriptName;
 	private $path;
-	private $file;
+	private $file, $file2;
 	private $fileid;
 	private $html;
 	private $fileArray = array();
@@ -32,7 +32,7 @@ class entradas{
 		fclose($this->fileid);
 	}
 	
-	public function fileToArray(){
+	private function fileToArray(){
 		$this->fileArray = file($this->file);
 		$this->rows = count($this->fileArray);
 		// Guardamos la información de la obra de teatro
@@ -82,8 +82,29 @@ class entradas{
 		echo '</table></div></div>';
 	}
 	
-	public function cambiosEstado(){
-		
+	public function cambioEstado($estado){
+		// estado, fila, columna ($_GET)
+		switch ($estado) {
+			case 'reservar':
+				//vardump::ver($this->obra);
+				$this->asientos[$_GET["fila"]][$_GET["columna"]] = 1;
+				break;
+			case 'cancelar':
+				$this->asientos[$_GET["fila"]][$_GET["columna"]] = 0;
+				break;
+			default:
+				$this->arrayToFile();
+				break;
+		}
+	}
+
+	private function arrayToFile(){
+		$registros = array(implode("|", $this->obra));
+		vardump::ver($registros);
+		foreach ($this->asientos as $row) {
+			vardump::ver($row);
+		}
+		//file_put_contents($this->file, $this->asientos);
 	}
 }
 ?>
