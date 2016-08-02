@@ -11,54 +11,44 @@ $aviso = '';
 
 // Se ha pulsado sobre una butaca
 if (isset($_GET['estado'])){
-	if (comprobarReserva()){
-		switch ($_GET['estado']){
-			case 0: // Butaca libre
-				$entradas->cambioEstado('reservar');
-				$nReservados = (int)$_COOKIE["butaca"]["reservados"];
-				setcookie("butaca[$nReservados][fila]",$_GET['fila']);
-				break;
-			case 1: // Butaca ocupada
-				if (isset($_COOKIE["butaca"])){
-					foreach ($_COOKIE["butaca"] as $row){
-						vardump::ver($row);
-					}
-				}else{
-					
+	$fila = $_GET['fila'];
+  $columna = $_GET['columna'];
+	switch ($_GET['estado']){
+		case 0: // Butaca libre
+			if (isset($_COOKIE["butaca"]["reservados"])){
+				// controlo que no se han sobrepasado las butacas reservadas
+				if ((int)$_COOKIE["butaca"]["reservados"] < 5){
+					// Sumo 1 al nº de reservas
+					$cont = (int)$_COOKIE["butaca"]["reservados"] + 1;
+					setcookie("butaca[reservados]",$cont);
+					// Cambio el estado del asiento a ocupado
+					// con el índice del nº de reserva
+					$entradas->cambioEstado('reservar');
+					setcookie("butaca[$fila][$columna]",1);
+				}else{ // Ya tiene 5 reservas
+					$aviso = 'Ha reservado más de 5 butacas';
+					$acceso = false;
 				}
-				//$cont = (int)$_COOKIE['reservados'];
-				$aviso = 'La butaca está ya ocupada y no se puede reservar ni devolver';
-				break;
-			case 2: // Butaca reservada
-				//$cont = (int)$_COOKIE['reservados'] - 1;
+			}else{ // La primera vez que se pulsa sobre una butaca libre
+				$cont = 0;
+				setcookie("butaca[reservados]",$cont);
+				// Cambio el estado del asiento a ocupado
+				// con el índice del nº de reserva
+				$entradas->cambioEstado('reservar');
+				setcookie("butaca[$fila][$columna]",1);
+			}
+			break;
+		case 1: // Butaca ocupada
+			if (isset($_COOKIE["butaca"][$fila][$columna])){
 				$entradas->cambioEstado('cancelar');
-				break;
-		}
+				$cont = (int)$_COOKIE["butaca"]["reservados"] - 1;
+				setcookie("butaca[reservados]",$cont);	
+			}else{
+				$aviso = 'La butaca está ya ocupada y no se puede reservar ni devolver';
+			}
+			break;
 	}
 }
-
-function comprobarReserva(){
-	// Compruebo las butacas reservadas
-	$acceso = true;
-	if (isset($_COOKIE["butaca"]["reservados"])){
-		// controlo que no se han sobrepasado las butacas reservadas
-		if ((int)$_COOKIE["butaca"]["reservados"] < 5){
-			echo '$cont = (int)$_COOKIE["butaca"]["reservados"] + 1;'; 
-			$cont = (int)$_COOKIE["butaca"]["reservados"] + 1;
-			setcookie("butaca[reservados]",$cont);
-		}else{ // se ha sobrepasado el límite de reservas
-			echo 'aviso';
-			$aviso = 'Ha reservado más de 5 butacas';
-			$acceso = false;
-		}
-	}else{
-		echo 'cont=0';
-		$cont = 0;
-		setcookie("butaca[reservados]",$cont);
-	}
-	return $acceso;
-}
-
 ?>
 <!doctype html>
 <html lang="es">
@@ -68,15 +58,15 @@ function comprobarReserva(){
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 
 	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="bootstrap.min.css">
 
 	<!-- Optional theme -->
-	<link rel="stylesheet" href="bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+	<link rel="stylesheet" href="bootstrap-theme.min.css">
 
-	<script   src="jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
+	<script src="jquery-1.12.4.min.js"></script>
 
 	<!-- Latest compiled and minified JavaScript -->
-	<script src="bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<script src="bootstrap.min.js"></script>
 	<style>
 		body{background-color: #cccccc;font-family: Times;}
 		.centrado{width:800px; margin: 0 auto;}
@@ -141,18 +131,12 @@ function comprobarReserva(){
 <body>
 <?php
 	echo '<div class="container centrado">';
-	//$html->titulo($aviso);
+	$html->titulo($aviso);
 
-	//$entradas->obra();
+	$entradas->obra();
 	$entradas->butacas();
 	
 	echo '$_COOKIE';
-	vardump::ver2($_COOKIE);
+	vardump::ver($_COOKIE);
 	echo '$_GET';
 	vardump::ver($_GET);
-	echo '$_POST';
-	vardump::ver($_POST);
-?>
-	</div>
-</body>
-</html>

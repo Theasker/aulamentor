@@ -65,7 +65,12 @@ class entradas{
       			echo "<a href=\"$this->scriptName?estado=".$this->asientos[$fila][$columna]."&fila=$fila&columna=$columna\">&nbsp;&nbsp;</a></td>";
       			break;
       		case 1:
-      			echo '<td class="rojo text-center">';
+      			$find = false;
+      			if (isset($_COOKIE["butaca"][$fila][$columna])){
+      				echo '<td class="naranja text-center">';
+      			}else{
+      				echo '<td class="rojo text-center">';
+      			}
       			echo "<a href=\"$this->scriptName?estado=".$this->asientos[$fila][$columna]."&fila=$fila&columna=$columna\">&nbsp;&nbsp;</a></td>";
       			break;
       	}
@@ -83,28 +88,25 @@ class entradas{
 	}
 	
 	public function cambioEstado($estado){
-		// estado, fila, columna ($_GET)
 		switch ($estado) {
 			case 'reservar':
+				//vardump::ver($estado);
 				//vardump::ver($this->obra);
 				$this->asientos[$_GET["fila"]][$_GET["columna"]] = 1;
 				break;
 			case 'cancelar':
 				$this->asientos[$_GET["fila"]][$_GET["columna"]] = 0;
 				break;
-			default:
-				$this->arrayToFile();
-				break;
 		}
+		$this->arrayToFile();
 	}
 
 	private function arrayToFile(){
 		$registros = array(implode("|", $this->obra));
-		vardump::ver($registros);
 		foreach ($this->asientos as $row) {
-			vardump::ver($row);
+			$registros[] = implode("", $row);
 		}
-		//file_put_contents($this->file, $this->asientos);
+		file_put_contents($this->file, $registros);
 	}
 }
 ?>
