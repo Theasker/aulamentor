@@ -8,7 +8,7 @@ class html{
 			<div class="row">
 				<div class="col-md-12 text-center">
 					<h3>¡Bienvenid@ a la página de reserva de localidades</h3>
-					<div class="danger text-center"><?php echo $aviso ?></div>
+					<h4 class="text-danger text-center"><?php echo $aviso ?></h4>
 				</div>
 				<hr>
 			</div>

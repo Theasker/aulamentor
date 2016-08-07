@@ -2,7 +2,7 @@
 class entradas{
 	private $scriptName;
 	private $path;
-	private $file, $file2;
+	private $file;
 	private $fileid;
 	private $html;
 	private $fileArray = array();

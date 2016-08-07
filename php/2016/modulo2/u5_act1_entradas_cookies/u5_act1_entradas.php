@@ -25,8 +25,9 @@ if (isset($_GET['estado'])){
 					// con el índice del nº de reserva
 					$entradas->cambioEstado('reservar');
 					setcookie("butaca[$fila][$columna]",1);
+					$aviso = 'Gracias por comprar en esta página';
 				}else{ // Ya tiene 5 reservas
-					$aviso = 'Ha reservado más de 5 butacas';
+					$aviso = 'Sólo se permite comprar 5 entradas como máximo';
 					$acceso = false;
 				}
 			}else{ // La primera vez que se pulsa sobre una butaca libre
@@ -36,13 +37,15 @@ if (isset($_GET['estado'])){
 				// con el índice del nº de reserva
 				$entradas->cambioEstado('reservar');
 				setcookie("butaca[$fila][$columna]",1);
+				$aviso = 'Gracias por comprar en esta página';
 			}
 			break;
 		case 1: // Butaca ocupada
 			if (isset($_COOKIE["butaca"][$fila][$columna])){
 				$entradas->cambioEstado('cancelar');
 				$cont = (int)$_COOKIE["butaca"]["reservados"] - 1;
-				setcookie("butaca[reservados]",$cont);	
+				setcookie("butaca[reservados]",$cont);
+				$aviso = 'Gracias por devolver la entrada';
 			}else{
 				$aviso = 'La butaca está ya ocupada y no se puede reservar ni devolver';
 			}
