@@ -50,6 +50,9 @@ insert into partidos values (8,9,8,7,3);
 insert into partidos values (9,10,3,8,2);
 insert into partidos values (10,1,4,9,1);
 insert into partidos values (11,11,2,10,0);
+insert into partidos values (12,1,3,7,2);
+insert into partidos values (13,1,0,8,2);
+insert into partidos values (14,2,0,1,0);
 
 
 -- Mostrar la información introducida en las dos tablas de la forma siguiente:
@@ -71,8 +74,28 @@ SELECT min(anio_fundacion) FROM equipos;
 
 -- Partidos jugados: nombre del equipo1, nombre del equipo2, resultado equipo1, resultado equipo2 ordenados por el nombre del equipo1. 
 -- Ayuda: es recomendable usar renombramiento de tablas con 3 tablas en el SELECT. (Por ejemplo: FROM EQUIPOS A, EQUIPOS B, PARTIDOS C).
+SELECT equiposa.nombre AS equipo1, equiposb.nombre AS equipo2,partidos.resultado_equipo1, partidos.resultado_equipo2 
+FROM equipos AS equiposa, equipos AS equiposb, partidos
+WHERE equiposa.registro = partidos.id_equipo1 AND equiposb.registro = partidos.id_equipo2;
 
-
-/*
-Los campos n º total de partidos jugados (campo calculado) y nombre del equipo ordenado decrecientemente por el nº de partidos jugados. Ayuda: puedes escribir 2 SELECT con el número de partidos jugados en la ida y en la vuelta por cada equipo, juntando ambos resultados usando la cláusula UNION ALL. A todo este resultado se le puede denominar una nueva tabla así: (select 1 UNION ALL select 2) as tabla y podemos trabajar con tabla como si fuera una tabla normal y corriente de esta manera: SELECT tabla.* FROM (select 1 UNION ALL select 2) as tabla ORDER BY tabla.x. Nota: si te resulta muy complicada esta solución, puedes hacer los cálculos de los partidos jugados a la ida, a la vuelta en 2 sql's separadas y, después, sumar a mano los resultados obtenidos.
+/* 
+Los campos n º total de partidos jugados (campo calculado) y nombre del equipo ordenado decrecientemente por el nº de partidos jugados. 
+	Ayuda: puedes escribir 2 SELECT con el número de partidos jugados en la ida y en la vuelta por cada equipo, juntando ambos resultados usando la cláusula UNION ALL. 
+	A todo este resultado se le puede denominar una nueva tabla así: 
+		(select 1 UNION ALL select 2) as tabla y podemos trabajar con tabla como si fuera una tabla normal y corriente de esta manera: 
+			SELECT tabla.* FROM (select 1 UNION ALL select 2) as tabla ORDER BY tabla.x. 
+	Nota: si te resulta muy complicada esta solución, puedes hacer los cálculos de los partidos jugados a la ida, a la vuelta en 2 sql's separadas 
+	y, después, sumar a mano los resultados obtenidos.
+	
+	Contar ocurrencias repetidas de un registro: select email, count(email) from usuario group by email 
 */
+
+SELECT equipos.nombre,COUNT(partidos_jugados.id_equipo) AS partidos
+FROM equipos,
+(SELECT id_equipo1 AS id_equipo FROM partidos
+UNION ALL
+SELECT id_equipo2 AS id_equipo FROM partidos)
+AS partidos_jugados
+WHERE equipos.registro = partidos_jugados.id_equipo
+GROUP BY partidos_jugados.id_equipo
+ORDER BY partidos;
