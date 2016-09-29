@@ -23,41 +23,52 @@ SELECT registro, nombre, poblacion, anio_fundacion FROM equipos WHERE anio_funda
 -- Para realizar esta consulta hemos utilizado los operadores ROUND y AVG de MySQL.
 SELECT 
 
--- Hallar la media de los goles de cada equipo y nombre del equipo y ordenar el resultado decrecientemente por el nº de goles. 
--- Pista: se puede usar también la cláusula UNION ALL para obtener el resultado. 
--- Para realizar esta consulta hemos utilizad los operadores ROUND y AVG de MySQL.
+# Hallar la media de los goles de cada equipo y nombre del equipo y ordenar el resultado decrecientemente por el nº de goles. 
+# Pista: se puede usar también la cláusula UNION ALL para obtener el resultado. 
+# Para realizar esta consulta hemos utilizad los operadores ROUND y AVG de MySQL.
+# Ocurrencias --> select email, count(email) from usuario group by email 
 
-select id_equipo1, count(id_equipo1) from partidos group by id_equipo1;
-select id_equipo1 as id_equipo, resultado_equipo1 as resultado from partidos union ALL select id_equipo2 as id_equipo, resultado_equipo2 as resultado from partidos;
+# Partidos jugados de cada equipo
+SELECT partidos_jugados.id_equipo, sum(partidos_jugados.partidos) FROM
+(SELECT id_equipo1 AS id_equipo, count(id_equipo1) AS partidos FROM partidos GROUP BY id_equipo1
+UNION ALL
+SELECT id_equipo2 AS id_equipo, count(id_equipo2) AS partidos FROM partidos GROUP BY id_equipo2) AS partidos_jugados
+GROUP BY partidos_jugados.id_equipo;
 
-SELECT equipos.registro, equipos.nombre, SUM(partidos_jugados.resultado) FROM
+# Goles marcados por los equipos
+SELECT goles.id_equipo, sum(goles.goles) FROM
+(SELECT id_equipo1 AS id_equipo, resultado_equipo1 as goles FROM partidos
+UNION ALL
+SELECT id_equipo2 as id_equipo, resultado_equipo2 as goles FROM partidos) AS goles
+GROUP BY goles.id_equipo;
 
-(select id_equipo1 as id_equipo, resultado_equipo1 as resultado from partidos
-union ALL
-select id_equipo2 as id_equipo, resultado_equipo2 as resultado from partidos)
-AS partidos_jugados,
+# Media de goles por partido
+SELECT num_goles.id_equipo, n_jugados.partidos, num_goles.goles, (num_goles.goles / n_jugados.partidos) as media
+FROM
+(SELECT partidos_jugados.id_equipo, sum(partidos_jugados.partidos) AS partidos FROM
+(SELECT id_equipo1 AS id_equipo, count(id_equipo1) AS partidos FROM partidos GROUP BY id_equipo1
+UNION ALL
+SELECT id_equipo2 AS id_equipo, count(id_equipo2) AS partidos FROM partidos GROUP BY id_equipo2) AS partidos_jugados
+GROUP BY partidos_jugados.id_equipo) AS n_jugados,
 
-(SELECT id_equipo1 AS id_equipo, count(id_equipo1) as n_partidos from partidos group by id_equipo 
-UNION ALL 
-SELECT id_equipo2 AS id_equipo, count(id_equipo2) as n_partidos from partidos group by id_equipo)
-AS n_partidos,
-equipos
+(SELECT n_goles.id_equipo, sum(n_goles.goles) as goles FROM
+(SELECT id_equipo1 AS id_equipo, resultado_equipo1 as goles FROM partidos
+UNION ALL
+SELECT id_equipo2 as id_equipo, resultado_equipo2 as goles FROM partidos) AS n_goles
+GROUP BY n_goles.id_equipo) AS num_goles
 
-WHERE equipos.registro = partidos_jugados.id_equipo AND equipos.registro = n_partidos.id_equipo
-GROUP BY partidos_jugados.id_equipo
-;
+WHERE n_jugados.id_equipo = num_goles.id_equipo
+ORDER BY num_goles.goles DESC;
 
-Hallar la máxima diferencia de puntos entre todos los partidos de los equipos añadiendo el nombre del equipo1 y equipo2 ordenados decrecientemente por la máxima diferencia de puntos (nuevo campo calculado). Ayuda: para obtener la diferencia entre dos partidos hemos utilizado la expresión siguiente: ABS((CAST(B.resultado_equipo1 AS SIGNED)-CAST(B.resultado_equipo2 AS SIGNED))).
-Hallar el mayor número de partidos ganados por cada equipo añadiendo el nombre del equipo y ordenar el resultado decrecientemente por el nº de partidos ganados. Pista: se puede usar también la cláusula UNION ALL para obtener el resultado. 
+# Hallar la máxima diferencia de puntos entre todos los partidos de los equipos 
+# añadiendo el nombre del equipo1 y equipo2 
+# ordenados decrecientemente por la máxima diferencia de puntos (nuevo campo calculado). 
+# 	Ayuda: para obtener la diferencia entre dos partidos hemos utilizado la expresión siguiente: 
+#		ABS((CAST(B.resultado_equipo1 AS SIGNED)-CAST(B.resultado_equipo2 AS SIGNED))).
 
 
-create table if not exists equipos (
-	registro INT PRIMARY KEY AUTO_INCREMENT,
-	nombre VARCHAR(30) NOT NULL,
-	nombre_entrenador VARCHAR(35) NOT NULL,
-	nombre_campo_futbol VARCHAR(30),
-	poblacion VARCHAR(25),
-	anio_fundacion INT(4),
-	anotaciones BLOB,
-	INDEX (nombre)
-);
+
+# Hallar el mayor número de partidos ganados por cada equipo 
+# añadiendo el nombre del equipo y ordenar el resultado decrecientemente por el nº de partidos ganados. 
+# 	Pista: se puede usar también la cláusula UNION ALL para obtener el resultado. 
+
