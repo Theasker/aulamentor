@@ -65,7 +65,16 @@ ORDER BY num_goles.goles DESC;
 # ordenados decrecientemente por la máxima diferencia de puntos (nuevo campo calculado). 
 # 	Ayuda: para obtener la diferencia entre dos partidos hemos utilizado la expresión siguiente: 
 #		ABS((CAST(B.resultado_equipo1 AS SIGNED)-CAST(B.resultado_equipo2 AS SIGNED))).
+SELECT 
+equiposa.nombre AS equipo1, 
+equiposb.nombre AS equipo2,
+partidos.resultado_equipo1, 
+partidos.resultado_equipo2,
+ABS((CAST(partidos.resultado_equipo1 AS SIGNED)-CAST(partidos.resultado_equipo2 AS SIGNED))) AS diferencia
 
+FROM equipos AS equiposa, equipos AS equiposb, partidos
+WHERE equiposa.registro = partidos.id_equipo1 AND equiposb.registro = partidos.id_equipo2
+ORDER BY diferencia DESC;
 
 
 # Hallar el mayor número de partidos ganados por cada equipo 
