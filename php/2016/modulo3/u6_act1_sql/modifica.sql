@@ -79,5 +79,14 @@ ORDER BY diferencia DESC;
 
 # Hallar el mayor número de partidos ganados por cada equipo 
 # añadiendo el nombre del equipo y ordenar el resultado decrecientemente por el nº de partidos ganados. 
-# 	Pista: se puede usar también la cláusula UNION ALL para obtener el resultado. 
+# 	Pista: se puede usar también la cláusula UNION ALL para obtener el resultado.
+SELECT ganador, equipos.nombre, count(ganador) AS n_ganador
+FROM
+
+(SELECT 
+IF (p.resultado_equipo1 > p.resultado_equipo2 , p.id_equipo1 , IF(p.resultado_equipo1 < p.resultado_equipo2, p.id_equipo2,"empate")) AS ganador
+FROM partidos p) AS ganadores, equipos
+WHERE ganadores.ganador = equipos.registro
+GROUP BY ganador
+ORDER BY n_ganador DESC;
 
