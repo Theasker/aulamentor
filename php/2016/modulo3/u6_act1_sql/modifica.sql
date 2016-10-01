@@ -85,8 +85,9 @@ FROM
 
 (SELECT 
 IF (p.resultado_equipo1 > p.resultado_equipo2 , p.id_equipo1 , IF(p.resultado_equipo1 < p.resultado_equipo2, p.id_equipo2,"empate")) AS ganador
-FROM partidos p) AS ganadores, equipos
-WHERE ganadores.ganador = equipos.registro
+FROM partidos p) AS ganadores
+INNER JOIN equipos
+ON ganadores.ganador = equipos.registro
 GROUP BY ganador
 ORDER BY n_ganador DESC;
 

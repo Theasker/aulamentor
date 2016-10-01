@@ -39,7 +39,7 @@ insert into equipos values (9,"Maccabi de Levantar","José Luis Lamata Feliz","C
 insert into equipos values (10,"Nottingham Prisas","Elsa Capunta","Campo No Juego","Villabajo",2011,"Pos vale");
 insert into equipos values (11,"Vodka Juniors","Elba Calao","Campo Tingue","Villabajo",2015,"Pos bueno");
 
-insert into partidos values (1,2,3,11,0);
+insert into partidos values (1,2,3,6,0);
 insert into partidos values (2,3,2,1,7);
 insert into partidos values (3,4,3,2,3);
 insert into partidos values (4,5,7,3,5);
@@ -49,7 +49,7 @@ insert into partidos values (7,8,5,6,7);
 insert into partidos values (8,9,8,7,3);
 insert into partidos values (9,10,3,8,2);
 insert into partidos values (10,1,4,9,1);
-insert into partidos values (11,11,2,10,0);
+insert into partidos values (11,6,2,10,0);
 insert into partidos values (12,1,3,7,2);
 insert into partidos values (13,1,0,8,2);
 insert into partidos values (14,2,0,1,0);
