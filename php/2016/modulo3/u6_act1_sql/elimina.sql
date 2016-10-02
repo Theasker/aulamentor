@@ -34,9 +34,12 @@ SELECT id_equipo2 AS id_equipo FROM partidos) AS p_jugados
 GROUP BY p_jugados.id_equipo);
 
 # 4. Mostrar los campos nombre, nombre del entrenador, nombre del campo de fútbol, población y año de fundación de los equipos no borrados.
-
+SELECT nombre, nombre_entrenador, nombre_campo_futbol, poblacion, anio_fundacion FROM equipos;
 
 # 5. Borrar las tablas de la base de datos liga_futbol.
-
+# DROP [TEMPORARY] TABLE [IF EXISTS] tbl_name [, tbl_name] ... [RESTRICT | CASCADE]
+DROP TABLE IF EXISTS partidos CASCADE;
+DROP TABLE IF EXISTS equipos CASCADE;
 
 # 9. Borrar base de datos liga_futbol.
+DROP DATABASE liga_futbol;
