@@ -88,7 +88,7 @@ VALUES
 (2,"enim, gravida sit amet, dapibus id, blandit at, nisi. Cum","Chantale","Cras Corp.","LIBRO","2017-08-28 03:42:31","Vanuatu","4.32","Lorem ipsum dolor sit amet,"),
 (3,"Praesent","Carlos","Sed LLP","CD","2016-12-06 02:33:30","Uganda","6.08","Lorem ipsum dolor sit amet,"),
 (4,"massa. Mauris vestibulum, neque sed","Norman","Egestas Aliquam PC","CD","2015-11-15 08:58:48","Bolivia","3.72","Lorem ipsum"),
-(5,"rutrum eu, ultrices sit amet, risus. Donec nibh enim, gravida","Nyssa","Nunc Commodo Ltd","DVD","2017-05-23 12:48:12","Afghanistan","0.47","Lorem ipsum dolor sit amet, consectetuer adipiscing"),(
+(5,"rutrum eu, ultrices sit amet, risus. Donec nibh enim, gravida","Nyssa","Nunc Commodo Ltd","DVD","2017-05-23 12:48:12","Uganda","0.47","Lorem ipsum dolor sit amet, consectetuer adipiscing"),(
 6,"erat","Mikayla","Ipsum Non Associates","DVD","2016-07-30 07:52:39","Brazil","0.27","Lorem ipsum dolor sit amet, consectetuer adipiscing"),
 (7,"Sed pharetra, felis eget varius ultrices, mauris","Calista","Tincidunt Company","DVD","2016-01-31 08:37:40","Marshall Islands","6.03","Lorem"),
 (8,"et, rutrum eu, ultrices sit amet, risus. Donec nibh enim,","Berk","Nisl Nulla Limited","CD","2017-03-16 09:49:56","United Kingdom (Great Britain)","0.79","Lorem ipsum dolor"),
@@ -100,7 +100,7 @@ INSERT INTO `compradores`
 (`registro`,`nombre`,`fecha_nacim`,`telefono`,`domicilio`,`poblacion`,`anotaciones`) 
 VALUES 
 (1,"Urielle","2016-07-28 14:12:33","536915160","5814 Nulla Carretera","Fortaleza","eget metus. In nec orci."),
-(2,"Kay","2016-09-18 00:28:56","324741379","6327 Magna, Avenida","Oviedo","ac sem ut dolor dapibus gravida. Aliquam"),
+(2,"Ray","2016-09-18 00:28:56","324741379","6327 Magna, Avenida","Oviedo","ac sem ut dolor dapibus gravida. Aliquam"),
 (3,"Aiko","2016-01-23 15:21:15","956877631","Apartado núm.: 710, 7458 Tortor Avenida","Langley","magna."),
 (4,"Bevis","2016-08-21 07:42:34","815635308","Apartado núm.: 301, 1030 Blandit Ctra.","Caledon","magnis dis parturient montes, nascetur ridiculus mus. Proin vel"),
 (5,"Juliet","2016-12-09 03:40:17","586972611","381-8961 Ornare, Avenida","Barranca","et netus et malesuada fames ac turpis egestas."),
@@ -135,21 +135,39 @@ SELECT titulo, escritor, pais, importe_euros FROM libros
 WHERE soporte = 'LIBRO';
 
 # El nombre, teléfono y anotaciones de los compradores cuyo nombre empiece por el carácter 'R'.
-SELECT nombre, telefono, anotaciones FROM compradores
+SELECT nombre, telefono, anotaciones FROM compradores WHERE nombre LIKE "R%";
 
 # El número de libros y país agrupados por el país ordenados decrecientemente por el número de libros.
+SELECT pais, count(pais) AS num
+FROM libros 
+GROUP BY pais
+ORDER BY num DESC;
 
-
-# Precio del libro más caro. 
+# Precio del libro más caro.
+SELECT MAX(importe_euros) AS importe_max  FROM libros;
 
 
 # El nombre de los compradores que han comprado al menos un libro, número de libros comprados 
 # ordenado decrecientemente por el número total de libros comprados.
+SELECT compradores.nombre, count(compras.id_comprador) AS num
+FROM compradores
+INNER JOIN compras
+ON compradores.registro = compras.id_comprador
+GROUP BY compras.id_comprador
+ORDER BY num DESC;
 
-
-# Ventas totales: título del libro y suma de los importes acumulados por cada libro de todos los compradores
-# agrupados por el título del libro.
-
+# Ventas totales: 
+# título del libro y suma de los importes acumulados por cada libro de todos los compradores agrupados por el título del libro.
+SELECT libros.titulo, SUM(libros.importe_euros) AS total
+FROM libros
+INNER JOIN compras
+ON libros.registro = compras.id_libro
+GROUP BY libros.titulo;
 
 # Libros adquiridos por los compradores: nombre del comprador, título del libro 
 # ordenando el resultado por el nombre del comprador.
+SELECT compradores.nombre, libros.titulo
+FROM compras,compradores,libros
+WHERE compradores.registro = compras.id_comprador AND
+compras.id_libro = libros.registro
+ORDER BY compradores.nombre;
