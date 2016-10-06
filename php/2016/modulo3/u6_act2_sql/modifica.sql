@@ -27,23 +27,56 @@ FROM libros
 WHERE DATE(fecha_entrada_libreria) > '1990-01-01';
 
 # Mostrar el título del libro, el nombre, la población y el importe acumulado de los compradores mayores de 30 años.
-SELECT libros.titulo, compradores.nombre, compradores.poblacion
+SELECT libros.titulo, compradores.nombre, compradores.poblacion, SUM(libros.importe_euros) AS suma,
+(DATEDIFF(CURDATE(),compradores.fecha_nacim)/365) AS edad
 FROM libros
 INNER JOIN compras
 ON libros.registro = compras.id_libro
 INNER JOIN compradores
-ON compras.id_comprador = compradores.registro;
+ON compras.id_comprador = compradores.registro
+GROUP BY libros.titulo
+HAVING edad > 30;
 
 # Hallar la media del precio de los libros.
-
+SELECT AVG(importe_euros) AS media FROM libros;
 
 # Hallar la media del precio de los libros agrupadas por soporte.
-
+SELECT soporte,AVG(importe_euros) AS media
+FROM libros
+GROUP BY soporte;
 
 # Hallar la media de lo que han gastado todos los compradores y la suma total de todas las ventas realizadas. 
-
+SELECT compradores.nombre,
+COUNT(compras.id_comprador) AS n_libros,
+SUM(libros.importe_euros) AS suma,
+AVG(libros.importe_euros) AS media
+FROM libros
+INNER JOIN compras
+ON libros.registro = compras.id_libro
+INNER JOIN compradores
+ON compras.id_comprador = compradores.registro
+GROUP BY compradores.nombre;
 
 # Hallar la media de lo que han gastado los compradores agrupados por población y ordenador decrecientemente por el importe medio. 
+SELECT compradores.poblacion,
+COUNT(compras.id_comprador) AS n_libros,
+SUM(libros.importe_euros) AS suma,
+AVG(libros.importe_euros) AS media
+FROM libros
+INNER JOIN compras
+ON libros.registro = compras.id_libro
+INNER JOIN compradores
+ON compras.id_comprador = compradores.registro
+GROUP BY compradores.poblacion;
 
-
-# Hallar el mayor número de libros vendidos de un país. Por ejemplo: El país que tiene un mayor número de libros vendidos es España. Total: 6”.
+# Hallar el mayor número de libros vendidos de un país. 
+# Por ejemplo: El país que tiene un mayor número de libros vendidos es España. Total: 6”.
+# Hallar el mayor número de libros vendidos de un país. 
+# Por ejemplo: El país que tiene un mayor número de libros vendidos es España. Total: 6”.
+SELECT pais, MAX(n_libros)
+FROM
+(SELECT libros.pais, COUNT(libros.pais) AS n_libros
+FROM libros
+INNER JOIN compras
+ON libros.registro = compras.id_libro
+GROUP BY libros.pais) AS cuenta_libros;
