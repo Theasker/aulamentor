@@ -21,7 +21,8 @@ SELECT registro, nombre, poblacion, anio_fundacion FROM equipos WHERE anio_funda
 
 -- Hallar la media de puntos de cada partido entre los dos equipos. 
 -- Para realizar esta consulta hemos utilizado los operadores ROUND y AVG de MySQL.
-SELECT 
+SELECT AVG((RESULTADO_EQUIPO1+RESULTADO_EQUIPO2) / 2)
+FROM PARTIDOS;
 
 # Hallar la media de los goles de cada equipo y nombre del equipo y ordenar el resultado decrecientemente por el nº de goles. 
 # Pista: se puede usar también la cláusula UNION ALL para obtener el resultado. 

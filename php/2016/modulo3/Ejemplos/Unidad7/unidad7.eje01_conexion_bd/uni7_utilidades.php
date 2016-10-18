@@ -6,7 +6,7 @@
 
 	define("SERVIDOR", "localhost");
 	define("USUARIO", "root");
-	define("CLAVE", "");
+	define("CLAVE", "Theasker");
 	
 	/* Función que conecta con el servidor MySQL y, si se indica, selecciona la BD indicada como parámetro.*/
 	function conectaBD($BD='')
