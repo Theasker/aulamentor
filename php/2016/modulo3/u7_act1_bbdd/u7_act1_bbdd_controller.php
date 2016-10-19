@@ -1,6 +1,7 @@
 <?php
 class rutas{
 	private $BD;
+	private $dificultad = array("Baja","Media","Alta");
 	
 	public function __construct($BD){
 		$this->BD = $BD;
@@ -8,12 +9,17 @@ class rutas{
 		$this->crearBD();
 		$this->crearTablas();
 		
-		$this->insertarValoresRutas();
-		$this->insertarValoresComentarios();
+		//$this->insertarValoresRutas();
+		//$this->insertarValoresComentarios();
+		
+		// Cargar directamente todo el fichero sql
+		//$sql = file_get_contents('crea_bases.sql');
+	
 	}
+	
 	private function crearBD(){
 		//echo '<script>alertify.log("Creando la base de datos...", type, wait);</script>';
-		echo '<script>alertify.log("Creando la base de datos...", "", 0);</script>';
+		echo '<script>alertify.log("Creando la base de datos...");</script>';
 		//echo '<script>alertify.success("Success notification");</script>';
 		//echo '<script>alertify.error("Error notification");</script>';
 		$sql = "SET NAMES UTF8";
@@ -30,7 +36,7 @@ class rutas{
 		}
 	}
 	private function crearTablas(){
-		echo "Creando tablas...<br>";
+		echo '<script>alertify.log("Creando tablas...");</script>';
 		$sql= "USE ejercicios";
 		if(!$this->BD->query($sql)){
 			$msg = "Error: ".$this->BD->errorInfo()[1]." -> ".$this->BD->errorInfo()[2];
@@ -68,7 +74,6 @@ class rutas{
 		}
 	}
 	private function insertarValoresRutas(){
-		echo "Creando rutas...<br>";
 		$sql = "INSERT INTO rutas VALUES('1','Cuerda Larga: puerto Navacerrada a Puerto la Morcuera','Cuerda Larga Desde el Puerto de Navacerrada al Puerto de la Morcuera, con sus 9 cumbres superiores a 2000 m.','1000','20.64','Las Montañas o Cumbres que conforman la Cuerda Larga ordenados de Oeste a Este son: 
 - Bola del Mundo 2.258 m
 - Alto de Valdemartin, 2.283 m
@@ -98,13 +103,12 @@ class rutas{
 		
 	}
 	private function insertarValoresComentarios(){
-		echo "Creando comentarios...<br>";
 		$sql = 'INSERT INTO rutas_comentarios VALUES("1","1","Pedro","¡Me ha encantado la ruta!","2014-06-23")';
 		if(!$this->BD->query($sql)){
 			$msg = "Error: ".$this->BD->errorInfo()[1]." -> ".$this->BD->errorInfo()[2];
-			echo $msg,"<br>";
 			echo '<script>alertify.error("',$msg,'");</script>';
 		}
+		
 		$sql = 'INSERT INTO rutas_comentarios VALUES("2","2","Irene","Gracias por la información.","2014-06-23")';
 		if(!$this->BD->query($sql)){
 			$msg = "Error: ".$this->BD->errorInfo()[1]." -> ".$this->BD->errorInfo()[2];
@@ -112,5 +116,9 @@ class rutas{
 		}
 	}
 	
+	public function datos(){
+		$sql = "select * from rutas";
+		return $this->BD->query($sql);
+	}
 }
 ?>
