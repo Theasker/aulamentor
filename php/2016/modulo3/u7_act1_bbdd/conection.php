@@ -1,9 +1,11 @@
 ﻿<?php
 
 	define("SERVIDOR", "localhost");
-	define("USUARIO", "ejercicios");
-	define("CLAVE", "ejercicios");
-	
+	//define("USUARIO", "ejercicios");
+	//define("CLAVE", "ejercicios");
+	define("USUARIO", "root");
+	define("CLAVE", "");
+
 	/* Función que conecta con el servidor MySQL y, 
 		si se indica, selecciona la BD indicada como parámetro.*/
 	function conectaBD($BD=''){

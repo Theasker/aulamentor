@@ -44,28 +44,47 @@
 		
 		<div class="row">
 			<table class="table table-condensed table-hover table-bordered table-fixed no-margin">
-				<thead>
-					<tr>
-						<th class="col-md-2 success text-center">Titulo</th>
-						<th class="col-md-4 success text-center">Descripción</th>
-						<th class="col-md-1 success text-center">Desnivel</th>
-						<th class="col-md-1 success text-center">Distancia<br>(Km)</th>
-						<th class="col-md-1 success text-center">Dificultad</th>
-						<th class="col-md-3 success text-center">Operaciones</th>
-					</tr>
-				</thead>
+				<tr>
+					<th class="col-md-2 success text-center">Titulo</th>
+					<th class="col-md-4 success text-center">Descripción</th>
+					<th class="col-md-1 success text-center">Desnivel</th>
+					<th class="col-md-1 success text-center">Distancia<br>(Km)</th>
+					<th class="col-md-1 success text-center">Dificultad</th>
+					<th class="col-md-3 success text-center">Operaciones</th>
+				</tr>
+				
 				<?php
 				require('conection.php');
 				require('u7_act1_bbdd_controller.php');
+
+				$scriptName = basename($_SERVER["SCRIPT_NAME"]);
 				
 				$bd = conectaBD();
 				$rutas = new rutas($bd);
 				$resultado = $rutas->datos();
+
 				if($resultado){
+					echo '<form action="u7_act1_bbdd_submit" method="post">';
 					foreach($resultado as $valor){
-						var_dump($valor);
-						
+						echo "<tr>";
+						echo "<td>",$valor['titulo'],"</td>";
+						echo "<td>",$valor['descripcion'],"</td>";
+						echo "<td>",$valor['desnivel'],"</td>";
+						echo "<td>",$valor['distancia'],"</td>";
+						echo "<td>",$valor['dificultad'],"</td>";
+						echo <<<EOT
+						<td class="text-center">
+							<div class="btn-group text-center" role="group">
+							  <a class="btn btn-xs btn-success" href="$scriptName?action=editVer&id=$id&orden=$orden">Editar</a>
+							  <a class="btn btn-xs btn-danger" href="$this->scriptName?action=del&id=$id&orden=$orden">Borrar</a>
+							</form>
+						</td>
+EOT;
+						echo '<a href="',scriptName,'?action=editar">email me</a>
+						echo "<td>[ ",$valor['id']," ]</td>";
+						echo "<tr>";
 					}
+					echo '</form>';
 				}
 	
 				?>
