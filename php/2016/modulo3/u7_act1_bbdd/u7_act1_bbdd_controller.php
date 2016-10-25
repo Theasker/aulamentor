@@ -120,5 +120,15 @@ class rutas{
 		$sql = "select * from rutas";
 		return $this->BD->query($sql);
 	}
+	
+	public function editReg(){
+		
+	}
+	
+	public function deleteReg(){
+		
+	}
+	
+	
 }
 ?>
