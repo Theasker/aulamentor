@@ -19,7 +19,7 @@ class rutas{
 	
 	private function crearBD(){
 		//echo '<script>alertify.log("Creando la base de datos...", type, wait);</script>';
-		echo '<script>alertify.log("Creando la base de datos...");</script>';
+		//echo '<script>alertify.log("Creando la base de datos...");</script>';
 		//echo '<script>alertify.success("Success notification");</script>';
 		//echo '<script>alertify.error("Error notification");</script>';
 		$sql = "SET NAMES UTF8";
@@ -36,7 +36,7 @@ class rutas{
 		}
 	}
 	private function crearTablas(){
-		echo '<script>alertify.log("Creando tablas...");</script>';
+		//echo '<script>alertify.log("Creando tablas...");</script>';
 		$sql= "USE ejercicios";
 		if(!$this->BD->query($sql)){
 			$msg = "Error: ".$this->BD->errorInfo()[1]." -> ".$this->BD->errorInfo()[2];
@@ -119,6 +119,23 @@ class rutas{
 	public function datos(){
 		$sql = "select * from rutas";
 		return $this->BD->query($sql);
+	}
+	
+	public function newReg(){
+		// INSERT INTO table_name (column1,column2,column3,...)
+		// VALUES (value1,value2,value3,...);
+		$tit = $_POST['titulo'];
+	  $desc = $_POST['descripcion'];
+	  $desnivel = (int)$_POST['desnivel'];
+	  $distancia = (float)$_POST['distancia'];
+	  $dif = (int)$_POST['dificultad'];
+	  $notas = $_POST['notas'];
+	  
+		$sql = 'INSERT INTO rutas (titulo,descripcion,desnivel,distancia,dificultad,notas) 
+						VALUES('.$tit.','.$desc.','.$desnivel.','.$distancia.','.$dif.','.$notas.')';
+		echo $sql;
+		
+	  
 	}
 	
 	public function editReg(){

@@ -22,6 +22,7 @@
 		.centrado{width:800px; margin: 0 auto;}
 		.titulo{margin-top: 15px; padding: 5px;}
 		input{width: 200px }
+		#new{width: 600px;margin: 0 auto; }
 	</style>
 </head>
 <body>
@@ -49,10 +50,15 @@
 			}else if($_GET['action'] == 'edit'){
 				
 			}else if($_GET['action'] == 'coment'){
-				$rutas->comentReg();
+				
 			}else if($_GET['action'] == 'del'){
-				$rutas->deleteReg();
-			}else{
+				
+			}else if(isset($_POST['altaRuta'])){
+				$rutas->newReg();
+				$resultado = $rutas->datos();
+				html::mostrarDatos($scriptName,$resultado);	
+			}
+			else{
 				$resultado = $rutas->datos();
 				html::mostrarDatos($scriptName,$resultado);
 			}
