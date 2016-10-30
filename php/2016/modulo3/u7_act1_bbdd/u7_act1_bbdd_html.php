@@ -23,8 +23,8 @@ HTML;
 						<label for="tipoBusqueda" class="col-lg-6 control-label">Buscar por el campo </label>
 						<div class="col-lg-6">
 							<select name="tipoBusqueda" class="form-control input-sm">
-								<option value="titulo">Título</option>
-								<option value="descripcion" selected>Descripcion</option>
+								<option value="titulo" selected>Título</option>
+								<option value="descripcion">Descripcion</option>
 							</select>
 						</div>
 					</div>
@@ -101,42 +101,68 @@ HTML;
 		echo '</div>';
 	}
 	
-	static function rutaNew($scriptName,$reg){
-		$dificultad = array("Baja","Media","Alta");
+	static function rutaNew($scriptName,$resultado){
+		if($_GET['action'] == 'edit'){
+			$datos = $resultado->fetch();
+
+			$id = $datos['id'];
+			$tit = $datos['titulo'];
+		  $desc = $datos['descripcion'];
+		  $desnivel = (int)$datos['desnivel'];
+		  $distancia = (float)$datos['distancia'];
+		  $dif = (int)$datos['dificultad'];
+		  $notas = $datos['notas'];
+		  $submit = "Guardar ruta";
+		  $submitname = "guardarRuta";
+		}else{
+			$id = '';
+			$tit = '';
+		  $desc = '';
+		  $desnivel = '';
+		  $distancia = '';
+		  $dif = '';
+		  $notas = '';
+		  $submit = "Alta ruta";
+		  $submitname = "altaRuta";
+		}
 		?>
 			<hr>
-
 			<form class="form-horizontal" role="form" method="post" action="<?=$scriptName?>" name="new" id="new">
+				
+				<input type="hidden" name="id" value="<?=$id?>">
 				
 			  <div class="form-group">
 			    <label for="titulo" class="col-lg-3 control-label">Título</label>
 			    <div class="col-lg-7">
-			      <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título">
+			      <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título" value="<?=$tit?>">
 			    </div>
 			  </div>
+			  
 			  <div class="form-group">
 			    <label for="descripcion" class="col-lg-3 control-label">Descripción</label>
 			    <div class="col-lg-7">
-			      <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Contraseña">
+			      <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Descripcion" value="<?=$desc?>">
 			    </div>
 			  </div>
+			  
 			  <div class="form-group">
 			    <label for="desnivel" class="col-lg-3 control-label">Desnivel (m.)</label>
 			    <div class="col-lg-7">
-			      <input type="number" class="form-control" id="desnivel" name="desnivel" placeholder="Desnivel">
+			      <input type="number" class="form-control" id="desnivel" name="desnivel" placeholder="Desnivel" value="<?=$desnivel?>">
 			    </div>
 			  </div>
+			  
 			  <div class="form-group">
 			    <label for="distancia" class="col-lg-3 control-label">Distancia (Km.)</label>
 			    <div class="col-lg-7">
-			      <input type="number" step="0.01" class="form-control" id="distancia" name="distancia" placeholder="Distancia">
+			      <input type="number" step="0.01" class="form-control" id="distancia" name="distancia" placeholder="Distancia" value="<?=$distancia?>">
 			    </div>
 			  </div>
 			  
 			  <div class="form-group">
 			    <label for="dificultad" class="col-lg-3 control-label">Dificultad</label>
 			    <div class="col-lg-7">
-			      <select name="dificultad" class="form-control input-sm">
+			      <select name="dificultad" class="form-control input-sm" value="<?=$dif?>">
 							<option value="1" selected>Baja</option>
 							<option value="2">Media</option>
 							<option value="3">Alta</option>
@@ -147,17 +173,19 @@ HTML;
 			  <div class="form-group">
 			    <label for="notas" class="col-lg-3 control-label">Notas</label>
 			    <div class="col-lg-7">
-			    	<textarea rows="4" cols="50" class="form-control" id="notas" name="notas" placeholder="Notas"></textarea>
+			    	<textarea rows="4" cols="50" class="form-control" id="notas" name="notas" placeholder="Notas">
+			    		<?=$notas?>
+			    	</textarea>
 			    </div>
 			  </div>
 			  
 			  <div class="form-group text-center">
 			    <div class="col-lg-offset-3 col-lg-7">
-			      <input type="submit" class="btn btn-success" name="altaRuta" value="Alta Ruta">
+			      <input type="submit" class="btn btn-success" name="<?=$submitname?>" value="<?=$submit?>">
 			    </div>
 			  </div>
+			  
 			</form>
-
 		<?php
 	}
 	

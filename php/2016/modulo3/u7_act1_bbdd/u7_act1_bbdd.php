@@ -40,25 +40,32 @@
 			$bd = conectaBD();
 			$rutas = new rutas($bd);
 
-			
-			// Mostramos todos los datos
 			if($_GET['action'] == 'listado'){
 				$resultado = $rutas->datos();
 				html::mostrarDatos($scriptName,$resultado);	
 			}else	if($_GET['action'] == 'new'){
 				html::rutaNew($scriptName,null);
 			}else if($_GET['action'] == 'edit'){
-				
+				$resultado = $rutas->verReg();
+				html::rutaNew($scriptName,$resultado);
 			}else if($_GET['action'] == 'coment'){
 				
 			}else if($_GET['action'] == 'del'){
-				
+				$rutas->deleteReg();
+				$resultado = $rutas->datos();
+				html::mostrarDatos($scriptName,$resultado);	
 			}else if(isset($_POST['altaRuta'])){
 				$rutas->newReg();
 				$resultado = $rutas->datos();
 				html::mostrarDatos($scriptName,$resultado);	
-			}
-			else{
+			}else if(isset($_POST['guardarRuta'])){
+				$rutas->saveData();
+				$resultado = $rutas->datos();
+				html::mostrarDatos($scriptName,$resultado);	
+			}else if(isset($_POST['buscar'])){
+				$resultado = $rutas->search();
+				html::mostrarDatos($scriptName,$resultado);	
+			}else{
 				$resultado = $rutas->datos();
 				html::mostrarDatos($scriptName,$resultado);
 			}

@@ -116,14 +116,23 @@ class rutas{
 		}
 	}
 	
+	// Función que ejecuta una SQL
+  private function ejecuta_SQL($sql) {
+		$resultado=$this->BD->query($sql);
+		if (!$resultado){
+			echo"<H3>No se ha podido ejecutar la consulta: <PRE>$sql</PRE><P><U> Errores</U>: </H3><PRE>";
+			print_r($this->BD->errorInfo());					
+			die ("</PRE>");
+		}
+		return $resultado;
+	} // end ejecuta_SQL
+	
 	public function datos(){
 		$sql = "select * from rutas";
-		return $this->BD->query($sql);
+		return $this->ejecuta_SQl($sql);
 	}
 	
 	public function newReg(){
-		// INSERT INTO table_name (column1,column2,column3,...)
-		// VALUES (value1,value2,value3,...);
 		$tit = $_POST['titulo'];
 	  $desc = $_POST['descripcion'];
 	  $desnivel = (int)$_POST['desnivel'];
@@ -133,19 +142,38 @@ class rutas{
 	  
 		$sql = 'INSERT INTO rutas (titulo,descripcion,desnivel,distancia,dificultad,notas) 
 						VALUES('.$tit.','.$desc.','.$desnivel.','.$distancia.','.$dif.','.$notas.')';
-		echo $sql;
-		
-	  
+		$this->ejecuta_SQl($sql);
 	}
 	
-	public function editReg(){
-		
+	public function saveData(){
+		$id = $_POST['id'];
+		$tit = $_POST['titulo'];
+	  $desc = $_POST['descripcion'];
+	  $desnivel = (int)$_POST['desnivel'];
+	  $distancia = (float)$_POST['distancia'];
+	  $dif = (int)$_POST['dificultad'];
+	  $notas = $_POST['notas'];
+	  
+		$sql = 'UPDATE rutas
+						SET titulo='.$tit.',descripcion='.$desc.',desnivel='.$desnivel.',
+								distancia='.$distancia.',dificultad='.$dif.',notas='.$notas.'
+						WHERE id='.$id;
+		$this->ejecuta_SQl($sql);
 	}
 	
 	public function deleteReg(){
-		
+		$sql = 'DELETE FROM rutas WHERE id = '.$_GET['id'];
+		$this->ejecuta_SQl($sql);
 	}
 	
+	public function verReg(){
+		$sql = 'SELECT * FROM rutas WHERE id = '.$_GET['id'];
+		return $this->ejecuta_SQl($sql);
+	}
 	
+	public function search(){
+		$sql = 'SELECT * FROM rutas WHERE '.$_POST['tipoBusqueda'].' LIKE "%'.$_POST['buscartexto'].'%"';
+		return $this->ejecuta_SQl($sql);
+	}
 }
 ?>
