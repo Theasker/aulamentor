@@ -175,5 +175,21 @@ class rutas{
 		$sql = 'SELECT * FROM rutas WHERE '.$_POST['tipoBusqueda'].' LIKE "%'.$_POST['buscartexto'].'%"';
 		return $this->ejecuta_SQl($sql);
 	}
+	
+	public function comments(){
+		$sql = 'SELECT * FROM rutas_comentarios WHERE id_ruta = '.$_GET['id'];
+		return $this->ejecuta_SQl($sql);
+	}
+	
+	public function saveComment(){
+		$id_ruta = $_POST['id'];
+		$nombre = $_POST['nombre'];
+	  $comentario = $_POST['comentario'];
+	  $fecha = $_POST['fecha'];
+	  
+		$sql = 'INSERT INTO rutas_comentarios (id_ruta,nombre,texto,fecha)
+						VALUES('.$id_ruta.',"'.$nombre.'","'.$comentario.'","'.$fecha.'")';
+		$this->ejecuta_SQl($sql);
+	}
 }
 ?>

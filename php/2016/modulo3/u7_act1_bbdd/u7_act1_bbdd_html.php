@@ -101,6 +101,12 @@ HTML;
 		echo '</div>';
 	}
 	
+	static function commentFoot(){
+		echo '<div class="row text-center">';
+		echo '<div class="text-success">Se ha dado de alta correctamente el comentario.</div>';
+		echo '</div>';
+	}
+	
 	static function rutaNew($scriptName,$resultado){
 		if($_GET['action'] == 'edit'){
 			$datos = $resultado->fetch();
@@ -189,6 +195,99 @@ HTML;
 		<?php
 	}
 	
-	
+	static function comment($scriptName,$resultado,$comentarios){
+		$dificultad = array('Baja','Media','Alta');
+		$datos = $resultado->fetch();
+		$id = $datos['id'];
+		$tit = $datos['titulo'];
+	  $desc = $datos['descripcion'];
+	  $desnivel = (int)$datos['desnivel'];
+	  $distancia = (float)$datos['distancia'];
+	  $dif = (int)$datos['dificultad'];
+	  $notas = $datos['notas'];
+		?>
+			<hr>
+			<form class="form-horizontal" role="form" method="post" action="<?=$scriptName?>" name="new">
+				<input type="hidden" name="id" value="<?=$id?>">
+				
+				<div id="new">
+					<div class="form-group">
+				    <label for="titulo" class="col-lg-3 control-label bg-success">Título</label>
+				    <div class="col-lg-7"><?=$tit?></div>
+				  </div>
+				  
+				  <div class="form-group">
+				    <label for="descripcion" class="col-lg-3 control-label bg-success">Descripción</label>
+				    <div class="col-lg-7"><?=$desc?></div>
+				  </div>
+				  
+				  <div class="form-group">
+				    <label for="desnivel" class="col-lg-3 control-label bg-success">Desnivel (m.)</label>
+				    <div class="col-lg-7"><?=$desnivel?></div>
+				  </div>
+				  
+				  <div class="form-group">
+				    <label for="distancia" class="col-lg-3 control-label bg-success">Distancia (Km.)</label>
+				    <div class="col-lg-7"><?=$distancia?></div>
+				  </div>
+				  
+				  <div class="form-group">
+				    <label for="dificultad" class="col-lg-3 control-label bg-success">Dificultad</label>
+				    <div class="col-lg-7"><?=$dificultad[$dif]?></div>
+				  </div>
+				  
+				  <div class="form-group">
+				    <label for="notas" class="col-lg-3 control-label bg-success">Notas</label>
+				    <div class="col-lg-7"><?=$notas?></div>
+				  </div>
+				</div>
+			  <div class="row centrado">
+			  	<table class="table table-condensed table-hover table-bordered table-fixed no-margin">
+			  		<tr>
+			  			<th class="col-md-2 bg-success text-center">Nombre</th>
+			  			<th class="col-md-2 bg-success text-center">Fecha</th>
+			  			<th class="col-md-7 bg-success text-center">Comentario</th>
+			  			<th class="col-md-1 bg-success text-center"></th>
+			  		</tr>
+		  <?php
+		  	if($comentarios){
+		  		foreach($comentarios as $com){
+		  			echo "<tr>";
+						echo "<td>",$com['nombre'],"</td>";
+						$date = new DateTime($com['fecha']);
+						echo "<td>",$date->format('d-m-Y'),"</td>";
+						echo "<td>",$com['texto'],"</td>";
+		  			echo "<td></td>";
+		  			echo "</tr>";
+		  		}
+		  	}
+		  ?>		
+		  
+					  <div class="form-group">
+					  	<tr>
+			  				<td>
+			  					<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre">
+			  				</td>
+			  				<td>
+			  					<input type="hidden" name="fecha" value="<?=date("Y-m-d")?>">
+			  					<?php
+			  						echo date("d-m-Y");
+			  					?>
+			  				</td>
+			  				<td>
+			  					<input type="text" class="form-control" id="comentario" name="comentario" placeholder="Comentario">
+			  				</td>
+			  				<td>
+			  					<input type="submit" class="form-control" name="addComment" value="Añadir">
+			  				</td>
+			  			</tr>
+					    
+					  </div>
+					  
+		  		</table>
+			  </div>
+			</form>
+		<?php
+	}
 }
 ?>

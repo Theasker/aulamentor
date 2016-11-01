@@ -49,7 +49,9 @@
 				$resultado = $rutas->verReg();
 				html::rutaNew($scriptName,$resultado);
 			}else if($_GET['action'] == 'coment'){
-				
+				$resultado = $rutas->verReg();
+				$resultadoCom = $rutas->comments();
+				html::comment($scriptName,$resultado,$resultadoCom);
 			}else if($_GET['action'] == 'del'){
 				$rutas->deleteReg();
 				$resultado = $rutas->datos();
@@ -65,17 +67,23 @@
 			}else if(isset($_POST['buscar'])){
 				$resultado = $rutas->search();
 				html::mostrarDatos($scriptName,$resultado);	
+			}else if(isset($_POST['addComment'])){
+				$rutas->saveComment();
+				$resultado = $rutas->datos();
+				html::mostrarDatos($scriptName,$resultado);
+				html::commentFoot();
 			}else{
 				$resultado = $rutas->datos();
 				html::mostrarDatos($scriptName,$resultado);
 			}
-			
+			/*
 			echo '<div class="row">';
 			echo "GET<br>";
 			var_dump($_GET);
 			echo "POST<br>";
 			var_dump($_POST);
 			echo '</div>';
+			*/
 		?>
 	</div>
 </body>
