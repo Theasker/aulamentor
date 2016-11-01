@@ -141,7 +141,7 @@ class rutas{
 	  $notas = $_POST['notas'];
 	  
 		$sql = 'INSERT INTO rutas (titulo,descripcion,desnivel,distancia,dificultad,notas) 
-						VALUES('.$tit.','.$desc.','.$desnivel.','.$distancia.','.$dif.','.$notas.')';
+						VALUES("'.$tit.'","'.$desc.'",'.$desnivel.','.$distancia.','.$dif.',"'.$notas.'")';
 		$this->ejecuta_SQl($sql);
 	}
 	
@@ -155,8 +155,8 @@ class rutas{
 	  $notas = $_POST['notas'];
 	  
 		$sql = 'UPDATE rutas
-						SET titulo='.$tit.',descripcion='.$desc.',desnivel='.$desnivel.',
-								distancia='.$distancia.',dificultad='.$dif.',notas='.$notas.'
+						SET titulo="'.$tit.'",descripcion="'.$desc.'",desnivel='.$desnivel.',
+								distancia='.$distancia.',dificultad='.$dif.',notas="'.$notas.'"
 						WHERE id='.$id;
 		$this->ejecuta_SQl($sql);
 	}

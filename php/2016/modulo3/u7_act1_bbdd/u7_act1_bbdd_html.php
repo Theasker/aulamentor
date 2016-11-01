@@ -63,6 +63,7 @@ HTML;
 HTML;
 	}
 	static function mostrarDatos($scriptName,$resultado){
+		$dificultad = array('Baja','Media','Alta');
 		$km = 0;
 		self::cabeceraTabla();
 		if($resultado){
@@ -75,7 +76,7 @@ HTML;
 				echo "<td>",$reg['descripcion'],"</td>";
 				echo "<td>",$reg['desnivel'],"</td>";
 				echo "<td>",$reg['distancia'],"</td>";
-				echo "<td>",$reg['dificultad'],"</td>";
+				echo "<td>",$dificultad[$reg['dificultad']],"</td>";
 				echo <<<EOT
 				<td class="text-center">
 					<div class="btn-group text-center" role="group">
@@ -117,6 +118,7 @@ HTML;
 		  $desnivel = (int)$datos['desnivel'];
 		  $distancia = (float)$datos['distancia'];
 		  $dif = (int)$datos['dificultad'];
+		  var_dump($dif,(int)$datos['dificultad']);
 		  $notas = $datos['notas'];
 		  $submit = "Guardar ruta";
 		  $submitname = "guardarRuta";
@@ -168,10 +170,26 @@ HTML;
 			  <div class="form-group">
 			    <label for="dificultad" class="col-lg-3 control-label">Dificultad</label>
 			    <div class="col-lg-7">
-			      <select name="dificultad" class="form-control input-sm" value="<?=$dif?>">
-							<option value="1" selected>Baja</option>
-							<option value="2">Media</option>
-							<option value="3">Alta</option>
+			      <select name="dificultad" class="form-control input-sm" id="dificultad">
+			      	<?php
+			      		switch ($dif){
+			      			case 0:
+			      				echo '<option value="0" selected>Baja</option>';
+			      				echo '<option value="1">Media</option>';
+			      				echo '<option value="2">Alta</option>';
+			      				break;
+			      			case 1:
+			      				echo '<option value="0">Baja</option>';
+			      				echo '<option value="1" selected>Media</option>';
+			      				echo '<option value="2">Alta</option>';
+			      				break;
+			      			case 2:
+			      				echo '<option value="0">Baja</option>';
+			      				echo '<option value="1">Media</option>';
+			      				echo '<option value="2" selected>Alta</option>';
+			      				break;
+			      		}
+			      	?>
 						</select>
 			    </div>
 			  </div>
@@ -179,9 +197,7 @@ HTML;
 			  <div class="form-group">
 			    <label for="notas" class="col-lg-3 control-label">Notas</label>
 			    <div class="col-lg-7">
-			    	<textarea rows="4" cols="50" class="form-control" id="notas" name="notas" placeholder="Notas">
-			    		<?=$notas?>
-			    	</textarea>
+			    	<textarea rows="4" cols="50" class="form-control" id="notas" name="notas" placeholder="Notas"><?=$notas?></textarea>
 			    </div>
 			  </div>
 			  
