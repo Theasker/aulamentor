@@ -1,8 +1,7 @@
 <?php
 class rutas{
 	private $BD;
-	private $dificultad = array("Baja","Media","Alta");
-	
+
 	public function __construct($BD){
 		$this->BD = $BD;
 		

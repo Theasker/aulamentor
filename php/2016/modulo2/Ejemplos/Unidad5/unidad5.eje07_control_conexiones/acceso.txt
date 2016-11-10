@@ -24,3 +24,4 @@
 2014-06-13 13:52:07: la anterior sesión terminó con estado 'Conexión caducada'.
 2014-06-13 13:52:37: la anterior sesión terminó con estado 'Conexión caducada'.
 2014-06-13 13:53:20: la anterior sesión terminó con estado 'Conexión normal'.
+2016-11-07 13:37:30: la anterior sesión terminó con estado 'Conexión caducada'.
