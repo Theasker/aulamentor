@@ -5,7 +5,7 @@ class discos{
 
 	public function __construct($BD){
 		$this->BD = $BD;
-		
+
 		// Cargar directamente todo el fichero sql
 		$sql = file_get_contents('crea_bases.sql');
 		$this->ejecuta_SQL($sql);
@@ -24,11 +24,20 @@ class discos{
 	
 	private function preparaSQL($sql,$params){
     $stmt = $this->BD->prepare($sql);
-    $resultado = $stmt->execute($params);
-
-    if($resultado){
+    if($params){
+    	$resultado = $stmt->execute($params);
+    }else{
+    	$resultado = $stmt->execute();
+    }
+    
+    if (!$resultado){
+			echo"<H3>No se ha podido ejecutar la consulta: <PRE>$sql</PRE><P><U> Errores</U>: </H3><PRE>";
+			print_r($stmt->errorInfo());					
+			echo "</PRE>";
+			return false;
+		}else {
     	return $stmt->fetchAll();
-    }else return false;
+    }
 	}
 	
 	public function login(){
@@ -37,6 +46,13 @@ class discos{
 
 		$params = array(':username' => $_POST['username']);
 		$resultado = $this->preparaSQL($sql,$params);
+		
+		/*
+		echo '<div style="margin-top:50px;">';
+		var_dump($params);
+		var_dump($resultado);
+		echo '</div>';
+		*/
 		
 		if(count($resultado)){
 			$res = $resultado[0];
@@ -51,6 +67,7 @@ class discos{
 		// Comprobamos si existe el usuario
 		$sql = 'SELECT * FROM clientes WHERE user = :username';
 
+		echo "comprobando usuario";
 		$params = array(':username' => $_POST['username']);
 		$resultado = $this->preparaSQL($sql,$params);
 
@@ -65,6 +82,18 @@ class discos{
 		
 		$params = array(':user' => $_POST['username'],':password' => $pass);
 		$resultado = $this->preparaSQL($sql,$params);
+	}
+	
+	public function productos($orden){
+		$sql = 'SELECT * FROM productos ORDER BY :orden';
+		if($orden){
+			$params = array(':orden'=>$orden);
+		}else{
+			$params = array(':orden'=>$id);
+		}
+		$resultado = $this->preparaSQL($sql,$params);
+		
+		return $resultado;
 	}
 }
 ?>

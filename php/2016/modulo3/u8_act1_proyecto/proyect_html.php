@@ -17,67 +17,28 @@ class html{
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="bootstrap.min.js"></script>
 	<style>
-		body{background-color: #cccccc;font-family: Times;}
+		body{background-color: #fff;;font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;font-size: 14px;color: #333;line-height: 1.42857143;padding-top: 20px;padding-bottom: 20px;}
 		.centrado{width:800px; margin: 0 auto;}
 		.titulo{margin-top: 15px; padding: 5px;}
 		input{width: 200px }
 		#new{width: 600px;margin: 0 auto; }
+		.navbar {margin-bottom: 20px;}
 	</style>
 </head>
 <body>
-	<div class="container centrado">
 <?php
 	}
-	
 	static function htmlFin(){
-	?>
-		</div>
-	</body>
-	</html>
-	<?php
-	}
-	
-	static function login($scriptName,$typeLogin,$mesage){
-		echo <<<HTML
-    <div class="row">
-			
-			<form class="form-horizontal" action='$scriptName' method="POST">
-			  <fieldset>
-			    <div id="legend">
-			      <legend class="">Login</legend>
-			    </div>
-			    <div class="control-group">
-			      <!-- Username -->
-			      <label class="control-label"  for="username">Username</label>
-			      <div class="controls">
-			        <input type="text" id="username" name="username" placeholder="Usuario" class="input-xlarge">
-			      </div>
-			    </div>
-			    <div class="control-group">
-			      <!-- Password-->
-			      <label class="control-label" for="password">Password</label>
-			      <div class="controls">
-			        <input type="password" id="password" name="password" placeholder="Contraseña" class="input-xlarge">
-			      </div>
-			    </div>
-			    <div class="control-group">
-			      <!-- Button -->
-			      <span class="label label-danger">$mesage</span>
-			      <div class="controls">
-			        <button type="submit" class="btn btn-default" name="$typeLogin" value="$typeLogin">$typeLogin</button>
-			      </div>
-			      <a href="./$scriptName?action=registrar">Registrar</a>
-			    </div>
-			  </fieldset>
-			</form>
-
-		</div>
-HTML;
-	}
-	
-	static function headerLogged(){
 		?>
-		<div class="navbar navbar-default navbar-fixed-top">
+		</body>
+		</html>
+		<?php
+	}
+	
+	static function login($scriptName,$typeLogin,$mesage,$logged){
+		?>
+	<!-- Static navbar -->
+	<div class="navbar navbar-inverse navbar-fixed-top">
 	    <div class="container">
         <div class="navbar-header">
           <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
@@ -85,46 +46,82 @@ HTML;
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Sitename</a>
+          <a class="navbar-brand" href="#">Discos Theasker</a>
         </div>
         <center>
           <div class="navbar-collapse collapse" id="navbar-main">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Link</a>
-              </li>
-              <li><a href="#">Link</a>
-              </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Action</a>
-                  </li>
-                  <li><a href="#">Another action</a>
-                  </li>
-                  <li><a href="#">Something else here</a>
-                  </li>
-                  <li class="divider"></li>
-                  <li><a href="#">Separated link</a>
-                  </li>
-                  <li class="divider"></li>
-                  <li><a href="#">One more separated link</a>
-                  </li>
-                </ul>
-              </li>
+              <li class="active"><a href="<?=$scriptName?>">Discos</a></li>
+              <li><a href="#">Link</a></li>
             </ul>
-            <form class="navbar-form navbar-right" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" name="username" placeholder="Username">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" name="password" placeholder="Password">
-              </div>
-              <button type="submit" class="btn btn-default">Sign In</button>
-            </form>
+            <?php
+            if(!$logged){ // Si aun no se ha logueado
+            	?>
+            	<form class="navbar-form navbar-right" role="search" action='<?=$scriptName?>' method="POST">
+	            	<span class="label label-danger"><?=$mesage?></span>
+	              <div class="form-group">
+	                <input type="text" id="username" class="form-control" name="username" placeholder="Usuario">
+	              </div>
+	              <div class="form-group">
+	                <input type="password" id="password" class="form-control" name="password" placeholder="Contraseña">
+	              </div>
+	              <button type="submit" class="btn btn-default" name="<?=$typeLogin?>" value="<?=$typeLogin?>"><?=$typeLogin?></button>
+	              <?php
+	              	if($typeLogin == "Entrar"){
+	              		echo '<a class="btn btn-default" href="./'.$scriptName.'?action=registrar">Registrar</a>';
+	              	}
+	              ?>
+	            </form>
+            	<?php
+            }else{
+            	?>
+            	<ul class="nav navbar-nav pull-right">
+								<li><a href="<?=$scriptName?>?action=cerrarSesion">Cerrar sesión de <?=$_SESSION['user']?></a></li>
+							</ul>
+            	<?php
+            }
+            ?>
           </div>
         </center>
 	    </div>
 	</div>
+	<br>
+	<br>
+	<br>
+	<br>
+
+<?php
+	}
+	
+	static function showProducts($products){
+		?>
+		<div class="container">
+			<table class="table table-condensed border table-hover table-bordered table-fixed no-margin">
+				<tr>
+					<th class="col-md-4 default text-center">
+						
+					</th>
+					<th class="col-md-3 default text-center">Artista</th>
+					<th class="col-md-2 default text-center">Género</th>
+					<th class="col-md-1 default text-center">Stock</th>
+					<th class="col-md-1 default text-center">Precio</th>
+					<th class="col-md-1 default text-center"></th>
+				</tr>
+				<?php
+				//var_dump($products);
+				foreach($products as $prod){
+					echo '<tr>';
+					echo '<td>',$prod['titulo'],'</td>';
+					echo '<td>',$prod['artista'],'</td>';
+					echo '<td>',$prod['genero'],'</td>';
+					echo '<td class="text-right">',$prod['stock'],'</td>';
+					echo '<td class="text-right">',$prod['precio'],'</td>';
+					echo '<td><a class="btn btn-xs btn-success" href="',$scriptName,'?action=comprar&id=',$prod['id'],'">Comprar</a></td>';
+					echo '<tr>';
+				}
+				?>
+			</table>
+		</div>
 		<?php
 	}
 }
