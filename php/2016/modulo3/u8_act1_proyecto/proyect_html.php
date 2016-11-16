@@ -76,6 +76,18 @@ class html{
             }else{
             	?>
             	<ul class="nav navbar-nav pull-right">
+            		<li>
+            			<?php
+            			// Número de productos comprados en el navbar
+            			$user = $_SESSION['user'];
+            			if (isset($_SESSION[$user])){
+            				$cont = 0;
+            				foreach($_SESSION[$user] as $prod){
+            					$cont = $cont + $prod;
+            				}
+            				echo '<a href="',$scriptName,'?action=carrito">Hay <b>',$cont,'</b> productos en el carrito</a>';
+            			}
+            			?>
 								<li><a href="<?=$scriptName?>?action=cerrarSesion">Cerrar sesión de <?=$_SESSION['user']?></a></li>
 							</ul>
             	<?php
@@ -93,22 +105,30 @@ class html{
 <?php
 	}
 	
-	static function showProducts($products){
+	static function showProducts($products,$orden,$msg){
 		?>
 		<div class="container">
+			<?php
+			if($msg){
+				echo '<div class="alert alert-',$msg['tipo'],'"><strong>Aviso: </strong>',$msg['msg'],'</div>';
+			}
+			?>
+			<h2>Arreglar número de productos del carrito en el navbar</h2>
 			<table class="table table-condensed border table-hover table-bordered table-fixed no-margin">
 				<tr>
-					<th class="col-md-4 default text-center">
-						
-					</th>
-					<th class="col-md-3 default text-center">Artista</th>
-					<th class="col-md-2 default text-center">Género</th>
-					<th class="col-md-1 default text-center">Stock</th>
-					<th class="col-md-1 default text-center">Precio</th>
+					<th class="col-md-3 default text-center">
+						<a href="<?=$scriptName?>?orden=titulo">Título</a></th>
+					<th class="col-md-3 default text-center">
+						<a href="<?=$scriptName?>?orden=artista">Artista</a></th>
+					<th class="col-md-2 default text-center">
+						<a href="<?=$scriptName?>?orden=genero">Género</a></th>
+					<th class="col-md-1 default text-center">
+						<a href="<?=$scriptName?>?orden=stock">Stock</a></th>
+					<th class="col-md-1 default text-center">
+						<a href="<?=$scriptName?>?orden=precio">Precio</a></th>
 					<th class="col-md-1 default text-center"></th>
 				</tr>
 				<?php
-				//var_dump($products);
 				foreach($products as $prod){
 					echo '<tr>';
 					echo '<td>',$prod['titulo'],'</td>';
@@ -123,6 +143,40 @@ class html{
 			</table>
 		</div>
 		<?php
+	}
+	
+	static function showCart($products){
+		?>
+		<div class="container">
+			<div class="col-md-6 col-md-offset-3">
+				<h2 class="alert alert-success text-center">Cesta de la compra</h2>
+			</div>
+			<table class="table table-condensed border table-hover table-bordered table-fixed no-margin">
+				<tr>
+					<th class="col-md-3 default text-center">Título</th>
+					<th class="col-md-3 default text-center">Artista</th>
+					<th class="col-md-1 default text-center">Precio</th>
+					<th class="col-md-1 default text-center">Cantidad</a></th>
+					<th class="col-md-1 default text-center">Total</a></th>
+				</tr>
+				<?php
+				$user = $_SESSION['user'];
+				foreach($products as $prod){
+					$id = (int)$prod['id'];
+					var_dump($_SESSION[$user][$id]);
+					echo '<tr>';
+					echo '<td>',$prod['titulo'],'</td>';
+					echo '<td>',$prod['artista'],'</td>';
+					echo '<td class="text-right">',$prod['precio'],'</td>';
+					echo '<td>', $_SESSION[$user][$id] ,'</td>';
+					echo '<td>', ($_SESSION[$user][$id] * (float)$prod['precio']) ,'</td>';
+					echo '</tr>';
+				}
+				?>
+			</table>
+		</div>
+		<?php
+		var_dump($products);
 	}
 }
 ?>
