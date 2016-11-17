@@ -104,32 +104,48 @@ class discos{
 		}
 	}
 	
-	public function finalizarCompra(){
-		if($this->checkStock($id)){ // Stock > 0
-			
-		}else{ // Stock < 0
-			return false;
+	public function endBuy(){
+		$user = $_SESSION['user'];
+		$cart = $this->cart();
+		// variable en la que almaceno los resultados de la resta de stocks si se ha podido o no restar.
+		$done = array(); 
+		foreach($cart as $line){
+			$id = $line['id'];
+			// Comprobamos si hay suficiente stock en el producto
+			if($line['stock']>=$_SESSION[$user][$id]){ // Hay suficiente stock en el producto 
+				$sql = 'UPDATE productos SET stock = (stock - :cantidad) WHERE id = '.$id;
+				$params = array(':cantidad'=>$_SESSION[$user][$id]);
+				$this->preparaSQL($sql,$params);
+				$done[$id] = true;
+			}else{ // No hay stock suficiente
+				$done[$id] = false;
+			}
 		}
+		var_dump($done);
+		$this->order($done);
 	}
 	
-	private function checkStock($id){
-		$sql = 'SELECT stock FROM productos WHERE id = '.$id;
-		$cont = $this->preparaSQL($sql,null);
-		//echo '<br><br><br><br>';
-		//var_dump($cont[0]['stock']);
-		if($cont[0]['stock']>0){ // Hay stock y restamos uno
-			// UPDATE equipos SET anio_fundacion = anio_fundacion + 2, anotaciones = "No hay anotaciones";
-			$sql = 'UPDATE productos SET stock = :stock WHERE id = '.$id;
-			$params = array(':stock'=>$cont[0]['stock']-1);
-			$this->preparaSQL($sql,$params);
-			return true; //mal
-		}else{
-			return false;
-		}
+	private function order($done){
+		/*
+		CREATE TABLE IF NOT EXISTS lineas_pedidos (
+		  id int(4) NOT NULL auto_increment,
+		  id_pedido int(4) NOT NULL,
+		  id_producto int(4) NOT NULL,
+		  cantidad int(3) UNSIGNED NOT NULL DEFAULT '0' ,
+		  precio double NOT NULL DEFAULT '0' ,
+		  PRIMARY KEY (id),
+		  KEY id_pedido (id_pedido),
+		  KEY id_producto (id_producto),
+		  FOREIGN KEY (id_pedido) REFERENCES pedidos(id),
+		  FOREIGN KEY (id_producto) REFERENCES productos(id)
+		) CHARACTER SET utf8 COLLATE utf8_general_ci;
+		*/
 	}
 	
+	// Devuelve los registros de los productos de la cesta de la compra
 	public function cart(){
-		$prod = $_SESSION[$_SESSION['user']];
+		// Guardamos las claves del array que son las id de los productos
+		$prod = array_keys($_SESSION[$_SESSION['user']]); 
 		$prodIds = implode(',',$prod);
 		$sql = 'SELECT * FROM productos WHERE id IN ('.$prodIds.')';
 		return $this->preparaSQL($sql,null);

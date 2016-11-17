@@ -113,7 +113,6 @@ class html{
 				echo '<div class="alert alert-',$msg['tipo'],'"><strong>Aviso: </strong>',$msg['msg'],'</div>';
 			}
 			?>
-			<h2>Arreglar número de productos del carrito en el navbar</h2>
 			<table class="table table-condensed border table-hover table-bordered table-fixed no-margin">
 				<tr>
 					<th class="col-md-3 default text-center">
@@ -131,7 +130,7 @@ class html{
 				<?php
 				foreach($products as $prod){
 					echo '<tr>';
-					echo '<td>',$prod['titulo'],'</td>';
+					echo '<td><b>(',$prod['id'],')</b> ',$prod['titulo'],'</td>';
 					echo '<td>',$prod['artista'],'</td>';
 					echo '<td>',$prod['genero'],'</td>';
 					echo '<td class="text-right">',$prod['stock'],'</td>';
@@ -153,7 +152,7 @@ class html{
 			</div>
 			<table class="table table-condensed border table-hover table-bordered table-fixed no-margin">
 				<tr>
-					<th class="col-md-3 default text-center">Título</th>
+					<th class="col-md-3 default text-center">Id - Título</th>
 					<th class="col-md-3 default text-center">Artista</th>
 					<th class="col-md-1 default text-center">Precio</th>
 					<th class="col-md-1 default text-center">Cantidad</a></th>
@@ -161,22 +160,34 @@ class html{
 				</tr>
 				<?php
 				$user = $_SESSION['user'];
+				$acum = 0;
 				foreach($products as $prod){
 					$id = (int)$prod['id'];
-					var_dump($_SESSION[$user][$id]);
-					echo '<tr>';
-					echo '<td>',$prod['titulo'],'</td>';
+					// Coloreamos la fila si no hay suficiente stock en el producto
+					if($prod['stock'] < $_SESSION[$user][$id]){
+						echo '<tr class="danger">';
+					}else{
+						echo '<tr>';
+					}
+					echo '<td><b>',$id,'</b> - ',$prod['titulo'],'</td>';
 					echo '<td>',$prod['artista'],'</td>';
 					echo '<td class="text-right">',$prod['precio'],'</td>';
-					echo '<td>', $_SESSION[$user][$id] ,'</td>';
-					echo '<td>', ($_SESSION[$user][$id] * (float)$prod['precio']) ,'</td>';
+					echo '<td class="text-right">', $_SESSION[$user][$id] ,'</td>';
+					$acum = $acum + ( ($_SESSION[$user][$id] * (float)$prod['precio']) );
+					echo '<td class="text-right">', ($_SESSION[$user][$id] * (float)$prod['precio']) ,'</td>';
 					echo '</tr>';
 				}
+				echo '<tr>';
+				echo '<td colspan="4" class="text-right"><strong>Total: </strong></td>';
+				echo '<td class="text-right">', $acum ,'</td>';
+				echo '</tr>';
 				?>
 			</table>
+			<div class="col-md-offset-10 col-md-2">
+				<a class="btn btn-lg btn-success" href="<?=$scriptName?>?action=endBuy">Confirmar compra</a>
+			</div>
 		</div>
 		<?php
-		var_dump($products);
 	}
 }
 ?>

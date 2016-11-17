@@ -46,16 +46,18 @@ if (isset($_POST['Entrar'])){
 				html::login($scriptName,"Entrar",'',false);
 				break;
 			case 'comprar':
-				html::login($scriptName,"",'',true);
 				$msg = array('tipo'=>'success','msg'=>'Producto añadido a la cesta.');
 				$discos->comprar();
+				html::login($scriptName,"",'',true);
 				html::showProducts($discos->productos('titulo'),$_GET['orden'],$msg);
 				break;
 			case 'carrito':
 				html::login($scriptName,"",'',true);
 				html::showCart($discos->cart());
 				break;
-			case 'finalizarCompra':
+			case 'endBuy':
+				html::login($scriptName,"",'',true);
+				$discos->endBuy();
 				break;
 		} 
 	}else{ // El usuario NO está logueado

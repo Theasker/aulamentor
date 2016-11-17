@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS clientes (
 
 
 #
-# Datos tabla'clientes'
+# Datos tabla'pedidos'
 #
 
 #
@@ -162,7 +162,7 @@ CREATE TABLE IF NOT EXISTS pedidos (
 
 
 #
-# Datos tabla 'pedidos'
+# Datos tabla 'lineas_pedidos'
 #
 
 
@@ -175,6 +175,8 @@ CREATE TABLE IF NOT EXISTS lineas_pedidos (
   id int(4) NOT NULL auto_increment,
   id_pedido int(4) NOT NULL,
   id_producto int(4) NOT NULL,
+  cantidad int(3) UNSIGNED NOT NULL DEFAULT '0' ,
+  precio double NOT NULL DEFAULT '0' ,
   PRIMARY KEY (id),
   KEY id_pedido (id_pedido),
   KEY id_producto (id_producto),
