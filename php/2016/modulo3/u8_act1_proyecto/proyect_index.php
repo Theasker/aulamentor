@@ -49,15 +49,30 @@ if (isset($_POST['Entrar'])){
 				$msg = array('tipo'=>'success','msg'=>'Producto añadido a la cesta.');
 				$discos->comprar();
 				html::login($scriptName,"",'',true);
-				html::showProducts($discos->productos('titulo'),$_GET['orden'],$msg);
+				html::showProducts($discos->productos($_GET['orden']),$_GET['orden'],$msg);
 				break;
 			case 'carrito':
 				html::login($scriptName,"",'',true);
-				html::showCart($discos->cart());
+				html::showCart($scriptName,$discos->cart());
 				break;
 			case 'endBuy':
 				html::login($scriptName,"",'',true);
-				$discos->endBuy();
+				html::endBuy($scriptName,$discos->cart(),$discos->endBuy());
+				$discos->cleanCart();
+				break;
+			case 'cleanCart':
+				$msg = '';
+				$discos->cleanCart();
+				html::login($scriptName,"",'',true);
+				html::showProducts($discos->productos($_GET['orden']),$_GET['orden'],$msg);
+				break;
+			case 'misPedidos':
+				html::login($scriptName,"",'',true);
+				html::pedidos($scriptName,$discos->pedidos());
+				break;
+			case 'verPedido':
+				html::login($scriptName,"",'',true);
+				html::verPedido($scriptName,$discos->verPedido());
 				break;
 		} 
 	}else{ // El usuario NO está logueado
@@ -95,9 +110,7 @@ if (isset($_POST['Entrar'])){
 }else{
 	html::login($scriptName,"Entrar",'',false);
 } 
-
-
-//html::containerEnd();
+/*
 echo '<div class="container">';
 echo "SESSION<br>";
 var_dump($_SESSION);
@@ -106,6 +119,6 @@ var_dump($_GET);
 echo "POST<br>";
 var_dump($_POST);
 echo '</div>';
-
+*/
 
 ?>

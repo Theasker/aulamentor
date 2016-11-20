@@ -108,24 +108,50 @@ class discos{
 		$user = $_SESSION['user'];
 		$cart = $this->cart();
 		// variable en la que almaceno los resultados de la resta de stocks si se ha podido o no restar.
-		$done = array(); 
+		$done = array();
 		foreach($cart as $line){
 			$id = $line['id'];
 			// Comprobamos si hay suficiente stock en el producto
 			if($line['stock']>=$_SESSION[$user][$id]){ // Hay suficiente stock en el producto 
-				$sql = 'UPDATE productos SET stock = (stock - :cantidad) WHERE id = '.$id;
+				$sql = $sql.'UPDATE productos SET stock = (stock - :cantidad) WHERE id = '.$id.";\n";
 				$params = array(':cantidad'=>$_SESSION[$user][$id]);
-				$this->preparaSQL($sql,$params);
+				//$this->preparaSQL($sql,$params);
 				$done[$id] = true;
 			}else{ // No hay stock suficiente
 				$done[$id] = false;
 			}
 		}
-		var_dump($done);
-		$this->order($done);
+		return $this->order($cart,$done);
 	}
 	
-	private function order($done){
+	private function order($cart,$done){
+		/*
+		CREATE TABLE IF NOT EXISTS pedidos (
+		  id int(4) NOT NULL auto_increment,
+		  id_cliente int(4) NOT NULL,
+		  fecha date NOT NULL DEFAULT '0000-00-00' ,
+		  PRIMARY KEY (id),
+		  KEY id_cliente (id_cliente),
+		  FOREIGN KEY (id_cliente) REFERENCES clientes(id)
+		) CHARACTER SET utf8 COLLATE utf8_general_ci;
+		*/
+		// Buscamos el id del cliente
+		$sql = 'SELECT id FROM clientes WHERE user = "'.$_SESSION['user'].'"';
+		$id_client = $this->preparaSQL($sql,null);
+		$id_client = (int)$id_client[0]['id'];
+		// Fecha de hoy
+		$now = getdate();
+		$date = $now['year'].'-'.$now['mon'].'-'.$now['mday'];
+		// Buscamos el último registro de la tabla pedidos para saber el nuevo 'id'
+		$sql = 'SELECT id FROM pedidos ORDER BY id DESC LIMIT 1';
+		$resultado = $this->preparaSQL($sql,null);
+		$id_pedido = (int)$resultado[0]['id'] + 1;
+
+		// Agregamos la entrada en la tabla de pedidos
+		$sql = 'INSERT INTO pedidos (id,id_cliente,fecha) VALUES(:id,:cliente,:fecha)';
+		$params = array(':id'=>$id_pedido,':cliente'=>$id_client,':fecha'=>$date);
+		$this->preparaSQL($sql,$params);
+
 		/*
 		CREATE TABLE IF NOT EXISTS lineas_pedidos (
 		  id int(4) NOT NULL auto_increment,
@@ -140,6 +166,22 @@ class discos{
 		  FOREIGN KEY (id_producto) REFERENCES productos(id)
 		) CHARACTER SET utf8 COLLATE utf8_general_ci;
 		*/
+		$user = $_SESSION['user'];
+		foreach($cart as $reg){
+			// Comprobamos si había stock en el array guardado
+			$id = (int)$reg['id'];
+			if ($done[$id]){ // Hay stock
+				$sql = 'INSERT INTO lineas_pedidos (id_pedido,id_producto,cantidad,precio)
+								VALUES (:id_pedido,:id_producto,:cantidad,:precio)';
+				$params = array(
+					':id_pedido'=>$id_pedido,
+					':id_producto'=>$reg['id'],
+					':cantidad'=>$_SESSION[$user][$id],
+					':precio'=>$reg['precio']);
+				$this->preparaSQL($sql,$params);
+			}
+		}
+		return $done;
 	}
 	
 	// Devuelve los registros de los productos de la cesta de la compra
@@ -149,6 +191,39 @@ class discos{
 		$prodIds = implode(',',$prod);
 		$sql = 'SELECT * FROM productos WHERE id IN ('.$prodIds.')';
 		return $this->preparaSQL($sql,null);
+	}
+	
+	// Vacía la cesta de la compra
+	public function cleanCart(){
+		$user = $_SESSION['user'];
+		unset($_SESSION[$user]);
+	}
+	
+	// visualización de los pedidos
+	public function pedidos(){
+		$cliente = $_SESSION['user'];
+		$sql = 'SELECT * FROM clientes WHERE user = "'.$cliente.'"';
+		$resultado = $this->preparaSQL($sql,null);
+		$id_cliente = (int)$resultado[0]['id'];
+		
+		$sql = 'SELECT pedidos.id_cliente,pedidos.id,pedidos.fecha,SUM(precio) AS sumPrecio 
+						FROM pedidos 
+						INNER JOIN lineas_pedidos ON pedidos.id = lineas_pedidos.id_pedido
+						INNER JOIN clientes ON clientes.id = pedidos.id_cliente
+						WHERE clientes.id = '.$id_cliente.
+						' GROUP BY pedidos.id';
+		$resultado = $this->preparaSQL($sql,null);
+		return $resultado;
+	}
+	
+	public function verPedido(){
+		$sql = 'SELECT lineas_pedidos.*,productos.titulo,productos.artista FROM lineas_pedidos 
+						INNER JOIN productos 
+						ON lineas_pedidos.id_producto = productos.id
+						WHERE lineas_pedidos.id_pedido = '.$_GET['id'];
+		$resultado = $this->preparaSQL($sql,null);
+		
+		return $resultado;
 	}
 }
 ?>
