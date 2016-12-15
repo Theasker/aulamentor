@@ -114,8 +114,9 @@ class discos{
 			// Comprobamos si hay suficiente stock en el producto
 			if($line['stock']>=$_SESSION[$user][$id]){ // Hay suficiente stock en el producto 
 				$sql = $sql.'UPDATE productos SET stock = (stock - :cantidad) WHERE id = '.$id.";\n";
+				var_dump($sql);
 				$params = array(':cantidad'=>$_SESSION[$user][$id]);
-				//$this->preparaSQL($sql,$params);
+				$this->preparaSQL($sql,$params);
 				$done[$id] = true;
 			}else{ // No hay stock suficiente
 				$done[$id] = false;
